@@ -7,6 +7,7 @@
   * [1.2 程序被其他程序翻译成不同的格式](ch01/untitled.md)
   * [1.3 了解编译系统如何工作是大有益处的](ch01/1.3-le-jie-bian-yi-xi-tong-ru-he-gong-zuo-shi-da-you-yi-chu-de.md)
   * [1.4 处理器读并解释储存在内存中的指令](ch01/1.4-chu-li-qi-du-bing-jie-shi-chu-cun-zai-nei-cun-zhong-de-zhi-ling.md)
+  * [1.5 高速缓存至关重要](ch01/1.5-gao-su-huan-cun-zhi-guan-zhong-yao.md)
 
 ## 第一部分：程序结构和执行
 
