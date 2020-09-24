@@ -7,6 +7,7 @@
 * [出版者的话](ben-shu-xin-xi/chu-ban-zhe-de-hua.md)
 * [中文版序一](ben-shu-xin-xi/zhong-wen-ban-xu-yi.md)
 * [中文版序二](ben-shu-xin-xi/zhong-wen-ban-xu-er.md)
+* [译者序](ben-shu-xin-xi/yi-zhe-xu.md)
 * [前言](ben-shu-xin-xi/00-preface.md)
 
 ---
