@@ -27,7 +27,13 @@
 
 ## 第一部分：程序结构和执行
 
-* [第 2 章：信息的表示和处理](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li.md)
+* [第 2 章：信息的表示和处理](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/README.md)
+  * [2.1 信息存储](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.1-xin-xi-cun-chu.md)
+  * [2.2 整数表示](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.2-zheng-shu-biao-shi.md)
+  * [2.3 整数运算](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.3-zheng-shu-yun-suan.md)
+  * [2.4 浮点数](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.4-fu-dian-shu.md)
+  * [2.5 小结](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.5-xiao-jie.md)
+  * [家庭作业](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/jia-ting-zuo-ye.md)
 * [第 3 章：程序的机器级表示](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-3-zhang-cheng-xu-de-ji-qi-ji-biao-shi.md)
 * [第 4 章：处理器体系结构](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-4-zhang-chu-li-qi-ti-xi-jie-gou.md)
 * [第 5 章：优化程序性能](di-yi-bu-fen-cheng-xu-jie-gou-he-zhi-hang/di-5-zhang-you-hua-cheng-xu-xing-neng.md)
