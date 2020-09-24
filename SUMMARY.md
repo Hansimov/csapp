@@ -1,7 +1,14 @@
 # Table of contents
 
 * [深入理解计算机系统（CSAPP）](README.md)
-* [前言](00-preface.md)
+
+## 本书信息
+
+* [出版者的话](ben-shu-xin-xi/chu-ban-zhe-de-hua.md)
+* [前言](ben-shu-xin-xi/00-preface.md)
+
+---
+
 * [第 1 章：计算机系统漫游](01/README.md)
   * [1.1 信息就是位 + 上下文](01/1.1.md)
   * [1.2 程序被其他程序翻译成不同的格式](01/1.2.md)
