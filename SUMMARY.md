@@ -9,6 +9,7 @@
 * [中文版序二](ben-shu-xin-xi/zhong-wen-ban-xu-er.md)
 * [译者序](ben-shu-xin-xi/yi-zhe-xu.md)
 * [前言](ben-shu-xin-xi/00-preface.md)
+* [关于作者](ben-shu-xin-xi/guan-yu-zuo-zhe.md)
 
 ---
 
