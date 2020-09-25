@@ -413,7 +413,13 @@ linux> gcc static ./libvector.a main2.c
 
 {% tabs %}
 {% tab title="练习题 7.3" %}
+a 和 b 表示当前目录中的目标模块或者静态库，而 a → b 表示 a 依赖于 b，也就是说 b 定义了一个被 a 引用的符号。对于下面每种场景，请给出最小的命令行（即一个含有最少数量的目标文件和库参数的命令），使得静态链接器能解析所有的符号引用。
 
+A. p.o → libx.a
+
+B. p.o → libx.a → liby.a
+
+C. p.o → libx.a → liby.a 且 liby.a → libx.a → p.o
 {% endtab %}
 
 {% tab title="答案" %}
