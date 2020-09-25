@@ -47,7 +47,7 @@
   * [7.3 目标文件](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.3-mu-biao-wen-jian.md)
   * [7.4 可重定位目标文件](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.4-ke-zhong-ding-wei-mu-biao-wen-jian.md)
   * [7.5 符号和符号表](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.5-fu-hao-he-fu-hao-biao.md)
-  * [Untitled](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/untitled-1.md)
+  * [7.6 符号解析](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/untitled-1.md)
 * [第 8 章：异常控制流](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-8-zhang-yi-chang-kong-zhi-liu.md)
 * [第 9 章：虚拟内存](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-9-zhang-xu-ni-nei-cun.md)
 
