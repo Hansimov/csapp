@@ -315,7 +315,7 @@ void addvec(int *x, int *y,
 
 {% tabs %}
 {% tab title="code/link/multvec.c" %}
-```bash
+```c
 int multcnt = 0;
 
 void multvec(int *x，int *y,
@@ -334,5 +334,90 @@ void multvec(int *x，int *y,
 
 > 图 7-6 libvector 库中的成员目标文件
 
+要创建这些函数的一个静态库，我们将使用 AR 工具，如下：
 
+```bash
+linux> gcc -c addvec.c multvec.c
+linux> ar rcs libvector.a addvec.o multvec.o 
+```
+
+为了使用这个库，我们可以编写一个应用， 比如图 7-7 中的 main2.c，它调用 addvec 库例程。包含（或头）文件 vector .h 定义了 libvector.a 中例程的函数原型。
+
+{% tabs %}
+{% tab title="code/link/main2.c" %}
+```c
+#include <stdio.h>
+#include "vector.h"
+
+int x[2] = {1, 2};
+int y[2] = {3, 4};
+int z[2];
+
+int main()
+{
+    addvec(x, y, z, 2);
+    printf("z = [%d %d]\n", z[0], z[1]);
+    return 0;
+}
+```
+{% endtab %}
+{% endtabs %}
+
+> 图 7-7 示例程序 2。这个程序调用 libvector 库中的函数
+
+为了创建这个可执行文件，我们要编译和链接输入文件 main.o 和 libvector.a：
+
+```bash
+linux>gcc -c main2.c
+linux>gcc -static -o prog2c main2.o ./libvector.a
+```
+
+或者等价地使用：
+
+```bash
+linux>gcc -c main2.c
+linux>gcc -static -o prog2c main2.o -L. -lvector
+```
+
+图 7-8 概括了链接器的行为。-static 参数告诉编译器驱动程序，链接器应该构建一个完全链接的可执行目标文件，它可以加载到内存并运行，在加载时无须更进一步的链接。-lvector 参数是 libvector.a 的缩写，-L. 参数告诉链接器在当前目录下查找 libvector.a。
+
+当链接器运行时，它判定 main2.o 引用了 addvec.o 定义的 addvec 符号，所以复制 addvec.o 到可执行文件。因为程序不引用任何由 multvec.o 定义的符号，所以链接器就不会复制这个模块到可执行文件。链接器还会复制 libc.a 中的 printf.o 模块，以及许多 C 运行时系统中的其他模块。
+
+## 7.6.3 链接器如何使用静态库来解析引用
+
+虽然静态库很有用，但是它们同时也是一个程序员迷惑的源头，原因在于 Linux 链接器使用它们解析外部引用的方式。在符号解析阶段，链接器从左到右按照它们在编译器驱动程序命令行上出现的顺序来扫描可重定位目标文件和存档文件。（驱动程序自动将命令行中所有的 .c 文件翻译为 .o 文件。）在这次扫描中，链接器维护一个可重定位目标文件的集合 E（这个集合中的文件会被合并起来形成可执行文件），一个未解析的符号（即引用了但是尚未定义的符号）集合 U，以及一个在前面输入文件中已定义的符号集合 D。初始时，E、U 和 D 均为空。
+
+* 对于命令行上的每个输入文件 f，链接器会判断 f 是一个目标文件还是一个存档文件。如果 f 是一个目标文件，那么链接器把 f 添加到 E，修改 U 和 D 来反映 f 中的符号定义和引用，并继续下一个输入文件。
+* 如果 f 是一个存档文件，那么链接器就尝试匹配 U 中未解析的符号和由存档文件成员定义的符号。如果某个存档文件成员 m，定义了一个符号来解析 U 中的一个引用，那么就将 m 加到 E 中，并且链接器修改 U 和 D 来反映 m 中的符号定义和引用。对存档文件中所有的成员目标文件都依次进行这个过程，直到 U 和 D 都不再发生变化。此时，任何不包含在 E 中的成员目标文件都简单地被丢弃，而链接器将继续处理下一个输入文件。
+* 如果当链接器完成对命令行上输入文件的扫描后，U 是非空的，那么链接器就会输出一个错误并终止。否则，它会合并和重定位 E 中的目标文件，构建输岀的可执行文件。
+
+不幸的是，这种算法会导致一些令人困扰的链接时错误，因为命令行上的库和目标文件的顺序非常重要。在命令行中，如果定义一个符号的库出现在引用这个符号的目标文件之前，那么引用就不能被解析，链接会失败。比如，考虑下面的命令行发生了什么？
+
+```bash
+linux> gcc static ./libvector.a main2.c
+/tmp/cc9XH6Rp.o: In function 'main':
+/tmp/cc9XH6Rp.o（.text+0x18）: undefined reference to 'addvec'
+```
+
+在处理 libvector.a 时，U 是空的，所以没有 libvector.a 中的成员目标文件会添加到 E 中。因此，对 addvec 的引用是绝不会被解析的，所以链接器会产生一条错误信息并终止。
+
+关于库的一般准则是将它们放在命令行的结尾。如果各个库的成员是相互独立的（也就是说没有成员引用另一个成员定义的符号），那么这些库就可以以任何顺序放置在命令行的结尾处。另一方面，如果库不是相互独立的，那么必须对它们排序，使得对于每个被存档文件的成员外部引用的符号 S，在命令行中至少有一个 S 的定义是在对 S 的引用之后的。比如，假设 foo.c 调用 libx.a 和 libz.a 中的函数，而这两个库又调用 liby.a 中的函数。那么，在命令行中 libx.a 和 libz.a 必须处在 liby.a 之前：
+
+**`linux>gcc foo.c libx.a libz.a liby.a`**
+
+如果需要满足依赖需求，可以在命令行上重复库。比如，假设 foo.c 调用 libx.a 中的函数，该库又调用 liby.a 中的函数，而 liby.a 又调用 libx.a 中的函数。那么 libx.a 必须在命令行上重复出现：
+
+**`linux> gcc foo.c libx.a liby.a libx.a`**
+
+另一种方法是，我们可以将 libx.a 和 liby.a 合并成一个单独的存档文件。
+
+{% tabs %}
+{% tab title="练习题 7.3" %}
+
+{% endtab %}
+
+{% tab title="答案" %}
+
+{% endtab %}
+{% endtabs %}
 
