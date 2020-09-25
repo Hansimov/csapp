@@ -294,5 +294,45 @@ int p2()
 
 为了使我们对库的讨论更加形象具体，考虑图 7-6 中的两个向量例程。每个例程，定义在它自己的目标模块中，对两个输入向量进行一个向量操作，并把结果存放在一个输出向量中。每个例程有一个副作用，会记录它自己被调用的次数，每次被调用会把一个全局变量加 1。（当我们在 7.12 节中解释位置无关代码的思想时会起作用。）
 
+{% tabs %}
+{% tab title="code/link/addvec.c" %}
+```c
+int addcnt = 0;
+
+void addvec(int *x, int *y,
+            int *z, int n)
+{
+    int i;
+    
+    addcnt++;
+    
+    for ( i = 0; i < n; i++)
+        z[i] = x[i] + y[i];
+}
+```
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="code/link/multvec.c" %}
+```bash
+int multcnt = 0;
+
+void multvec(int *x，int *y,
+             int *z，int n)
+{
+    int i;
+
+    multcnt++;
+
+    for (i = 0; i < n; i++)
+        z[i] = x[i] * y[i];
+}
+```
+{% endtab %}
+{% endtabs %}
+
+> 图 7-6 libvector 库中的成员目标文件
+
 
 
