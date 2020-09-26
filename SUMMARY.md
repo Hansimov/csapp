@@ -1,6 +1,6 @@
 # Table of contents
 
-* [深入理解计算机系统（CSAPP）](README.md)
+* [封面](README.md)
 
 ## 出版信息 <a id="info"></a>
 
