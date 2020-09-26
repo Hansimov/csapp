@@ -381,7 +381,9 @@ linux>gcc -c main2.c
 linux>gcc -static -o prog2c main2.o -L. -lvector
 ```
 
-图 7-8 概括了链接器的行为。-static 参数告诉编译器驱动程序，链接器应该构建一个完全链接的可执行目标文件，它可以加载到内存并运行，在加载时无须更进一步的链接。-lvector 参数是 libvector.a 的缩写，-L. 参数告诉链接器在当前目录下查找 libvector.a。
+图 7-8 概括了链接器的行为。**-static** 参数告诉编译器驱动程序，链接器应该构建一个完全链接的可执行目标文件，它可以加载到内存并运行，在加载时无须更进一步的链接。**-lvector** 参数是 libvector.a 的缩写，**-L.** 参数告诉链接器在当前目录下查找 libvector.a。
+
+![&#x56FE; 7-8 &#x4E0E;&#x9759;&#x6001;&#x5E93;&#x94FE;&#x63A5;](../../.gitbook/assets/0708-yu-jing-tai-ku-lian-jie-.png)
 
 当链接器运行时，它判定 main2.o 引用了 addvec.o 定义的 addvec 符号，所以复制 addvec.o 到可执行文件。因为程序不引用任何由 multvec.o 定义的符号，所以链接器就不会复制这个模块到可执行文件。链接器还会复制 libc.a 中的 printf.o 模块，以及许多 C 运行时系统中的其他模块。
 
