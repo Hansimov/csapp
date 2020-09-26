@@ -1,6 +1,7 @@
 # Table of contents
 
 * [封面](README.md)
+* [常用符号](chang-yong-fu-hao.md)
 
 ## 出版信息 <a id="info"></a>
 
@@ -58,7 +59,8 @@
   * [7.14 处理目标文件的工具](part2/07/7.14-chu-li-mu-biao-wen-jian-de-gong-ju.md)
   * [7.15 小结](part2/07/7.15-xiao-jie.md)
   * [家庭作业](part2/07/jia-ting-zuo-ye.md)
-* [第 8 章：异常控制流](part2/di-8-zhang-yi-chang-kong-zhi-liu.md)
+* [第 8 章：异常控制流](part2/di-8-zhang-yi-chang-kong-zhi-liu/README.md)
+  * [8.1 异常](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.1-yi-chang.md)
 * [第 9 章：虚拟内存](part2/di-9-zhang-xu-ni-nei-cun.md)
 
 ## 第三部分：程序间的交互和通信
