@@ -53,6 +53,8 @@
   * [7.9 加载可执行目标文件](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.9-jia-zai-ke-zhi-hang-mu-biao-wen-jian.md)
   * [7.10 动态链接共享库](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.10-dong-tai-lian-jie-gong-xiang-ku.md)
   * [7.11 从应用程序中加载和链接共享库](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.11-cong-ying-yong-cheng-xu-zhong-jia-zai-he-lian-jie-gong-xiang-ku.md)
+  * [7.12 位置无关代码](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.12-wei-zhi-wu-guan-dai-ma.md)
+  * [7.13 库打桩机制](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-7-zhang-lian-jie/7.13-ku-da-zhuang-ji-zhi.md)
 * [第 8 章：异常控制流](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-8-zhang-yi-chang-kong-zhi-liu.md)
 * [第 9 章：虚拟内存](di-er-bu-fen-zai-xi-tong-shang-yun-hang-cheng-xu/di-9-zhang-xu-ni-nei-cun.md)
 
