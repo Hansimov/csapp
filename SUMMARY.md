@@ -61,6 +61,9 @@
   * [家庭作业](part2/07/jia-ting-zuo-ye.md)
 * [第 8 章：异常控制流](part2/di-8-zhang-yi-chang-kong-zhi-liu/README.md)
   * [8.1 异常](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.1-yi-chang.md)
+  * [8.2 进程](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.2-jin-cheng.md)
+  * [8.3 系统调用错误处理](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.3-xi-tong-tiao-yong-cuo-wu-chu-li.md)
+  * [8.4 进程控制](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.4-jin-cheng-kong-zhi.md)
 * [第 9 章：虚拟内存](part2/di-9-zhang-xu-ni-nei-cun.md)
 
 ## 第三部分：程序间的交互和通信
