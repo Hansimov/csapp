@@ -64,6 +64,7 @@
   * [8.2 进程](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.2-jin-cheng.md)
   * [8.3 系统调用错误处理](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.3-xi-tong-tiao-yong-cuo-wu-chu-li.md)
   * [8.4 进程控制](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.4-jin-cheng-kong-zhi.md)
+  * [8.5 信号](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.5-xin-hao.md)
 * [第 9 章：虚拟内存](part2/di-9-zhang-xu-ni-nei-cun.md)
 
 ## 第三部分：程序间的交互和通信
