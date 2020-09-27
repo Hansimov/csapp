@@ -68,7 +68,7 @@
   * [8.6 非本地跳转](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.6-fei-ben-di-tiao-zhuan.md)
   * [8.7 操作进程的工具](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.7-cao-zuo-jin-cheng-de-gong-ju.md)
   * [8.8 小结](part2/di-8-zhang-yi-chang-kong-zhi-liu/8.8-xiao-jie.md)
-* [家庭作业](part2/jia-ting-zuo-ye.md)
+  * [家庭作业](part2/di-8-zhang-yi-chang-kong-zhi-liu/jia-ting-zuo-ye.md)
 * [第 9 章：虚拟内存](part2/di-9-zhang-xu-ni-nei-cun.md)
 
 ## 第三部分：程序间的交互和通信
