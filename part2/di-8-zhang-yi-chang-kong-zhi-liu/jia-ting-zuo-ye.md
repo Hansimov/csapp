@@ -92,8 +92,8 @@ int main()
 
 void doit()
 {
-    Fork{};
-    Fork{};
+    Fork();
+    Fork();
     printf("hello\n");
     return;
 }
@@ -109,7 +109,7 @@ int main()
 {% endtab %}
 {% endtabs %}
 
-练习题 8.13
+## 练习题 8.13
 
 {% tabs %}
 {% tab title="答案" %}
@@ -117,7 +117,7 @@ int main()
 {% endtab %}
 
 {% tab title="练习题 8.13" %}
-这个程序会输出多少个下面程序的一种可能的输出是什么？
+下面程序的一种可能的输出是什么？
 
 {% code title="code/ecf/forkprob3.c" %}
 ```c
@@ -138,7 +138,7 @@ int main() 
 {% endtab %}
 {% endtabs %}
 
-练习题 8.14
+## 练习题 8.14
 
 {% tabs %}
 {% tab title="答案" %}
@@ -154,8 +154,8 @@ int main() 
 
 void doit()
 {
-    if (Fork{} == 0) {
-        Fork{};
+    if (Fork() == 0) {
+        Fork();
         printf("hello\n");
         exit(0);
     }
@@ -173,11 +173,84 @@ int main()
 {% endtab %}
 {% endtabs %}
 
-练习题 8.15
+## 练习题 8.15
 
-练习题 8.16
+{% tabs %}
+{% tab title="答案" %}
 
-练习题 8.17
+{% endtab %}
+
+{% tab title="练习题 8.15" %}
+这个程序会输出多少个 “hello” 输出行？
+
+{% code title="code/ecf/forkprob6.c" %}
+```c
+#include "csapp.h"
+
+void doit()
+{
+    if (Fork() == 0) {
+        Fork();
+        printf("hello\n");
+        return;
+    }
+    return;
+}
+
+int main()
+{
+    doit();
+    printf("hello\n");
+    exit(0);
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+## 练习题 8.16
+
+{% tabs %}
+{% tab title="答案" %}
+
+{% endtab %}
+
+{% tab title="练习题 8.16" %}
+下面这个程序的输出是什么？
+
+{% code title="code/ecf/forkprob7.c" %}
+```c
+#include "csapp.h"
+int counter = 1;
+
+int main()
+{
+    if (fork() == 0) {
+        counter--;
+        exit(0);
+    }
+    else {
+        Wait(NULL);
+        printf("counter = %d\n", ++counter);
+    }
+    exit(0);
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+## 练习题 8.17
+
+{% tabs %}
+{% tab title="答案" %}
+
+{% endtab %}
+
+{% tab title="练习题 8.17" %}
+列举练习题 8.4 中程序所有可能的输出。
+{% endtab %}
+{% endtabs %}
 
 练习题 8.18
 
