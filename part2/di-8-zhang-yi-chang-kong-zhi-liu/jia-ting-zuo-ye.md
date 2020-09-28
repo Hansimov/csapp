@@ -254,7 +254,77 @@ int main()
 
 练习题 8.18
 
+{% tabs %}
+{% tab title="答案" %}
+
+{% endtab %}
+
+{% tab title="练习题 8.18" %}
+考虑下面的程序：
+
+{% code title="code/ecf/forkprob2.c" %}
+```c
+#include "csapp.h"
+
+void end(void)
+{
+    printf("2"); fflush(stdout);
+}
+
+int main()
+{
+    if (Fork() == 0)
+        atexit(end);
+    if (Fork() == 0) {
+        printf("0"); fflush(stdout);
+    }
+    else {
+        printf("1"); fflush(stdout);
+    }
+    exit(0);
+}
+```
+{% endcode %}
+
+判断下面哪个输出是可能的。注意：atexit 函数以一个指向函数的指针为输入，并将它添加到函数列表中（初始为空），当 exit 函数被调用时，会调用该列表中的函数。
+
+A. 112002
+
+B. 211020
+
+C. 102120
+
+D. 122001
+
+E. 100212
+{% endtab %}
+{% endtabs %}
+
 练习题 8.19
+
+{% tabs %}
+{% tab title="答案" %}
+
+{% endtab %}
+
+{% tab title="练习题 8.19" %}
+下面的函数会打印多少行输出？用一个 n 的函数给出答案。假设$$\small n \geqslant 1$$。
+
+{% code title="code/ecf/forkprob8.c" %}
+```c
+void foo(int n)
+{
+    int i;
+
+    for (i = 0; i < n; i++)
+        Fork();
+    printf("hello\n");
+    exit(0);
+}
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
 
 练习题 8.20
 
