@@ -71,6 +71,8 @@
   * [家庭作业](part2/di-8-zhang-yi-chang-kong-zhi-liu/jia-ting-zuo-ye.md)
 * [第 9 章：虚拟内存](part2/di-9-zhang-xu-ni-nei-cun/README.md)
   * [9.1 物理和虚拟寻址](part2/di-9-zhang-xu-ni-nei-cun/9.1-wu-li-he-xu-ni-xun-zhi.md)
+  * [9.2 地址空间](part2/di-9-zhang-xu-ni-nei-cun/9.2-di-zhi-kong-jian.md)
+  * [9.3 虚拟内存作为缓存的工具](part2/di-9-zhang-xu-ni-nei-cun/9.3-xu-ni-nei-cun-zuo-wei-huan-cun-de-gong-ju.md)
 
 ## 第三部分：程序间的交互和通信
 
