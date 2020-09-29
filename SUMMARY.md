@@ -73,6 +73,9 @@
   * [9.1 物理和虚拟寻址](part2/di-9-zhang-xu-ni-nei-cun/9.1-wu-li-he-xu-ni-xun-zhi.md)
   * [9.2 地址空间](part2/di-9-zhang-xu-ni-nei-cun/9.2-di-zhi-kong-jian.md)
   * [9.3 虚拟内存作为缓存的工具](part2/di-9-zhang-xu-ni-nei-cun/9.3-xu-ni-nei-cun-zuo-wei-huan-cun-de-gong-ju.md)
+  * [9.4 虚拟内存作为内存管理的工具](part2/di-9-zhang-xu-ni-nei-cun/9.4-xu-ni-nei-cun-zuo-wei-nei-cun-guan-li-de-gong-ju.md)
+  * [9.5 虚拟内存作为内存保护的工具](part2/di-9-zhang-xu-ni-nei-cun/9.5-xu-ni-nei-cun-zuo-wei-nei-cun-bao-hu-de-gong-ju.md)
+  * [9.6 地址翻译](part2/di-9-zhang-xu-ni-nei-cun/9.6-di-zhi-fan-yi.md)
 
 ## 第三部分：程序间的交互和通信
 
