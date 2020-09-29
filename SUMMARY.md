@@ -77,6 +77,7 @@
   * [9.5 虚拟内存作为内存保护的工具](part2/di-9-zhang-xu-ni-nei-cun/9.5-xu-ni-nei-cun-zuo-wei-nei-cun-bao-hu-de-gong-ju.md)
   * [9.6 地址翻译](part2/di-9-zhang-xu-ni-nei-cun/9.6-di-zhi-fan-yi.md)
   * [9.7 案例研究：Intel Core i7 / Linux 内存系统](part2/di-9-zhang-xu-ni-nei-cun/9.7-an-li-yan-jiu-intel-core-i7-linux-nei-cun-xi-tong.md)
+  * [9.8 内存映射](part2/di-9-zhang-xu-ni-nei-cun/9.8-nei-cun-ying-she.md)
 
 ## 第三部分：程序间的交互和通信
 
