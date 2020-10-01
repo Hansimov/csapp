@@ -101,6 +101,8 @@
   * [家庭作业](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-10-zhang-xi-tong-ji-io/jia-ting-zuo-ye.md)
 * [第 11 章：网络编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-11-zhang-wang-luo-bian-cheng/README.md)
   * [11.1 客户端—服务器编程模型](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-11-zhang-wang-luo-bian-cheng/11.1-ke-hu-duan-fu-wu-qi-bian-cheng-mo-xing.md)
+  * [11.2 网络](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-11-zhang-wang-luo-bian-cheng/11.2-wang-luo.md)
+  * [11.3 全球 IP 因特网](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-11-zhang-wang-luo-bian-cheng/11.3-quan-qiu-ip-yin-te-wang.md)
 * [第 12 章：并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng.md)
 
 ---
