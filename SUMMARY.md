@@ -1,7 +1,6 @@
 # Table of contents
 
 * [封面](README.md)
-* [常用符号](chang-yong-fu-hao.md)
 
 ## 出版信息 <a id="info"></a>
 
@@ -93,5 +92,5 @@
 
 ## 实验
 
-* [Untitled](shi-yan/untitled.md)
+* [实验简介](shi-yan/untitled.md)
 
