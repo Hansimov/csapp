@@ -95,6 +95,7 @@
   * [10.7 读取目录内容](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-10-zhang-xi-tong-ji-io/10.7-du-qu-mu-lu-nei-rong.md)
   * [10.8 共享文件](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-10-zhang-xi-tong-ji-io/10.8-gong-xiang-wen-jian.md)
   * [10.9 I/O 重定向](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-10-zhang-xi-tong-ji-io/10.9-io-zhong-ding-xiang.md)
+  * [10.10 标准 I/O](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-10-zhang-xi-tong-ji-io/10.10-biao-zhun-io.md)
 * [第 11 章：网络编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-11-zhang-wang-luo-bian-cheng.md)
 * [第 12 章：并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng.md)
 
