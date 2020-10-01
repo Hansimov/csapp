@@ -79,6 +79,7 @@
   * [9.8 内存映射](part2/di-9-zhang-xu-ni-nei-cun/9.8-nei-cun-ying-she.md)
   * [9.9 动态内存分配](part2/di-9-zhang-xu-ni-nei-cun/9.9-dong-tai-nei-cun-fen-pei.md)
   * [9.10 垃圾收集](part2/di-9-zhang-xu-ni-nei-cun/9.10-la-ji-shou-ji.md)
+  * [9.11 C 程序中常见的与内存有关的错误](part2/di-9-zhang-xu-ni-nei-cun/9.11-c-cheng-xu-zhong-chang-jian-de-yu-nei-cun-you-guan-de-cuo-wu.md)
 
 ## 第三部分：程序间的交互和通信
 
