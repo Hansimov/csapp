@@ -110,6 +110,7 @@
   * [家庭作业](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-11-zhang-wang-luo-bian-cheng/jia-ting-zuo-ye.md)
 * [第 12 章：并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/README.md)
   * [12.1 基于进程的并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.1-ji-yu-jin-cheng-de-bing-fa-bian-cheng.md)
+  * [12.2 基于 I/O 多路复用的并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.2-ji-yu-io-duo-lu-fu-yong-de-bing-fa-bian-cheng.md)
 
 ---
 
