@@ -112,6 +112,8 @@
   * [12.1 基于进程的并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.1-ji-yu-jin-cheng-de-bing-fa-bian-cheng.md)
   * [12.2 基于 I/O 多路复用的并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.2-ji-yu-io-duo-lu-fu-yong-de-bing-fa-bian-cheng.md)
   * [12.3 基于线程的并发编程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.3-ji-yu-xian-cheng-de-bing-fa-bian-cheng.md)
+  * [12.4 多线程程序中的共享变量](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.4-duo-xian-cheng-cheng-xu-zhong-de-gong-xiang-bian-liang.md)
+  * [12.5 用信号量同步线程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.5-yong-xin-hao-liang-tong-bu-xian-cheng.md)
 
 ---
 
