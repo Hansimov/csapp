@@ -115,6 +115,7 @@
   * [12.4 多线程程序中的共享变量](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.4-duo-xian-cheng-cheng-xu-zhong-de-gong-xiang-bian-liang.md)
   * [12.5 用信号量同步线程](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.5-yong-xin-hao-liang-tong-bu-xian-cheng.md)
   * [12.6 使用线程提高并行性](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.6-shi-yong-xian-cheng-ti-gao-bing-hang-xing.md)
+  * [12.7 其他并发问题](di-san-bu-fen-cheng-xu-jian-de-jiao-hu-he-tong-xin/di-12-zhang-bing-fa-bian-cheng/12.7-qi-ta-bing-fa-wen-ti.md)
 
 ---
 
