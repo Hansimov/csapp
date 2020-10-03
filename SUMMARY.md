@@ -129,4 +129,5 @@
 * [实验总览](shi-yan/untitled.md)
 * [实验 1：Data Lab](shi-yan/shi-yan-1data-lab.md)
 * [实验 2：Bomb Lab](shi-yan/shi-yan-2bomb-lab.md)
+* [实验 3：Attack Lab](shi-yan/shi-yan-3attack-lab.md)
 
