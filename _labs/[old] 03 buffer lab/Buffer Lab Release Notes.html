@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0048)http://csapp.cs.cmu.edu/3e/buflab32-release.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Buffer Lab Release Notes</title>
+  <script charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/btype.js"></script><script type="text/javascript" charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/chrome.js"></script></head>
+
+  <body bgcolor="white" class="vsc-initialized">
+    <h1>Buffer Lab Release Notes</h1>
+
+<table width="700"><tbody><tr><td>
+
+<h2>9/10/2014</h2>
+<ul>
+<li> Fixed a typo in the writeup.
+<i>Thanks to Prof. Len Hamey, Macquarie University (Australia)</i>
+</li></ul>
+
+<h2>10/15/2013</h2>
+<ul>
+<li> Using gcc 4.8.1 at -O1, inlining is enabled and the frame pointer
+is disabled, both of which are bad for the buffer bomb. We split the
+buffer code to a separate file to disable inlining, and added the
+-fno-omit-frame-pointer compiler flag to enable the frame pointer. 
+</li><li> Made some tweaks to improve validation in bufbomb.
+</li><li> Tightened up the parsing in the solve scripts. 
+</li></ul>
+
+
+<h2>4/23/2012</h2>
+<ul>
+<li> Some recent gcc builds automatically enable the -fstack-protector
+option. We now explicitly disable this by compiling the buffer bomb
+with -fno-stack-protector.
+
+</li><li> In order to avoid infinite loops during autograding, the previous
+update from February 2012 introduced a timeout feature that was always
+enabled. However, this was a problem for students who were debugging
+their bombs in gdb. We now enable timeouts only during autograding.
+
+<p>
+<i>Thanks to Prof. James Riely, DePaul University for pointing these
+out to us.</i>
+</p>
+</li></ul>
+
+<h2>2/21/2012</h2>
+<ul>
+<li>In some newer versions of Linux, the location of shared libraries
+would conflict with user-definedhardwired stack. Added a fix to avoid
+the conflict. <i>Thanks to Prof. Godmar Back, Virginia Tech, for
+teaching us how to do this.</i>
+
+</li><li>To protect against infinite loops in student exploit strings
+during autograding, each buffer bomb now always times out after 5
+seconds. <i>Thanks to Prof. Godmar Back, Virginia Tech.</i>
+
+</li><li>Increased the amount of randomization during the nitro phase. 
+<i>Thanks to Prof. Godmar Back, Virginia Tech.</i>
+
+</li><li>Cleaned up some indenting issues in the source code. 
+</li></ul>
+
+<h2>9/7/2011</h2>
+<ul>
+
+<li> Fixed a bug in <kbd>buflab-requestd.pl</kbd> where the request server would
+sometimes return a non-notifying buffer bomb. <i>Thanks to
+Prof. Godmar Back, Virginia Tech.</i>
+
+</li><li> Added some clearer error messages to <kbd>driverlib.c</kbd> for
+those cases where a notifying bomb can't resolve the server address or
+can't connect to the server.
+</li></ul>
+
+
+<h2>8/22/2011</h2>
+<ul>
+
+<li>Modified the "start" rule in Makefile to touch the log.txt file
+before starting up the lab daemons, so that an empty scoreboard is
+created initially. <i>Thanks to Prof. Godmar Back, Virginia Tech.</i>
+
+</li></ul>
+
+<h2>1/2/2011</h2>
+<b>This is a major update of the Buffer Lab:</b>
+<ul>
+
+<li> This version of the lab has been specially modified to defeat the
+stack randomization techniques used by newer versions of Linux. On
+entry, the <kbd>bufbomb</kbd> creates a stable stack location across
+all platforms by using <kbd>mmap()</kbd> and an assembly language
+insert to move the stack pointed at by <kbd>%esp</kbd> to an unused
+part of the heap.
+
+</li><li> Introduced a new stand-alone, user-level HTTP-based autograding
+service (based on the new Bomb Lab autograder) that hands out buffer
+bombs on demand, tracks successful solutions in real-time on a
+scoreboard, and serves the scoreboard to browsers. The service also
+maintains a handin directory that contains the most recent submissions
+from each student, along with a report showing the output from the
+autograder.
+
+</li><li> Introduced a powerful new tool, called <kbd>hex2raw</kbd>, that
+allows students to encode their exploit strings as simple text files,
+where each byte in the exploit string is represented as a pair of hex
+digits.  Further, exploit strings can be annotated using C block
+comments.
+
+</li><li> Introduced a new master solver program, called
+<kbd>solve.pl</kbd> that uses gdb to automatically generate an
+annotated exploit string for any userid and level. 
+
+</li><li> The writeup contains a lot of additional information to help
+students solve their bombs. 
+
+</li></ul>
+
+<h2>4/28/2004</h2>
+<ul>
+<li> Closed a loophole that allowed some students to use the "candle"
+exploit string to receive credit for the "sparkler" and "firecracker"
+stages. The fix is a simple check to make sure validation only happens
+after proper function entry. 
+<i>Thanks to Prof. Bill Bynum, William and Mary.</i> 
+</li></ul>
+
+<h2>1/20/2004</h2>
+<ul>
+<li>Some recent versions of Linux include a shield to avoid stack exploit problems.  With this shield in place, the lab becomes much too difficult.
+On some systems, the shield can be disabled temporarily (until the machine is rebooted) by writing into the proc file system:
+<br>
+On older Linux 2.4 systems:
+<br>
+<kbd>echo 0 &gt; /proc/sys/kernel/exec-shield-randomize</kbd>
+<br>
+On newer Linux 2.6 systems:
+<br>
+<kbd>echo 0 &gt; /proc/sys/kernel/randomize_va_space</kbd>
+<p>
+You can make this happen automatically at boot time by including one
+of the above commands in <kbd>/etc/rc.d/rc.local</kbd>
+<br>
+<i>Thanks to Umberto Villano.</i> 
+</p></li></ul>
+
+<h2>3/31/2003</h2>
+<ul>
+<li> The old autograder would fail on programs compiled with newer
+versions of GCC because these versions use different amounts
+of stack padding than older versions. The new autograder now
+detects the amount of padding automatically, and thus works with
+any version of GCC.  <i>Thanks to Prof. Chris Carothers, RPI.</i> 
+<p>
+</p></li><li> The autograder now includes the buffer bomb generation
+number on the status Web page. 
+</li></ul>
+
+<h2>10/16/2002</h2>
+<ul>
+<li> Minor modifications to improve the clarity of the writeup.
+<p>
+</p></li><li> Minor modifications to the autograders:
+<ul>
+<li> <kbd>gengrades.pl</kbd> now gives 0 points for an invalid submission rather
+than 1/4 credit. 
+</li><li> <kbd>genhtml.pl</kbd> no longer prints the border around icons.
+</li><li> <kbd>genhtml.pl</kbd> now uses smaller more attractive icons.
+</li></ul>
+</li></ul>
+
+<h2>6/3/2002</h2>
+<ul>
+<li> Initial release.
+</li></ul>
+
+</td></tr></tbody></table>
+
+
+<audio controls="controls" style="display: none;"></audio></body><style id="stylish-16" class="stylish" type="text/css">.goog-te-banner-frame.skiptranslate {
+    opacity:0;
+    /* height:50px; */
+}
+.goog-te-banner-frame.skiptranslate:hover {
+    opacity:1.0;
+}
+
+#goog-gt-tt > div.top, #goog-gt-tt > div.bottom, #goog-gt-tt > div:nth-child(1) {
+	display:none;
+}
+
+#goog-gt-tt {
+    padding:8px 12px !important;
+/*     text-align:center !important; */
+	left:300px !important;
+}
+
+#goog-gt-tt > div.middle {
+    padding:0px !important;
+}
+</style><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>

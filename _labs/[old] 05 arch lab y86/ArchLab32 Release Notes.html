@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0049)http://csapp.cs.cmu.edu/3e/archlab32-release.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ArchLab32 Release Notes</title>
+  <script charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/btype.js"></script><script type="text/javascript" charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/chrome.js"></script></head>
+
+  <body bgcolor="white" class="vsc-initialized">
+    <h1>ArchLab2 Release Notes</h1>
+
+<table width="700"><tbody><tr><td>
+
+<h2>10/19/2016</h2>
+<ul>
+<li> Fixed a bug in pipe/correctness.pl that allowed programs that are too long to get full credit. 
+<i>Thanks to Jenna MacCarly, Carnegie Mellon</i>
+</li></ul>
+
+<h2>7/29/2013</h2>
+<ul>
+<li> Updated autograders to compute and summarize all autograded scores
+on the gradesheets.
+
+</li><li> Fixed some typos in the writeup and the slides.
+
+</li><li> In the writeup, updated references to problem numbers for <kbd>iaddl</kbd>
+and <kbd>leave</kbd> to include the corresponding problem numbers for the
+international version.
+</li></ul>
+
+<h2>5/1/2011</h2> 
+<b>This is a major update of the Arch Lab that reflects the changes in Chapter 4 of CS:APP2e.</b>
+
+<ul> 
+<li> Students can now use the conditional move instructions to avoid
+the performance problems of conditional jumps.
+
+</li><li> The benchmark test has a random selection of positive
+vs. negative numbers.  So, conditional moves are really the way to go.
+
+</li><li> The correctness check is more robust, looking for things like overshooting the array bounds.
+
+</li><li> Added a 1000-byte limit on the size of the object code for the ncopy function.
+
+</li><li> Added Perl scripts in <kbd>src/ptest</kbd> that provide comprehensive
+regression testing of the different Y86 simulators:
+<ul>
+<li>Tests each individual instruction type.
+</li><li>Tests all of the jump types under different conditions.
+</li><li>Tests different pipeline control combinations.
+</li><li>Tests many different hazard possibilities.
+</li></ul>
+
+</li><li> Incorporated the regresssion tests in <kbd>src/ptest</kbd> into the autograding
+of the student solutions for parts B and C.
+</li></ul>
+
+<h2>11/04/2004</h2>
+<ul>
+<li> Fixed problem that caused some newer Linux distributions to
+get tk.h from /usr/local/include instead of /usr/include.
+<i>Thanks to Prof. Dr. Gerd Doeben-Henisch, Fachhochschule Frankfurt.</i>
+</li></ul>
+
+<h2>12/22/2003</h2>
+<ul>
+<li> Fixed minor bug that caused some compilers to complain.
+Changed type of return value from <kbd>getopt()</kbd> from <kbd>char</kbd> 
+to <kbd>int</kbd>.
+<i>Thanks to Morgan Harvey, Portland State University.</i>
+</li></ul>
+
+<h2>8/5/2002</h2>
+<ul>
+<li> Initial release.
+</li></ul>
+
+
+</td></tr></tbody></table>
+
+
+<audio controls="controls" style="display: none;"></audio></body><style id="stylish-16" class="stylish" type="text/css">.goog-te-banner-frame.skiptranslate {
+    opacity:0;
+    /* height:50px; */
+}
+.goog-te-banner-frame.skiptranslate:hover {
+    opacity:1.0;
+}
+
+#goog-gt-tt > div.top, #goog-gt-tt > div.bottom, #goog-gt-tt > div:nth-child(1) {
+	display:none;
+}
+
+#goog-gt-tt {
+    padding:8px 12px !important;
+/*     text-align:center !important; */
+	left:300px !important;
+}
+
+#goog-gt-tt > div.middle {
+    padding:0px !important;
+}
+</style><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>
