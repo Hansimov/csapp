@@ -127,7 +127,8 @@
 ## 实验
 
 * [实验总览](shi-yan/untitled.md)
-* [实验 1：Data Lab](shi-yan/shi-yan-1data-lab.md)
+* [实验 1：Data Lab](shi-yan/shi-yan-1data-lab/README.md)
+  * [README（中文版）](shi-yan/shi-yan-1data-lab/readme-zhong-wen-ban.md)
 * [实验 2：Bomb Lab](shi-yan/shi-yan-2bomb-lab.md)
 * [实验 3：Attack Lab](shi-yan/shi-yan-3attack-lab.md)
 * [实验 4：Architechture Lab](shi-yan/shi-yan-4architechture-lab.md)
