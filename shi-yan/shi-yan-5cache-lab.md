@@ -11,7 +11,7 @@
 * 自学讲义
   * [http://csapp.cs.cmu.edu/3e/cachelab-handout.tar](http://csapp.cs.cmu.edu/3e/cachelab-handout.tar)
 
-## 实验说明
+## 实验简介
 
 CMU 用该实验替代 Performance Lab。学生编写一个通用缓存模拟器，然后优化一个小矩阵转置内核，从而最小化模拟缓存上的未命中次数。这个实验室使用 Valgrind 工具来生成地址踪迹（address traces）。
 

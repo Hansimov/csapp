@@ -132,4 +132,8 @@
 * [实验 3：Attack Lab](shi-yan/shi-yan-3attack-lab.md)
 * [实验 4：Architechture Lab](shi-yan/shi-yan-4architechture-lab.md)
 * [实验 5：Cache Lab](shi-yan/shi-yan-5cache-lab.md)
+* [实验 6：Performance Lab](shi-yan/shi-yan-6performance-lab.md)
+* [实验 7：Shell Lab](shi-yan/shi-yan-7shell-lab.md)
+* [实验 8：Malloc Lab](shi-yan/shi-yan-8malloc-lab.md)
+* [实验 9：Proxy Lab](shi-yan/shi-yan-9proxy-lab.md)
 

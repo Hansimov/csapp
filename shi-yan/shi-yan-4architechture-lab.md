@@ -11,7 +11,7 @@
 * 自学讲义
   * [http://csapp.cs.cmu.edu/3e/archlab-handout.tar](http://csapp.cs.cmu.edu/3e/archlab-handout.tar)
 
-## 实验说明
+## 实验简介
 
 > 注：为 CSAPP 第 3 版更新到 Y86-64。
 

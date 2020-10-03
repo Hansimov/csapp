@@ -21,11 +21,25 @@ This page contains a complete set of turnkey labs for the CS:APP3e text. The lab
 
 Handout directories for each lab \(without solutions\) are available to students who are using the book for self-study and who want to work on the labs. Solutions are provided only to instructors.
 
+## 各实验链接
+
 {% page-ref page="shi-yan-1data-lab.md" %}
 
 {% page-ref page="shi-yan-2bomb-lab.md" %}
 
 {% page-ref page="shi-yan-3attack-lab.md" %}
+
+{% page-ref page="shi-yan-4architechture-lab.md" %}
+
+{% page-ref page="shi-yan-5cache-lab.md" %}
+
+{% page-ref page="shi-yan-6performance-lab.md" %}
+
+{% page-ref page="shi-yan-7shell-lab.md" %}
+
+{% page-ref page="shi-yan-8malloc-lab.md" %}
+
+{% page-ref page="shi-yan-9proxy-lab.md" %}
 
 
 
