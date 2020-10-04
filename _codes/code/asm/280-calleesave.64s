@@ -1,0 +1,36 @@
+	.file	"280-calleesave.c"
+	.text
+	.globl	P
+	.type	P, @function
+P:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rdi, %rbp
+	movq	%rsi, %rdi
+	call	Q
+	movq	%rax, %rbx
+	movq	%rbp, %rdi
+	call	Q
+	addq	%rbx, %rax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+	.size	P, .-P
+	.globl	P2
+	.type	P2, @function
+P2:
+	subq	$24, %rsp
+	movq	%rsi, (%rsp)
+	call	Q
+	movq	%rax, 8(%rsp)
+	movq	(%rsp), %rdi
+	call	Q
+	movq	8(%rsp), %rdx
+	addq	%rdx, %rax
+	addq	$24, %rsp
+	ret
+	.size	P2, .-P2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

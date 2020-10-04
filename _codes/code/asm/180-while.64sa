@@ -1,0 +1,39 @@
+	.file	"180-while.c"
+	.text
+	.globl	loop_while
+	.type	loop_while, @function
+/* $begin 180-while-s 5 */
+# long loop_while(long a, long b)
+# a in \rdireg{}, b in \rsireg{}
+loop_while:
+	movl	$1, %eax
+	jmp	.L2  ## line:asm:while:jmp
+.L3:
+	leaq	(%rdi,%rsi), %rdx
+	imulq	%rdx, %rax
+	addq	$1, %rdi
+.L2:
+	cmpq	%rsi, %rdi
+	jl	.L3
+	rep; ret
+/* $end 180-while-s 5 */
+	.size	loop_while, .-loop_while
+	.globl	loop_while2
+	.type	loop_while2, @function
+/* $begin 180-while2-s 19 */
+# long loop_while2(long a, long b)
+# a in \rdireg{}, b in \rsireg{}
+loop_while2:
+	movq	%rsi, %rax
+	jmp	.L5
+.L6:
+	imulq	%rdi, %rax
+	subq	%rdi, %rsi
+.L5:
+	testq	%rsi, %rsi
+	jg	.L6
+	rep; ret
+/* $end 180-while2-s 19 */
+	.size	loop_while2, .-loop_while2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

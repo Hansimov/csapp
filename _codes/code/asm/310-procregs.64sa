@@ -1,0 +1,61 @@
+	.file	"310-procregs.c"
+	.text
+	.globl	proc
+	.type	proc, @function
+/* $begin 310-proc-s 5 */
+# void proc(a1, a1p, a2, a2p, a3, a3p, a4, a4p)
+# Arguments passed as follows:
+#   a1  in %rdi          (64 bits)
+#   a1p in %rsi       	 (64 bits)
+#   a2  in %edx       	 (32 bits)
+#   a2p in %rcx       	 (64 bits)
+#   a3  in %r8w       	 (16 bits)
+#   a3p in %r9           (64 bits)
+#   a4  at %rsp+8        ( 8 bits)
+#   a4p at %rsp+16       (64 bits)
+proc:
+	movq	16(%rsp), %rax	# Fetch a4p   (64 bits)
+	addq	%rdi, (%rsi)	# *a1p += a1  (64 bits)
+	addl	%edx, (%rcx)	# *a2p += a2  (32 bits)
+	addw	%r8w, (%r9)	# *a3p += a3  (16 bits)
+	movl	8(%rsp), %edx	# Fetch a4    ( 8 bits)  # line:asm:proc:movl
+	addb	%dl, (%rax)	# *a4p += a4  ( 8 bits)
+	ret	     		# Return
+/* $end 310-proc-s 5 */
+	.size	proc, .-proc
+	.globl	call_proc
+	.type	call_proc, @function
+/* $begin 310-call_proc-s 16 */
+# long call_proc()
+call_proc:
+	# Set up arguments to proc
+	subq	$32, %rsp        # Allocate 32-byte stack frame  # line:asm:callproc:allocate
+	movq	$1, 24(%rsp)	 # Store 1 in &x1
+	movl	$2, 20(%rsp)	 # Store 2 in &x2
+	movw	$3, 18(%rsp)	 # Store 3 in &x3
+	movb	$4, 17(%rsp)	 # Store 4 in &x4
+	leaq	17(%rsp), %rax	 # Create &x4  # line:asm:callproc:x4
+	movq	%rax, 8(%rsp)	 # Store &x4 as argument 8
+	movl	$4, (%rsp)	 # Store 4 as argument 7 # line:asm:call_proc:movlb
+	leaq	18(%rsp), %r9	 # Pass &x3 as argument 6  # line:asm:callproc:x3
+	movl	$3, %r8d  	 # Pass 3 as argument 5
+	leaq	20(%rsp), %rcx	 # Pass &x2 as argument 4  # line:asm:callproc:x2
+	movl	$2, %edx  	 # Pass 2 as argument 3  # line:asm:call_proc:movlw
+	leaq	24(%rsp), %rsi	 # Pass &x1 as argument 2  # line:asm:callproc:x1
+	movl	$1, %edi  	 # Pass 1 as argument 1 # line:asm:callproc:callready
+	# Call proc 
+	call	proc ## line:asm:callproc:call
+	# Retrieve changes to memory
+	movslq	20(%rsp), %rdx	 # Get x2 and convert to long # line:asm:callproc:retrieve1
+	addq	24(%rsp), %rdx	 # Compute x1+x2
+	movswl	18(%rsp), %eax	 # Get x3 and convert to int
+	movsbl	17(%rsp), %ecx	 # Get x4 and convert to int # line:asm:callproc:retrieve4
+	subl	%ecx, %eax	 # Compute x3-x4
+	cltq	      		 # Convert to long
+	imulq	%rdx, %rax	 # Compute (x1+x2) * (x3-x4)
+	addq	$32, %rsp	 # Deallocate stack frame
+	ret	     		 # Return
+/* $end 310-call_proc-s 16 */
+	.size	call_proc, .-call_proc
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

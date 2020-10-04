@@ -1,0 +1,55 @@
+	.file	"w110-procreg-ia32.c"
+	.text
+	.globl	proc
+	.type	proc, @function
+proc:
+	pushl	%esi
+	pushl	%ebx
+	movl	16(%esp), %ebx
+	movl	24(%esp), %ecx
+	movl	32(%esp), %edx
+	movl	40(%esp), %eax
+	movl	12(%esp), %esi
+	addl	%esi, (%ebx)
+	movl	20(%esp), %ebx
+	addl	%ebx, (%ecx)
+	movl	28(%esp), %ecx
+	addw	%cx, (%edx)
+	movl	36(%esp), %edx
+	addb	%dl, (%eax)
+	popl	%ebx
+	popl	%esi
+	ret
+	.size	proc, .-proc
+	.globl	call_proc
+	.type	call_proc, @function
+call_proc:
+	subl	$48, %esp
+	movl	$1, 40(%esp)
+	movl	$2, 44(%esp)
+	movw	$3, 38(%esp)
+	movb	$4, 37(%esp)
+	leal	37(%esp), %eax
+	movl	%eax, 28(%esp)
+	movl	$4, 24(%esp)
+	leal	38(%esp), %eax
+	movl	%eax, 20(%esp)
+	movl	$3, 16(%esp)
+	leal	44(%esp), %eax
+	movl	%eax, 12(%esp)
+	movl	$2, 8(%esp)
+	leal	40(%esp), %eax
+	movl	%eax, 4(%esp)
+	movl	$1, (%esp)
+	call	proc
+	movl	40(%esp), %edx
+	addl	44(%esp), %edx
+	movswl	38(%esp), %eax
+	movsbl	37(%esp), %ecx
+	subl	%ecx, %eax
+	imull	%edx, %eax
+	addl	$48, %esp
+	ret
+	.size	call_proc, .-call_proc
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

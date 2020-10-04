@@ -1,0 +1,64 @@
+	.file	"100-muldiv.c"
+	.text
+	.globl	store_uprod
+	.type	store_uprod, @function
+/* $begin 100-umul-s 5 */
+# void store_uprod(uint128_t *dest, uint64_t x, uint64_t y)
+# dest in \rdireg, x in \rsireg, y in \rdxreg
+store_uprod:
+	movq	%rsi, %rax     # Copy x to multiplicand
+	mulq	%rdx           # Multiply by y
+	movq	%rax, (%rdi)   # Store lower 8 bytes at dest   # line:asm:umul:storelo
+	movq	%rdx, 8(%rdi)  # Store upper 8 bytes at dest+8 # line:asm:umul:storehi
+	ret
+/* $end 100-umul-s 5 */
+	.size	store_uprod, .-store_uprod
+	.globl	store_prod
+	.type	store_prod, @function
+store_prod:
+	movq	%rdx, %rax
+	cqto
+	movq	%rsi, %rcx
+	sarq	$63, %rcx
+	imulq	%rax, %rcx
+	imulq	%rsi, %rdx
+	addq	%rdx, %rcx
+	mulq	%rsi
+	addq	%rcx, %rdx
+	movq	%rax, (%rdi)  
+	movq	%rdx, 8(%rdi)
+	ret
+	.size	store_prod, .-store_prod
+	.globl	remdiv
+	.type	remdiv, @function
+/* $begin 100-remdiv-s 30 */
+# void remdiv(long x, long y, long *qp, long *rp)
+# x in \rdireg, y in \rsireg, qp in \rdxreg, rp in \rcxreg
+remdiv:
+	movq	%rdx, %r8     # Copy qp # line:asm:remdiv:movrp
+	movq	%rdi, %rax    # Move x to lower 8 bytes of dividend  # line:asm:remdiv:movx
+	cqto	      	      # Sign extend to upper 8 bytes of dividend #line:asm:remdiv:cqto
+	idivq	%rsi          # Divide by y
+	movq	%rax, (%r8)   # Store quotient at qp #line:asm:remdiv:storeq
+	movq	%rdx, (%rcx)  # Store remainder at rp #line:asm:remdiv:storer
+	ret
+/* $end 100-remdiv-s 30 */
+	.size	remdiv, .-remdiv
+	.globl	uremdiv
+	.type	uremdiv, @function
+/* $begin 100-uremdiv-s 41 */
+# void uremdiv(unsigned long x, unsigned long y,
+#	       unsigned long *qp, unsigned long *rp)
+# x in \rdireg, y in \rsireg, qp in \rdxreg, rp in \rcxreg
+uremdiv:
+	movq	%rdx, %r8     # Copy qp
+	movq	%rdi, %rax    # Move x to lower 8 bytes of dividend
+	movl	$0, %edx      # Set upper 8 bytes of dividend to 0
+	divq	%rsi          # Divide by y
+	movq	%rax, (%r8)   # Store quotient at qp
+	movq	%rdx, (%rcx)  # Store remainder at rp
+	ret
+/* $end 100-uremdiv-s 41 */
+	.size	uremdiv, .-uremdiv
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

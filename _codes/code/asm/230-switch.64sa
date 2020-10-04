@@ -1,0 +1,88 @@
+	.file	"230-switch.c"
+	.text
+	.globl	switch_eg
+	.type	switch_eg, @function
+/* $begin 230-switch-s 5 */
+# void switch_eg(long x, long n, long *dest)
+# x in \rdireg, n in \rsireg, dest in \rdxreg
+switch_eg:
+	subq	$100, %rsi          #   Compute index = n-100
+	cmpq	$6, %rsi	    #   Compare index:6
+	ja	.L8 		    #   If >, goto \texttt{loc_def}
+	jmp	*.L4(,%rsi,8)       #   Goto *jt[index] # line:asm:switch:s_jump
+/* $end 230-switch-s 5 */
+/* $begin 230-switch-jt 10 */
+	.section	.rodata
+	.align 8         # Align address to multiple of 8 # line:asm:switch:align
+/* $end 230-switch-jt 10 */
+	.align 4
+/* $begin 230-switch-jt 13 */
+.L4:
+	.quad	.L3	 # Case 100: loc_A
+	.quad	.L8	 # Case 101: loc_def
+	.quad	.L5	 # Case 102: loc_B
+	.quad	.L6	 # Case 103: loc_C
+	.quad	.L7	 # Case 104: loc_D
+	.quad	.L8	 # Case 105: loc_def
+	.quad	.L7	 # Case 106: loc_D
+/* $end 230-switch-jt 13 */
+	.text
+/* $begin 230-switch-s 22 */
+.L3:	  		            # \texttt{loc_A:}
+	leaq	(%rdi,%rdi,2), %rax #   3*x
+	leaq	(%rdi,%rax,4), %rdi #   val = 13*x
+	jmp	.L2                 #   Goto \texttt{done}
+.L5:				    # \texttt{loc_B:}
+	addq	$10, %rdi           #   x = x + 10
+.L6:		     		    # \texttt{loc_C:}
+	addq	$11, %rdi	    #   val = x + 11
+	jmp	.L2  		    #   Goto \texttt{done}
+.L7:				    # \texttt{loc_D:}
+	imulq	%rdi, %rdi	    #   val = x * x
+	jmp	.L2   		    #   Goto \texttt{done}
+.L8:				    # \texttt{loc_def:}
+	movl	$0, %edi	    #   val = 0
+.L2:		    		    # \texttt{done:}
+	movq	%rdi, (%rdx)	    #   *dest = val
+	ret	      		    #   Return
+/* $end 230-switch-s 22 */
+	.size	switch_eg, .-switch_eg
+	.globl	switch_eg_impl
+	.type	switch_eg_impl, @function
+switch_eg_impl:
+	subq	$100, %rsi
+	cmpq	$6, %rsi
+	ja	.L10
+	jmp	*jt.1736(,%rsi,8)
+.L11:
+	leaq	(%rdi,%rdi,2), %rax
+	leaq	(%rdi,%rax,4), %rdi
+	jmp	.L12
+.L13:
+	addq	$10, %rdi
+.L14:
+	addq	$11, %rdi
+	jmp	.L12
+.L15:
+	imulq	%rdi, %rdi
+	jmp	.L12
+.L10:
+	movl	$0, %edi
+.L12:
+	movq	%rdi, (%rdx)
+	ret
+	.size	switch_eg_impl, .-switch_eg_impl
+	.section	.rodata
+	.align 32
+	.type	jt.1736, @object
+	.size	jt.1736, 56
+jt.1736:
+	.quad	.L11
+	.quad	.L10
+	.quad	.L13
+	.quad	.L14
+	.quad	.L15
+	.quad	.L10
+	.quad	.L15
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,99 @@
+	.file	"w110-procreg.c"
+	.text
+	.globl	proc
+	.type	proc, @function
+/* $begin w110-proc-ns 5 */
+# void proc(int a2, int *a2p, short a3, short *a3p, char a4, char *a4p)
+proc:
+	pushl	%ebx  		## line:asm:32ns:proc:stack
+	movl	12(%esp), %ecx
+	movl	20(%esp), %edx
+	movl	28(%esp), %eax
+	movl	8(%esp), %ebx
+	addl	%ebx, (%ecx)
+	movl	16(%esp), %ecx
+	addw	%cx, (%edx)
+	movl	24(%esp), %edx
+	addb	%dl, (%eax)
+	popl	%ebx
+	ret
+/* $end w110-proc-ns 5 */
+
+/* $begin w110-proc-ann-ns 5 */
+# void proc(int a2, int *a2p, short a3, short *a3p, char a4, char *a4p)
+# a2 at %esp+4, a2p at %esp+8, a3 at %esp+12, a3p at %esp+16
+# a4 at %esp+20, a4p at %esp+24
+proc:
+	pushl	%ebx  			# Save %ebx
+# Now: a2 at %esp+8, a2p at %esp+12, a3 at %esp+16, a3p at %esp+20
+#      a4 at %esp+24, a4p at %esp+28
+	movl	12(%esp), %ecx		# Get a2p
+	movl	20(%esp), %edx		# Get a3p
+	movl	28(%esp), %eax		# Get a4p
+	movl	8(%esp), %ebx		# Get a2
+	addl	%ebx, (%ecx)		# *a2p += a2
+	movl	16(%esp), %ecx		# Get a3
+	addw	%cx, (%edx)		# *a3p += a3
+	movl	24(%esp), %edx		# Get a4
+	addb	%dl, (%eax)		# *a4p += a4
+	popl	%ebx 			# Restore %ebx
+	ret
+/* $end w110-proc-ann-ns 5 */
+	.size	proc, .-proc
+	.globl	call_proc
+	.type	call_proc, @function
+	.size	call_proc, .-call_proc
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits
+
+
+/* $begin w110-call_proc-ns 21 */
+# int call_proc()
+call_proc:
+	subl	$40, %esp
+	movl	$2, 36(%esp)
+	movw	$3, 34(%esp)
+	movb	$4, 33(%esp)
+	leal	33(%esp), %eax
+	movl	%eax, 20(%esp)
+	movl	$4, 16(%esp)
+	leal	34(%esp), %eax
+	movl	%eax, 12(%esp)
+	movl	$3, 8(%esp)
+	leal	36(%esp), %eax
+	movl	%eax, 4(%esp)
+	movl	$2, (%esp)	## line:asm:32ns:call_proc:stack
+	call	proc
+	movswl	34(%esp), %eax
+	movsbl	33(%esp), %edx
+	subl	%edx, %eax
+	imull	36(%esp), %eax
+	addl	$40, %esp
+	ret
+/* $end w110-call_proc-ns 21 */
+
+/* $begin w110-call_proc-ann-ns 21 */
+call_proc:
+	subl	$40, %esp		# Allocate 40 bytes
+# Allocation: x2 at %esp+36, x3 at %esp+34, x4 at %esp+33
+#             Arguments at offsets 0, 4, 8, 12, 16, and 20 to %esp
+	movl	$2, 36(%esp)		# Set x2 = 2
+	movw	$3, 34(%esp)		# Set x3 = 3
+	movb	$4, 33(%esp)		# Set x4 = 4
+	leal	33(%esp), %eax		# Compute &x4
+	movl	%eax, 20(%esp)		# Store as 6th argument
+	movl	$4, 16(%esp)		# Store 4 as 5th argument
+	leal	34(%esp), %eax		# Compute &x3
+	movl	%eax, 12(%esp)		# Store as 4th argument
+	movl	$3, 8(%esp)		# Store 3 as 3rd argument
+	leal	36(%esp), %eax		# Compute &x2
+	movl	%eax, 4(%esp)		# Store as 2nd argument
+	movl	$2, (%esp)		# Store 2 as 1st argument
+	call	proc			# proc(x2, &x2, x3, &x3, x4, &x4)
+	movswl	34(%esp), %eax		# Get x3
+	movsbl	33(%esp), %edx		# Get x4
+	subl	%edx, %eax		# Compute x3-x4
+	imull	36(%esp), %eax		# Multiply by x2
+	addl	$40, %esp 		# Deallocate 40 bytes
+	ret
+/* $end w110-call_proc-ann-ns 21 */

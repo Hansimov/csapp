@@ -1,0 +1,25 @@
+	.file	"120-branch.c"
+	.text
+	.globl	loop
+	.type	loop, @function
+loop:
+/* $begin 120-branch-s 6 */
+	movq	%rdi, %rax
+	jmp	.L2 ## line:asm:branch_s:jmp
+.L3:
+	sarq	%rax
+.L2:
+	testq	%rax, %rax
+	jg	.L3 ## line:asm:branch_s:jg
+	rep; ret ## line:asm:branch_s:ret
+/* $end 120-branch-s 6 */
+	.size	loop, .-loop
+	.globl	main
+	.type	main, @function
+main:
+	movq	$-2, %rdi
+	call	loop
+	rep; ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

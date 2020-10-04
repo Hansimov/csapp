@@ -1,0 +1,15 @@
+	.file	"050-exchange.c"
+	.text
+	.globl	exchange
+	.type	exchange, @function
+/* $begin 050-exchange-s 5 */
+# long exchange(long *xp, long y)
+# xp in \rdireg, y in \rsireg{}
+exchange:
+	movq	(%rdi), %rax   # Get x at xp.  Set as return value # line:asm:exchange:getx
+	movq	%rsi, (%rdi)   # Store y at xp. # line:asm:exchange:storey
+	ret                    # Return.
+/* $end 050-exchange-s 5 */
+	.size	exchange, .-exchange
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

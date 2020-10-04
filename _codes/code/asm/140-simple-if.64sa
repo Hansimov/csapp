@@ -1,0 +1,44 @@
+	.file	"140-simple-if.c"
+	.text
+	.globl	cond
+	.type	cond, @function
+/* $begin 140-simple-if-s 5 */
+# void cond(long a, long *p)
+# a in \rdireg{}, p in \rsireg{}
+cond:
+	testq	%rsi, %rsi
+	je	.L1
+	cmpq	%rdi, (%rsi)
+	jge	.L1
+	movq	%rdi, (%rsi)
+.L1:
+	rep; ret
+/* $end 140-simple-if-s 5 */
+	.size	cond, .-cond
+	.globl	goto_cond
+	.type	goto_cond, @function
+goto_cond:
+	testq	%rsi, %rsi
+	je	.L3
+	cmpq	%rdi, (%rsi)
+	jge	.L3
+	movq	%rdi, (%rsi)
+.L4:
+.L3:
+	rep; ret
+	.size	goto_cond, .-goto_cond
+	.globl	cond2
+	.type	cond2, @function
+cond2:
+	testq	%rsi, %rsi
+	setne	%dl
+	testq	%rdi, %rdi
+	setg	%al
+	testb	%al, %dl
+	je	.L5
+	movq	%rdi, (%rsi)
+.L5:
+	rep; ret
+	.size	cond2, .-cond2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

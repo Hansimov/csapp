@@ -1,0 +1,24 @@
+verbose	10
+size	199999
+hash	1
+lower	0
+find	2
+ngram	2
+quicksort	1
+file	shakespeare.txt
+N-gram size 2
+Lower case function lower1
+Hash function h_add
+Find element function find_ele_iter_r
+1892	'i am'
+1804	'i ll'
+1753	'in the'
+1709	'my lord'
+1681	'to the'
+1660	'i have'
+1603	'i will'
+1554	'of the'
+1118	'it is'
+1020	'to be'
+965028 n-grams, 363039 unique, 266018 singletons.  Most common (1892) = 'i am'.  Longest (1 have length 32) = 'honorificabilitudinitatibus thou'
+Total time = 9.100000 seconds

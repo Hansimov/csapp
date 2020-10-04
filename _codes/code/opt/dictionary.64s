@@ -1,0 +1,848 @@
+.Ltext0:
+h_mod:
+	movl	$0, %edx
+	jmp	.L2
+.L3:
+	movl	%edx, %eax
+	sall	$7, %eax
+	movsbl	%cl, %ecx
+	addl	%ecx, %eax
+	movl	$0, %edx
+	divl	tsize(%rip)
+	movq	%rsi, %rdi
+.L2:
+	leaq	1(%rdi), %rsi
+	movzbl	(%rdi), %ecx
+	testb	%cl, %cl
+	jne	.L3
+	movl	%edx, %eax
+	ret
+
+h_add:
+	movl	$0, %eax
+	jmp	.L5
+.L6:
+	movsbl	%cl, %ecx
+	addl	%ecx, %eax
+	movq	%rdx, %rdi
+.L5:
+	leaq	1(%rdi), %rdx
+	movzbl	(%rdi), %ecx
+	testb	%cl, %cl
+	jne	.L6
+	movl	$0, %edx
+	divl	tsize(%rip)
+	movl	%edx, %eax
+	ret
+
+h_xor:
+	movl	$0, %eax
+	jmp	.L8
+.L9:
+	movsbl	%dl, %edx
+	xorl	%eax, %edx
+	sall	$4, %edx
+	shrl	$28, %eax
+	orl	%edx, %eax
+	movq	%rcx, %rdi
+.L8:
+	leaq	1(%rdi), %rcx
+	movzbl	(%rdi), %edx
+	testb	%dl, %dl
+	jne	.L9
+	movl	$0, %edx
+	divl	tsize(%rip)
+	movl	%edx, %eax
+	ret
+
+compare_ele:
+	movq	(%rdi), %rdx
+	movq	(%rsi), %rax
+	movl	8(%rax), %eax
+	subl	8(%rdx), %eax
+	ret
+
+new_table:
+	subq	$8, %rsp
+	movl	%edi, tsize(%rip)
+	movslq	%edi, %rdi
+	movl	$8, %esi
+	call	calloc
+	movq	%rax, htable(%rip)
+	testq	%rax, %rax
+	jne	.L11
+	movq	stderr(%rip), %rcx
+	movl	$38, %edx
+	movl	$1, %esi
+	movl	$.LC0, %edi
+	call	fwrite
+	movl	$1, %edi
+	call	exit
+.L11:
+	addq	$8, %rsp
+	ret
+
+Strlen:
+	movl	$0, %eax
+	movq	$-1, %rcx
+	repnz; scasb
+	notq	%rcx
+	leaq	-1(%rcx), %rax
+	ret
+
+lower1:
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %r12
+	movl	$0, %ebx
+	jmp	.L16
+.L18:
+	addq	%r12, %rbp
+	movzbl	0(%rbp), %eax
+	leal	-65(%rax), %edx
+	cmpb	$25, %dl
+	ja	.L17
+	addl	$32, %eax
+	movb	%al, 0(%rbp)
+.L17:
+	addl	$1, %ebx
+.L16:
+	movslq	%ebx, %rbp
+	movq	%r12, %rdi
+	call	Strlen
+	cmpq	%rax, %rbp
+	jb	.L18
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+lower2:
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	Strlen
+	movl	$0, %edx
+	jmp	.L21
+.L23:
+	movslq	%edx, %rcx
+	addq	%rbx, %rcx
+	movzbl	(%rcx), %esi
+	leal	-65(%rsi), %r8d
+	cmpb	$25, %r8b
+	ja	.L22
+	addl	$32, %esi
+	movb	%sil, (%rcx)
+.L22:
+	addl	$1, %edx
+.L21:
+	cmpl	%eax, %edx
+	jl	.L23
+	popq	%rbx
+	ret
+
+new_ele:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rdi, %rbp
+	movl	$24, %edi
+	call	malloc
+	movq	%rax, %rbx
+	movq	%rbp, %rdi
+	call	Strlen
+	movl	llen(%rip), %edx
+	cmpl	%edx, %eax
+	jle	.L26
+	movq	%rbp, lstring(%rip)
+	movl	%eax, llen(%rip)
+	movl	$1, lcnt(%rip)
+	jmp	.L27
+.L26:
+	cmpl	%edx, %eax
+	jne	.L27
+	addl	$1, lcnt(%rip)
+.L27:
+	testq	%rbx, %rbx
+	jne	.L28
+	movq	stderr(%rip), %rcx
+	movl	$40, %edx
+	movl	$1, %esi
+	movl	$.LC1, %edi
+	call	fwrite
+	movl	$1, %edi
+	call	exit
+.L28:
+	movq	%rbp, (%rbx)
+	movl	$1, 8(%rbx)
+	movq	%rbx, %rax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+save_string:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rdi, %rbp
+	call	Strlen
+	leaq	1(%rax), %rdi
+	call	malloc
+	movq	%rax, %rbx
+	testq	%rax, %rax
+	jne	.L31
+	movq	stderr(%rip), %rcx
+	movl	$44, %edx
+	movl	$1, %esi
+	movl	$.LC2, %edi
+	call	fwrite
+	movl	$1, %edi
+	call	exit
+.L31:
+	movq	%rbp, %rsi
+	movq	%rax, %rdi
+	call	strcpy
+	movq	%rbx, %rax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+find_ele_rec:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rdi, %rbx
+	movq	%rsi, %rbp
+	testq	%rdi, %rdi
+	jne	.L34
+	addl	$1, ucnt(%rip)
+	movq	%rsi, %rdi
+	call	save_string
+	movq	%rax, %rdi
+	call	new_ele
+	jmp	.L35
+.L34:
+	movq	(%rdi), %rsi
+	movq	%rbp, %rdi
+	call	strcmp
+	testl	%eax, %eax
+	jne	.L36
+	movl	8(%rbx), %eax
+	addl	$1, %eax
+	movl	%eax, 8(%rbx)
+	cmpl	mcnt(%rip), %eax
+	jle	.L37
+	movl	%eax, mcnt(%rip)
+	movq	(%rbx), %rax
+	movq	%rax, mstring(%rip)
+.L37:
+	movq	%rbx, %rax
+	jmp	.L35
+.L36:
+	movq	16(%rbx), %rdi
+	movq	%rbp, %rsi
+	call	find_ele_rec
+	movq	%rax, 16(%rbx)
+	movq	%rbx, %rax
+.L35:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+find_ele_iter_f:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rdi, %r13
+	movq	%rsi, %r12
+	movq	%rdi, %rbx
+	jmp	.L40
+.L44:
+	movq	(%rbx), %rbp
+	movq	%rbp, %rsi
+	movq	%r12, %rdi
+	call	strcmp
+	testl	%eax, %eax
+	jne	.L41
+	movl	8(%rbx), %eax
+	addl	$1, %eax
+	movl	%eax, 8(%rbx)
+	cmpl	mcnt(%rip), %eax
+	jle	.L42
+	movl	%eax, mcnt(%rip)
+	movq	%rbp, mstring(%rip)
+.L42:
+	movq	%r13, %rax
+	jmp	.L43
+.L41:
+	movq	16(%rbx), %rbx
+.L40:
+	testq	%rbx, %rbx
+	jne	.L44
+	movq	%r12, %rdi
+	call	save_string
+	movq	%rax, %rdi
+	call	new_ele
+	addl	$1, ucnt(%rip)
+	movq	%r13, 16(%rax)
+.L43:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+find_ele_iter_r:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rdi, %r13
+	movq	%rsi, %r12
+	movq	%rdi, %rbx
+	movl	$0, %ebp
+	jmp	.L47
+.L51:
+	movq	(%rbx), %rbp
+	movq	%rbp, %rsi
+	movq	%r12, %rdi
+	call	strcmp
+	testl	%eax, %eax
+	jne	.L48
+	movl	8(%rbx), %eax
+	addl	$1, %eax
+	movl	%eax, 8(%rbx)
+	cmpl	mcnt(%rip), %eax
+	jle	.L49
+	movl	%eax, mcnt(%rip)
+	movq	%rbp, mstring(%rip)
+.L49:
+	movq	%r13, %rax
+	jmp	.L50
+.L48:
+	movq	%rbx, %rbp
+	movq	16(%rbx), %rbx
+.L47:
+	testq	%rbx, %rbx
+	jne	.L51
+	movq	%r12, %rdi
+	call	save_string
+	movq	%rax, %rdi
+	call	new_ele
+	addl	$1, ucnt(%rip)
+	movq	$0, 16(%rax)
+	testq	%rbp, %rbp
+	je	.L50
+	movq	%rax, 16(%rbp)
+	movq	%r13, %rax
+.L50:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+sort_words:
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movl	%edi, %r12d
+	movslq	ucnt(%rip), %rdi
+	movl	$8, %esi
+	call	calloc
+	movq	%rax, %rbx
+	movl	$0, scnt(%rip)
+	movl	$0, %ebp
+	movl	$0, %edi
+	jmp	.L55
+.L63:
+	movslq	%edi, %rdx
+	movq	htable(%rip), %rax
+	movq	(%rax,%rdx,8), %rax
+	jmp	.L56
+.L62:
+	cmpl	$1, 8(%rax)
+	jne	.L57
+	addl	$1, scnt(%rip)
+.L57:
+	testl	%r12d, %r12d
+	je	.L67
+	movslq	%ebp, %rdx
+	movq	%rax, (%rbx,%rdx,8)
+	jmp	.L59
+.L61:
+	movq	%rcx, (%rbx,%rsi)
+	subl	$1, %edx
+	jmp	.L58
+.L67:
+	movl	%ebp, %edx
+.L58:
+	testl	%edx, %edx
+	jle	.L60
+	movslq	%edx, %rsi
+	salq	$3, %rsi
+	movq	-8(%rbx,%rsi), %rcx
+	movl	8(%rcx), %r8d
+	cmpl	%r8d, 8(%rax)
+	jg	.L61
+.L60:
+	movslq	%edx, %rdx
+	movq	%rax, (%rbx,%rdx,8)
+.L59:
+	addl	$1, %ebp
+	movq	16(%rax), %rax
+.L56:
+	testq	%rax, %rax
+	jne	.L62
+	addl	$1, %edi
+.L55:
+	cmpl	tsize(%rip), %edi
+	jl	.L63
+	testl	%r12d, %r12d
+	je	.L64
+	movslq	%ebp, %rsi
+	movl	$compare_ele, %ecx
+	movl	$8, %edx
+	movq	%rbx, %rdi
+	call	qsort
+.L64:
+	movq	(%rbx), %r12
+	movl	$0, %edx
+	leal	-1(%rbp), %edi
+	jmp	.L65
+.L66:
+	movslq	%edx, %rcx
+	movq	(%rbx,%rcx,8), %rsi
+	movq	8(%rbx,%rcx,8), %rax
+	movq	%rax, 16(%rsi)
+	addl	$1, %edx
+.L65:
+	cmpl	%edx, %edi
+	jg	.L66
+	movslq	%ebp, %rbp
+	movq	-8(%rbx,%rbp,8), %rax
+	movq	$0, 16(%rax)
+	movq	%rbx, %rdi
+	call	free
+	movq	%r12, %rax
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+insert_string:
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	movq	%rsi, %rbp
+	movq	%rcx, %r12
+	call	*%rdx
+	movq	%rbx, %rdi
+	call	*%rbp
+	cltq
+	movq	htable(%rip), %rdx
+	leaq	(%rdx,%rax,8), %rbp
+	movq	%rbx, %rsi
+	movq	0(%rbp), %rdi
+	call	*%r12
+	movq	%rax, 0(%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+init_token:
+	movl	$0, bufvalid(%rip)
+	movq	%rdi, infile(%rip)
+	ret
+
+get_word:
+	subq	$8, %rsp
+.L76:
+	cmpl	$0, bufvalid(%rip)
+	je	.L73
+	movl	$.LC3, %esi
+	movl	$0, %edi
+	call	strtok
+	testq	%rax, %rax
+	jne	.L74
+.L73:
+	movq	infile(%rip), %rdx
+	movl	$1024, %esi
+	movl	$buf, %edi
+	call	fgets
+	testq	%rax, %rax
+	je	.L75
+	movl	$1, bufvalid(%rip)
+	movl	$.LC3, %esi
+	movl	$buf, %edi
+	call	strtok
+	testq	%rax, %rax
+	je	.L76
+.L74:
+	addl	$1, wcnt(%rip)
+.L75:
+	addq	$8, %rsp
+	ret
+
+get_token:
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	%edi, %r12d
+	cmpl	$1, %edi
+	jne	.L80
+	movl	$0, %eax
+	call	get_word
+	jmp	.L81
+.L80:
+	leal	-1(%rdi), %ebx
+	cmpl	$0, first.4138(%rip)
+	jne	.L94
+	jmp	.L83
+.L84:
+	movl	$0, %eax
+	call	get_word
+	testq	%rax, %rax
+	je	.L91
+	movl	bindex.4139(%rip), %edx
+	leal	1(%rdx), %ecx
+	movl	%ecx, bindex.4139(%rip)
+	movslq	%edx, %rdi
+	salq	$10, %rdi
+	addq	$token_buf.4137, %rdi
+	movq	%rax, %rsi
+	call	strcpy
+.L94:
+	cmpl	bindex.4139(%rip), %ebx
+	jg	.L84
+	movl	$0, first.4138(%rip)
+.L83:
+	movl	$0, %eax
+	call	get_word
+	testq	%rax, %rax
+	je	.L92
+	movl	bindex.4139(%rip), %edx
+	leal	1(%rdx), %ebx
+	movl	%ebx, bindex.4139(%rip)
+	movslq	%edx, %rdi
+	salq	$10, %rdi
+	addq	$token_buf.4137, %rdi
+	movq	%rax, %rsi
+	call	strcpy
+	cmpl	$9, %ebx
+	jle	.L85
+	movl	$0, bindex.4139(%rip)
+.L85:
+	movl	bindex.4139(%rip), %ebx
+	subl	%r12d, %ebx
+	leal	10(%rbx), %eax
+	testl	%ebx, %ebx
+	cmovs	%eax, %ebx
+	movl	$0, %ebp
+	movl	$sbuf.4140, %eax
+	movl	$0, %r14d
+	jmp	.L87
+.L90:
+	testl	%ebp, %ebp
+	je	.L93
+	leaq	1(%rax), %r13
+	movb	$32, (%rax)
+	jmp	.L88
+.L93:
+	movq	%rax, %r13
+.L88:
+	movslq	%ebx, %r15
+	salq	$10, %r15
+	addq	$token_buf.4137, %r15
+	movq	%r15, %rsi
+	movq	%r13, %rdi
+	call	strcpy
+	movq	%r15, %rdi
+	call	Strlen
+	addq	%r13, %rax
+	addl	$1, %ebx
+	cmpl	$10, %ebx
+	cmovge	%r14d, %ebx
+	addl	$1, %ebp
+.L87:
+	cmpl	%r12d, %ebp
+	jl	.L90
+	movl	$sbuf.4140, %eax
+	jmp	.L81
+.L91:
+	movl	$0, %eax
+	jmp	.L81
+.L92:
+	movl	$0, %eax
+.L81:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	ret
+
+word_freq:
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$56, %rsp
+	movl	%esi, %ebx
+	movl	%edx, %ebp
+	movl	%ecx, %r15d
+	movl	%r8d, 44(%rsp)
+	movq	%r9, %r14
+	movq	112(%rsp), %r13
+	movq	120(%rsp), %r12
+	call	init_token
+	movl	%r15d, %edi
+	call	new_table
+	jmp	.L97
+.L98:
+	movq	%r12, %rcx
+	movq	%r13, %rdx
+	movq	%r14, %rsi
+	movq	%rax, %rdi
+	call	insert_string
+.L97:
+	movl	%ebp, %edi
+	call	get_token
+	testq	%rax, %rax
+	jne	.L98
+	testl	%ebx, %ebx
+	jle	.L99
+	movl	44(%rsp), %edi
+	call	sort_words
+	movq	%rax, %rbp
+	jmp	.L100
+.L101:
+	movq	0(%rbp), %rcx
+	movl	8(%rbp), %edx
+	movl	$.LC4, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movq	16(%rbp), %rbp
+	movl	%r12d, %ebx
+.L100:
+	testq	%rbp, %rbp
+	je	.L99
+	leal	-1(%rbx), %r12d
+	testl	%ebx, %ebx
+	jne	.L101
+.L99:
+	movq	lstring(%rip), %rax
+	movq	%rax, 24(%rsp)
+	movl	llen(%rip), %eax
+	movl	%eax, 16(%rsp)
+	movl	lcnt(%rip), %eax
+	movl	%eax, 8(%rsp)
+	movq	mstring(%rip), %rax
+	movq	%rax, (%rsp)
+	movl	mcnt(%rip), %r9d
+	movl	scnt(%rip), %r8d
+	movl	ucnt(%rip), %ecx
+	movl	wcnt(%rip), %edx
+	movl	$.LC5, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	addq	$56, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	ret
+
+main:
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$64, %rsp
+	movl	%edi, %ebp
+	movq	%rsi, %r12
+	movl	$1, 28(%rsp)
+	movl	$1024, 32(%rsp)
+	movl	$0, 36(%rsp)
+	movl	$0, 40(%rsp)
+	movl	$0, 44(%rsp)
+	movl	$1, 48(%rsp)
+	movl	$0, 52(%rsp)
+	movq	$0, 56(%rsp)
+	movq	stdin(%rip), %rbx
+	leaq	28(%rsp), %rsi
+	movl	$.LC6, %edi
+	call	add_int_option
+	leaq	32(%rsp), %rsi
+	movl	$.LC7, %edi
+	call	add_int_option
+	leaq	36(%rsp), %rsi
+	movl	$.LC8, %edi
+	call	add_int_option
+	leaq	40(%rsp), %rsi
+	movl	$.LC9, %edi
+	call	add_int_option
+	leaq	44(%rsp), %rsi
+	movl	$.LC10, %edi
+	call	add_int_option
+	leaq	48(%rsp), %rsi
+	movl	$.LC11, %edi
+	call	add_int_option
+	leaq	52(%rsp), %rsi
+	movl	$.LC12, %edi
+	call	add_int_option
+	leaq	56(%rsp), %rsi
+	movl	$.LC13, %edi
+	call	add_string_option
+	movl	$0, %edx
+	movq	%r12, %rsi
+	movl	%ebp, %edi
+	call	parse_options
+	movq	stdout(%rip), %rdi
+	call	show_options
+	movl	48(%rsp), %edx
+	movl	$.LC14, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movslq	40(%rsp), %rax
+	movq	lower_fun_names(,%rax,8), %rdx
+	movl	$.LC15, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movslq	36(%rsp), %rax
+	movq	hash_fun_names(,%rax,8), %rdx
+	movl	$.LC16, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movslq	44(%rsp), %rax
+	movq	find_ele_fun_names(,%rax,8), %rdx
+	movl	$.LC17, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	36(%rsp), %ecx
+	cmpl	$2, %ecx
+	jbe	.L104
+	movl	$.LC18, %edx
+	movl	$1, %esi
+	movq	stderr(%rip), %rdi
+	movl	$0, %eax
+	call	__fprintf_chk
+	movl	$1, %edi
+	call	exit
+.L104:
+	movl	40(%rsp), %ecx
+	cmpl	$1, %ecx
+	jbe	.L105
+	movl	$.LC19, %edx
+	movl	$1, %esi
+	movq	stderr(%rip), %rdi
+	movl	$0, %eax
+	call	__fprintf_chk
+	movl	$1, %edi
+	call	exit
+.L105:
+	movl	44(%rsp), %ecx
+	cmpl	$2, %ecx
+	jbe	.L106
+	movl	$.LC20, %edx
+	movl	$1, %esi
+	movq	stderr(%rip), %rdi
+	movl	$0, %eax
+	call	__fprintf_chk
+	movl	$1, %edi
+	call	exit
+.L106:
+	movq	56(%rsp), %rdi
+	testq	%rdi, %rdi
+	je	.L107
+	movl	$.LC21, %esi
+	call	fopen
+	movq	%rax, %rbx
+	testq	%rax, %rax
+	jne	.L107
+	movq	56(%rsp), %rcx
+	movl	$.LC22, %edx
+	movl	$1, %esi
+	movq	stderr(%rip), %rdi
+	movl	$0, %eax
+	call	__fprintf_chk
+	movl	$1, %edi
+	call	exit
+.L107:
+	movslq	36(%rsp), %rax
+	movq	hash_fun_set(,%rax,8), %r9
+	movslq	44(%rsp), %rax
+	movq	find_ele_fun_set(,%rax,8), %rax
+	movq	%rax, 8(%rsp)
+	movslq	40(%rsp), %rax
+	movq	lower_fun_set(,%rax,8), %rax
+	movq	%rax, (%rsp)
+	movl	52(%rsp), %r8d
+	movl	32(%rsp), %ecx
+	movl	48(%rsp), %edx
+	movl	28(%rsp), %esi
+	movq	%rbx, %rdi
+	call	word_freq
+	call	clock
+	vcvtsi2sdq	%rax, %xmm0, %xmm0
+	vdivsd	.LC23(%rip), %xmm0, %xmm0
+	movl	$.LC24, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	movq	%rbx, %rdi
+	call	fclose
+	movl	$0, %eax
+	addq	$64, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+first.4138:
+bufvalid:
+find_ele_fun_names:
+find_ele_fun_set:
+hash_fun_names:
+hash_fun_set:
+lower_fun_names:
+lower_fun_set:
+lcnt:
+lstring:
+llen:
+mstring:
+scnt:
+mcnt:
+ucnt:
+wcnt:
+.Letext0:
+.Ldebug_info0:
+.Ldebug_abbrev0:
+.Ldebug_loc0:
+.Ldebug_ranges0:
+.Ldebug_line0:

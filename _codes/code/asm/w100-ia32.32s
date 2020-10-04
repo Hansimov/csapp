@@ -1,0 +1,42 @@
+	.file	"w100-ia32.c"
+	.text
+	.globl	fun
+	.type	fun, @function
+fun:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	movl	(%eax), %eax
+	addl	8(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	fun, .-fun
+	.globl	call_fun
+	.type	call_fun, @function
+call_fun:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	leal	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	fun
+	leave
+	ret
+	.size	call_fun, .-call_fun
+	.globl	afun
+	.type	afun, @function
+afun:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	$33, -8(%ebp)
+	movl	$515, -4(%ebp)
+	movl	8(%ebp), %eax
+	movl	-8(%ebp,%eax,4), %eax
+	leave
+	ret
+	.size	afun, .-afun
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

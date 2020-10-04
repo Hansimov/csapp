@@ -1,0 +1,51 @@
+	.file	"w100-ia32.c"
+	.text
+	.globl	fun
+	.type	fun, @function
+/* $begin w100-fun-ns 5 */
+# int fun(int a, int *bp)
+# a at %esp+4, bp at %esp+8
+fun:
+	movl	8(%esp), %eax		# Get bp  # line:asm:32ns:fun:line1
+	movl	(%eax), %eax		# Get *bp # line:asm:32ns:fun:line2
+	addl	4(%esp), %eax		# Add a   # line:asm:32ns:fun:line3
+	ret                             ## line:asm:32ns:fun:ret
+/* $end w100-fun-ns 5 */
+	.size	fun, .-fun
+	.globl	call_fun
+	.type	call_fun, @function
+/* $begin w100-call_fun-ns 13 */
+# int call_fun(int x, int y)
+# x at %esp+4, y at %esp+8
+call_fun:
+	subl	$8, %esp		# Allocate 8 bytes	# line:asm:32ns:call_fun:line1
+# Now: x at %esp+12, y at %esp+16
+# Store arguments at offsets 0 and 4 from %esp
+	leal	16(%esp), %eax		# Compute &y  		# line:asm:32ns:call_fun:line2
+	movl	%eax, 4(%esp)		# Store as 2nd argument # line:asm:32ns:call_fun:line3
+	movl	12(%esp), %eax		# Get x        		# line:asm:32ns:call_fun:line4
+	movl	%eax, (%esp)		# Store as 1st argument # line:asm:32ns:call_fun:line5
+	call	fun			# fun(x, &y)   		# line:asm:32ns:call_fun:line6   
+	addl	$8, %esp		# Deallocate 8 bytes  	# line:asm:32ns:call_fun:line7
+	ret                             ## line:asm:32ns:call_fun:ret
+/* $end w100-call_fun-ns 13 */
+	.size	call_fun, .-call_fun
+	.globl	afun
+	.type	afun, @function
+/* $begin w100-afun-ns 25 */
+# int afun(int t)
+# t at %esp+4
+afun:
+	subl	$16, %esp		# Allocate 16 bytes	# line:asm:32ns:afun:line1
+# Now: t at %esp+20
+# Allocate: a[0] at %esp+8, a[1] at %esp+12
+	movl	$33, 8(%esp)		# a[0] = 33   		# line:asm:32ns:afun:line2
+	movl	$515, 12(%esp)		# a[1] = 515   		# line:asm:32ns:afun:line3
+	movl	20(%esp), %eax		# Get t   		# line:asm:32ns:afun:line4
+	movl	8(%esp,%eax,4), %eax	# Get a[t]		# line:asm:32ns:afun:line5
+	addl	$16, %esp		# Deallocate 16 bytes	# line:asm:32ns:afun:line6
+	ret
+/* $end w100-afun-ns 25 */
+	.size	afun, .-afun
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

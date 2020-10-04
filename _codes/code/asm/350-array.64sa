@@ -1,0 +1,192 @@
+	.file	"350-array.c"
+	.text
+	.globl	get_value
+	.type	get_value, @function
+get_value:
+/* $begin 350-arrayaccess-s 6  */
+# A in \rdireg{}, i in \rsireg{}, and j in \rdxreg{}
+	leaq	(%rsi,%rsi,2), %rax   # Compute \(3i\)
+	leaq	(%rdi,%rax,4), %rax   # Compute \(\startaddr{A} + 12i\)
+	movl	(%rax,%rdx,4), %eax   # Read from \(\memref{\startaddr{A} + 12i + 4j}\)
+/* $end 350-arrayaccess-s 6  */
+	ret
+	.size	get_value, .-get_value
+	.globl	get_value2
+	.type	get_value2, @function
+get_value2:
+	movq	(%rdi,%rsi,8), %rax
+	movq	(%rax,%rdx,8), %rax
+	ret
+	.size	get_value2, .-get_value2
+	.globl	new_fix_matrix
+	.type	new_fix_matrix, @function
+new_fix_matrix:
+	subq	$8, %rsp
+	movl	$1024, %edi
+	call	malloc
+	addq	$8, %rsp
+	ret
+	.size	new_fix_matrix, .-new_fix_matrix
+	.globl	fix_prod_ele
+	.type	fix_prod_ele, @function
+fix_prod_ele:
+	movl	$0, %eax
+	movl	$0, %r8d
+	salq	$6, %rdx
+	addq	%rdx, %rdi
+	jmp	.L6
+.L7:
+	movq	%r8, %r9
+	salq	$6, %r9
+	addq	%rsi, %r9
+	movl	(%r9,%rcx,4), %r9d
+	imull	(%rdi,%r8,4), %r9d
+	addl	%r9d, %eax
+	addq	$1, %r8
+.L6:
+	cmpq	$15, %r8
+	jle	.L7
+	rep; ret
+	.size	fix_prod_ele, .-fix_prod_ele
+	.globl	fix_prod_ele_opt
+	.type	fix_prod_ele_opt, @function
+fix_prod_ele_opt:
+	salq	$6, %rdx
+	addq	%rdx, %rdi
+	leaq	(%rsi,%rcx,4), %rcx
+	leaq	1024(%rcx), %rsi
+	movl	$0, %eax
+.L9:
+	movl	(%rcx), %edx
+	imull	(%rdi), %edx
+	addl	%edx, %eax
+	addq	$4, %rdi
+	addq	$64, %rcx
+	cmpq	%rsi, %rcx
+	jne	.L9
+	rep; ret
+	.size	fix_prod_ele_opt, .-fix_prod_ele_opt
+	.globl	fix_set_diag
+	.type	fix_set_diag, @function
+fix_set_diag:
+	movl	$0, %eax
+	jmp	.L12
+.L13:
+	movq	%rax, %rdx
+	salq	$6, %rdx
+	addq	%rdi, %rdx
+	movl	%esi, (%rdx,%rax,4)
+	addq	$1, %rax
+.L12:
+	cmpq	$15, %rax
+	jle	.L13
+	rep; ret
+	.size	fix_set_diag, .-fix_set_diag
+	.globl	fix_set_diag_opt
+	.type	fix_set_diag_opt, @function
+fix_set_diag_opt:
+	movl	$0, %eax
+.L15:
+	movl	%esi, (%rdi,%rax,4)
+	addq	$17, %rax
+	cmpq	$272, %rax
+	jne	.L15
+	rep; ret
+	.size	fix_set_diag_opt, .-fix_set_diag_opt
+	.globl	fix_ele
+	.type	fix_ele, @function
+fix_ele:
+	movslq	%esi, %rsi
+	salq	$6, %rsi
+	addq	%rsi, %rdi
+	movslq	%edx, %rdx
+	movl	(%rdi,%rdx,4), %eax
+	ret
+	.size	fix_ele, .-fix_ele
+	.globl	new_var_matrix
+	.type	new_var_matrix, @function
+new_var_matrix:
+	subq	$8, %rsp
+	imulq	%rdi, %rdi
+	salq	$2, %rdi
+	call	malloc
+	addq	$8, %rsp
+	ret
+	.size	new_var_matrix, .-new_var_matrix
+	.globl	var_ele
+	.type	var_ele, @function
+/* $begin 350-varele-s 116 */
+# int var_ele(long n, int A[n][n], long i, long j)
+# n in \rdireg{}, A in \rsireg{}, i in \rdxreg{}, j in \rcxreg{}
+var_ele:
+	imulq	%rdx, %rdi		# Compute \(n \cdot i\) # line:asm:varele:mult
+	leaq	(%rsi,%rdi,4), %rax	# Compute \(\startaddr{A} + 4 (n \cdot i)\)
+	movl	(%rax,%rcx,4), %eax	# Read from \(\memref{\startaddr{A} + 4 (n \cdot i) + 4j}\)
+	ret
+/* $end 350-varele-s 116 */
+	.size	var_ele, .-var_ele
+	.globl	pvar_ele
+	.type	pvar_ele, @function
+pvar_ele:
+	call	var_ele
+	rep; ret
+	.size	pvar_ele, .-pvar_ele
+	.globl	var_prod_ele
+	.type	var_prod_ele, @function
+var_prod_ele:
+	movl	$0, %eax
+	movl	$0, %r9d
+	imulq	%rdi, %rcx
+	leaq	(%rsi,%rcx,8), %rsi
+	jmp	.L23
+.L24:
+	movq	%rdi, %rcx
+	imulq	%r9, %rcx
+	leaq	(%rdx,%rcx,8), %rcx
+	movq	(%rcx,%r8,8), %rcx
+	imull	(%rsi,%r9,8), %ecx
+	addl	%ecx, %eax
+	addq	$1, %r9
+.L23:
+	cmpq	%rdi, %r9
+	jl	.L24
+	rep; ret
+	.size	var_prod_ele, .-var_prod_ele
+	.globl	var_prod_ele_opt
+	.type	var_prod_ele_opt, @function
+var_prod_ele_opt:
+	imulq	%rdi, %rcx
+	leaq	(%rsi,%rcx,4), %r9
+	leaq	(%rdx,%r8,4), %rcx
+	movl	$0, %edx
+	movl	$0, %eax
+	leaq	0(,%rdi,4), %r8
+	jmp	.L26
+.L27:
+	movl	(%rcx), %esi
+	imull	(%r9,%rdx,4), %esi
+	addl	%esi, %eax
+	addq	%r8, %rcx
+	addq	$1, %rdx
+.L26:
+	cmpq	%rdi, %rdx
+	jl	.L27
+	rep; ret
+	.size	var_prod_ele_opt, .-var_prod_ele_opt
+	.globl	B
+	.data
+	.align 32
+	.type	B, @object
+	.size	B, 32
+B:
+	.quad	row0
+	.quad	row1
+	.quad	row2
+	.quad	row3
+	.comm	row3,12,4
+	.comm	row2,12,4
+	.comm	row1,12,4
+	.comm	row0,12,4
+	.comm	A,60,32
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

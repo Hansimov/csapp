@@ -1,0 +1,83 @@
+	.file	"110-cc.c"
+	.text
+	.globl	comp
+	.type	comp, @function
+/* $begin 110-cc-s 5 */
+# int comp(data_t a, data_t b)
+# a in \rdireg{}, b in \rsireg{}
+comp:
+	cmpq	%rsi, %rdi   # Compare a:b # line:asm:cc:cmpq
+	setl	%al          # Set low order byte of \eaxreg{} to 0 or 1
+	movzbl	%al, %eax    # Clear rest of \eaxreg{} (and rest of \raxreg) # line:asm:cc:movzbl
+	ret
+/* $end 110-cc-s 5 */
+	.size	comp, .-comp
+	.globl	ge
+	.type	ge, @function
+ge:
+	cmpb	%sil, %dil
+	setae	%al
+	movzbl	%al, %eax
+	ret
+	.size	ge, .-ge
+	.globl	ne
+	.type	ne, @function
+ne:
+	cmpw	%si, %di
+	setne	%al
+	movzbl	%al, %eax
+	ret
+	.size	ne, .-ne
+	.globl	eq
+	.type	eq, @function
+eq:
+	cmpl	%esi, %edi
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	eq, .-eq
+	.globl	gt
+	.type	gt, @function
+gt:
+	cmpq	%rsi, %rdi
+	seta	%al
+	movzbl	%al, %eax
+	ret
+	.size	gt, .-gt
+	.globl	test
+	.type	test, @function
+test:
+	testq	%rdi, %rdi
+	setne	%al
+	movzbl	%al, %eax
+	ret
+	.size	test, .-test
+	.globl	test_eq
+	.type	test_eq, @function
+test_eq:
+	testw	%di, %di
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	test_eq, .-test_eq
+	.globl	test_ge
+	.type	test_ge, @function
+test_ge:
+	movl	%edi, %eax
+	notl	%eax
+	shrb	$7, %al
+	movzbl	%al, %eax
+	ret
+	.size	test_ge, .-test_ge
+	.globl	test_ne
+	.type	test_ne, @function
+test_ne:
+	testl	%edi, %edi
+	setne	%al
+	movzbl	%al, %eax
+	ret
+	.size	test_ne, .-test_ne
+	.comm	y,4,4
+	.comm	x,4,4
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

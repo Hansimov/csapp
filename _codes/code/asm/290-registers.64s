@@ -1,0 +1,43 @@
+	.file	"290-registers.c"
+	.text
+	.globl	proc
+	.type	proc, @function
+proc:
+	leal	(%rdi,%rsi), %eax
+	addl	%edx, %eax
+	cltq
+	ret
+	.size	proc, .-proc
+	.globl	t3
+	.type	t3, @function
+t3:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	(%rdi), %rax
+	movq	(%rsi), %r12
+	movq	(%rdx), %rbp
+	movq	(%rcx), %rbx
+	movq	(%r8), %r11
+	movq	(%r9), %r10
+	leaq	(%rax,%r12), %r13
+	addq	%rbp, %r12
+	addq	%rbx, %rbp
+	addq	%r11, %rbx
+	addq	%r10, %r11
+	addq	%r10, %rax
+	movq	%r13, (%rdi)
+	movq	%r12, (%rsi)
+	movq	%rbp, (%rdx)
+	movq	%rbx, (%rcx)
+	movq	%r11, (%r8)
+	movq	%rax, (%r9)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+	.size	t3, .-t3
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

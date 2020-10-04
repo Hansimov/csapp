@@ -1,0 +1,53 @@
+	.file	"330-frame.c"
+	.text
+	.globl	vframe
+	.type	vframe, @function
+/* $begin 330-frame-frags-s 5 */
+# long int vframe(long int n, long int idx, long int *q)
+# n in \rdireg{}, idx in \rsireg{}, q in \rdxreg{}
+# Only portions of code shown
+vframe:
+	pushq	%rbp		       #   Save old \rbpreg{}  # line:asm:frame:saverbp
+	movq	%rsp, %rbp	       #   Set frame pointer   # line:asm:frame:newrbp
+	subq	$16, %rsp	       #   Allocate space for i 
+	leaq	22(,%rdi,8), %rax      	   	    	  # # line:asm:frame:allocstart
+	andq	$-16, %rax
+	subq	%rax, %rsp	       #   Allocate space for p # line:asm:frame:allocdone
+	leaq	7(%rsp), %rax
+	shrq	$3, %rax
+	leaq	0(,%rax,8), %r8        #   Set %r8 to start of p 
+	movq	%r8, %rcx	       #   Set %rcx to start of p # line:asm:frame:findp
+/* $end 330-frame-frags-s 5 */
+	leaq	-8(%rbp), %r9
+	movq	%r9, 0(,%rax,8)
+	movq	$1, -8(%rbp)
+	jmp	.L2
+/* $begin 330-frame-frags-s 20 */
+#       . . . 
+# Code for loop
+# i in \raxreg{} and on stack, n in \rdireg{}, p in \rcxreg{}, q in \rdxreg{}
+.L3:   		     	       	       # \textbf{loop:}
+	movq	%rdx, (%rcx,%rax,8)    #   Set p[i] to q	# line:asm:frame:setp
+	addq	$1, %rax	       #   Increment i
+	movq	%rax, -8(%rbp)	       #   Store on stack	# line:asm:frame:storei
+.L2:
+	movq	-8(%rbp), %rax	       #   Retrieve i from stack # line:asm:frame:loadi
+	cmpq	%rdi, %rax	       #   Compare i:n
+	jl	.L3   		       #   If <, goto \textbf{loop}
+/* $end 330-frame-frags-s 20 */
+	movq	(%r8,%rsi,8), %rax
+	movq	(%rax), %rax
+/* $begin 330-frame-frags-s 30 */
+#  	. . .   
+	leave				#   Restore %rbp and %rsp # line:asm:frame:leave
+	ret				#   Return
+/* $end 330-frame-frags-s 30 */
+	.size	vframe, .-vframe
+	.globl	main
+	.type	main, @function
+main:
+	movl	$0, %eax
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

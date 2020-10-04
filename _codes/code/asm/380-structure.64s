@@ -1,0 +1,55 @@
+	.file	"380-structure.c"
+	.text
+	.globl	copy
+	.type	copy, @function
+copy:
+	movl	(%rdi), %eax
+	movl	%eax, 4(%rdi)
+	ret
+	.size	copy, .-copy
+	.globl	set_i
+	.type	set_i, @function
+set_i:
+	movl	%esi, (%rdi)
+	ret
+	.size	set_i, .-set_i
+	.globl	set_a_ele
+	.type	set_a_ele, @function
+set_a_ele:
+	movslq	%esi, %rsi
+	movl	%edx, 8(%rdi,%rsi,4)
+	ret
+	.size	set_a_ele, .-set_a_ele
+	.globl	set_p
+	.type	set_p, @function
+set_p:
+	movq	%rsi, 16(%rdi)
+	ret
+	.size	set_p, .-set_p
+	.globl	find_a
+	.type	find_a, @function
+find_a:
+	movq	%rdi, p(%rip)
+	movl	%esi, j(%rip)
+	movq	%rdi, q(%rip)
+	movl	%esi, k(%rip)
+	movslq	%esi, %rsi
+	leaq	8(%rdi,%rsi,4), %rax
+	ret
+	.size	find_a, .-find_a
+	.globl	link_p
+	.type	link_p, @function
+link_p:
+	movl	4(%rdi), %eax
+	addl	(%rdi), %eax
+	cltq
+	leaq	8(%rdi,%rax,4), %rax
+	movq	%rax, 16(%rdi)
+	ret
+	.size	link_p, .-link_p
+	.comm	k,4,4
+	.comm	j,4,4
+	.comm	q,8,8
+	.comm	p,8,8
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,42 @@
+	.file	"320-procprobs.c"
+	.text
+	.globl	procprob
+	.type	procprob, @function
+/* $begin 320-procprob-s 5 */
+procprob:
+	movslq	%edi, %rdi
+	addq	%rdi, (%rdx)			##line:asm:procprob:addq
+	addb	%sil, (%rcx)			##line:asm:procprob:addb
+	movl	$6, %eax
+	ret
+/* $end 320-procprob-s 5 */
+
+/* $begin 320-procprob-ans-s 5 */
+# int procprobl(int a, short b, long *u, char *v)
+# a in %edi, b in %si, u in %rdx, v in %rcx
+procprob:
+	movslq	%edi, %rdi	# Convert a to long		
+	addq	%rdi, (%rdx)	# Add to *u (long)		
+	addb	%sil, (%rcx)	# Add low-order byte of b to *v
+	movl	$6, %eax	# Return 4+2
+	ret
+/* $end 320-procprob-ans-s 5 */
+
+	.size	procprob, .-procprob
+	.globl	argprob
+	.type	argprob, @function
+argprob:
+	movsbl	%dil, %edi
+	subl	%edi, %edx
+	movq	8(%rsp), %rax
+	movl	%edx, (%rax)
+	movswq	%si, %rsi
+	subq	%rcx, %rsi
+	movq	16(%rsp), %rax
+	movq	%rsi, (%rax)
+	movzwl	(%r9), %eax
+	movb	%al, (%r8)
+	ret
+	.size	argprob, .-argprob
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,83 @@
+	.file	"510-cvt.c"
+	.text
+	.globl	cvt
+	.type	cvt, @function
+cvt:
+	movslq	%edi, %rax
+	ret
+	.size	cvt, .-cvt
+	.globl	cvt_sl2sl
+	.type	cvt_sl2sl, @function
+cvt_sl2sl:
+	movq	%rdi, %rax
+	ret
+	.size	cvt_sl2sl, .-cvt_sl2sl
+	.globl	cvt_si2sl
+	.type	cvt_si2sl, @function
+cvt_si2sl:
+	movslq	%edi, %rax
+	ret
+	.size	cvt_si2sl, .-cvt_si2sl
+	.globl	cvt_sc2sl
+	.type	cvt_sc2sl, @function
+cvt_sc2sl:
+	movsbq	%dil, %rax
+	ret
+	.size	cvt_sc2sl, .-cvt_sc2sl
+	.globl	cvt_ui2ul
+	.type	cvt_ui2ul, @function
+cvt_ui2ul:
+	movl	%edi, %eax
+	ret
+	.size	cvt_ui2ul, .-cvt_ui2ul
+	.globl	cvt_uc2ul
+	.type	cvt_uc2ul, @function
+cvt_uc2ul:
+	movzbl	%dil, %eax
+	ret
+	.size	cvt_uc2ul, .-cvt_uc2ul
+	.globl	cvt_sl2si
+	.type	cvt_sl2si, @function
+cvt_sl2si:
+	movl	%edi, %eax
+	ret
+	.size	cvt_sl2si, .-cvt_sl2si
+	.globl	cvt_ul2ui
+	.type	cvt_ul2ui, @function
+cvt_ul2ui:
+	movl	%edi, %eax
+	ret
+	.size	cvt_ul2ui, .-cvt_ul2ui
+	.globl	cvt_sl2d
+	.type	cvt_sl2d, @function
+cvt_sl2d:
+	vcvtsi2sdq	%rdi, %xmm0, %xmm0
+	ret
+	.size	cvt_sl2d, .-cvt_sl2d
+	.globl	cvt_d2si
+	.type	cvt_d2si, @function
+cvt_d2si:
+	vcvttsd2si	%xmm0, %eax
+	ret
+	.size	cvt_d2si, .-cvt_d2si
+	.globl	cvt_f2d
+	.type	cvt_f2d, @function
+cvt_f2d:
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	ret
+	.size	cvt_f2d, .-cvt_f2d
+	.globl	cvt_sl2f
+	.type	cvt_sl2f, @function
+cvt_sl2f:
+	vcvtsi2ssq	%rdi, %xmm0, %xmm0
+	ret
+	.size	cvt_sl2f, .-cvt_sl2f
+	.globl	cvt_f2sl
+	.type	cvt_f2sl, @function
+cvt_f2sl:
+	vcvttss2siq	%xmm0, %rax
+	ret
+	.size	cvt_f2sl, .-cvt_f2sl
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

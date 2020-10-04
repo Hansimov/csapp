@@ -1,0 +1,17 @@
+	.file	"400-struct-eg.c"
+	.text
+	.globl	fun
+	.type	fun, @function
+fun:
+	movl	$0, %eax
+	jmp	.L2
+.L3:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+.L2:
+	testq	%rdi, %rdi
+	jne	.L3
+	rep; ret
+	.size	fun, .-fun
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,29 @@
+
+030-add-suffixes.64o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <prob>:
+   0:	89 04 24             	mov    %eax,(%rsp)
+   3:	66 8b 10             	mov    (%rax),%dx
+   6:	b3 ff                	mov    $0xff,%bl
+   8:	8a 14 94             	mov    (%rsp,%rdx,4),%dl
+   b:	48 8b 02             	mov    (%rdx),%rax
+   e:	66 89 10             	mov    %dx,(%rax)
+
+0000000000000011 <ans>:
+  11:	89 04 24             	mov    %eax,(%rsp)
+  14:	66 8b 10             	mov    (%rax),%dx
+  17:	b3 ff                	mov    $0xff,%bl
+  19:	8a 14 94             	mov    (%rsp,%rdx,4),%dl
+  1c:	48 8b 02             	mov    (%rdx),%rax
+  1f:	66 89 10             	mov    %dx,(%rax)
+
+0000000000000022 <extra>:
+  22:	81 c4 50 40 00 00    	add    $0x4050,%esp
+  28:	02 07                	add    (%rdi),%al
+  2a:	66 01 74 10 04       	add    %si,0x4(%rax,%rdx,1)
+  2f:	66 8d 07             	lea    (%rdi),%ax
+  32:	8d 14 94             	lea    (%rsp,%rdx,4),%edx
+  35:	48 ff c0             	inc    %rax

@@ -1,0 +1,39 @@
+	.file	"170-dw.c"
+	.text
+	.globl	dw_loop
+	.type	dw_loop, @function
+/* $begin 170-dw-prob-s 5 */
+# long dw_loop(long x)
+# x initially in \rdireg{}
+dw_loop:
+	movq	%rdi, %rax
+	movq	%rdi, %rcx
+	imulq	%rdi, %rcx  
+	leaq	(%rdi,%rdi), %rdx 
+.L2:
+	leaq	1(%rcx,%rax), %rax 
+	subq	$1, %rdx
+	testq	%rdx, %rdx
+	jg	.L2
+	rep; ret
+/* $end 170-dw-prob-s 5 */
+	.size	dw_loop, .-dw_loop
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits
+
+
+/* $begin 170-dw-ans-s 5 */
+# long dw_loop(long x)
+# x initially in \rdireg{}
+dw_loop:
+	movq	%rdi, %rax           # Copy x to \raxreg{}  # line:asm:dw:initx
+	movq	%rdi, %rcx         
+	imulq	%rdi, %rcx           # Compute y = x*x # line:asm:dw:inity
+	leaq	(%rdi,%rdi), %rdx    # Compute n = 2*x # line:asm:dw:initn
+.L2:                              # \textbf{loop:}
+	leaq	1(%rcx,%rax), %rax   # Compute x += y + 1 # line:asm:dw:leaq
+	subq	$1, %rdx             # Decrement n
+	testq	%rdx, %rdx           # Test n
+	jg	.L2                  # If > 0, goto \textbf{loop}
+	rep; ret                     # Return
+/* $end 170-dw-ans-s 5 */

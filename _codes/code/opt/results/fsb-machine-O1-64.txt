@@ -1,0 +1,128 @@
+Float Sum combine1: Maximum use of data abstraction:
+Best: 9.47 (2%), Overall Best: 9.50 40-most: 9.83 cycles/element
+Float Sum combine2: Take vec_length() out of loop:
+Best: 8.69 (2%), Overall Best: 9.01 40-most: 9.03 cycles/element
+Float Sum combine3: Array reference to vector data:
+Best: 8.63 (2%), Overall Best: 8.74 40-most: 9.02 cycles/element
+Float Sum combine3w: Update *dest within loop only with write:
+Best: 2.83 (8%), Overall Best: 2.83 40-most: 3.01 cycles/element
+Float Sum combine4: Array reference, accumulate in temporary:
+Best: 2.82 (2%), Overall Best: 2.86 40-most: 3.01 cycles/element
+Float Sum combine4b: Include bonds check in loop:
+Best: 2.90 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum combine4p: Pointer reference, accumulate in temporary:
+Best: 2.82 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum combine5: Array code, unrolled by 2:
+Best: 2.82 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum combine5p: Pointer code, unrolled by 2, for loop:
+Best: 2.88 (2%), Overall Best: 2.90 40-most: 3.01 cycles/element
+Float Sum unroll2aw: Array code, unrolled by 2, while loop:
+Best: 2.83 (2%), Overall Best: 2.88 40-most: 3.01 cycles/element
+Float Sum unroll3a: Array code, unrolled by 3:
+Best: 2.83 (4%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll4a: Array code, unrolled by 4:
+Best: 2.93 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll5a: Array code, unrolled by 5:
+Best: 2.88 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll6a: Array code, unrolled by 6:
+Best: 2.83 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll7a: Array code, unrolled by 7:
+Best: 2.95 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll8a: Array code, unrolled by 8:
+Best: 2.84 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll9a: Array code, unrolled by 9:
+Best: 2.83 (4%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll10a: Array code, unrolled by 10:
+Best: 2.82 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll16a: Array code, unrolled by 16:
+Best: 2.82 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll2: Pointer code, unrolled by 2:
+Best: 2.82 (2%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll3: Pointer code, unrolled by 3:
+Best: 2.82 (4%), Overall Best: 3.01 40-most: 3.01 cycles/element
+Float Sum unroll4: Pointer code, unrolled by 4:
+Best: 2.82 (6%), Overall Best: 2.94 40-most: 3.01 cycles/element
+Float Sum unroll8: Pointer code, unrolled by 8:
+Best: 2.83 (6%), Overall Best: 2.83 40-most: 3.01 cycles/element
+Float Sum unroll16: Pointer code, unrolled by 16:
+Best: 2.82 (2%), Overall Best: 2.83 40-most: 3.01 cycles/element
+Float Sum combine6: Array code, unrolled by 2, Superscalar x2:
+Best: 1.41 (4%), Overall Best: 1.46 40-most: 1.50 cycles/element
+Float Sum unroll4x2a: Array code, unrolled by 4, Superscalar x2:
+Best: 1.44 (2%), Overall Best: 1.50 40-most: 1.50 cycles/element
+Float Sum unroll8x2a: Array code, unrolled by 8, Superscalar x2:
+Best: 1.50 (88%), Overall Best: 1.51 40-most: 1.50 cycles/element
+Float Sum unroll3x3a: Array code, unrolled by 3, Superscalar x3:
+Best: 0.95 (4%), Overall Best: 1.00 40-most: 1.00 cycles/element
+Float Sum unroll4x4a: Array code, unrolled by 4, Superscalar x4:
+Best: 0.95 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll5x5a: Array code, unrolled by 5, Superscalar x5:
+Best: 0.94 (2%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll6x6a: Array code, unrolled by 6, Superscalar x6:
+Best: 0.95 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll7x7a: Array code, unrolled by 7, Superscalar x7:
+Best: 0.96 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll8x4a: Array code, unrolled by 8, Superscalar x4:
+Best: 0.94 (4%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll8x8a: Array code, unrolled by 8, Superscalar x8:
+Best: 0.95 (2%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll9x9a: Array code, unrolled by 9, Superscalar x9:
+Best: 0.95 (2%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll10x10a: Array code, unrolled by 10, Superscalar x10:
+Best: 0.94 (2%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll2x6a: Array code, unrolled by 12, Superscalar x6:
+Best: 0.95 (8%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll12x12a: Array code, unrolled by 12, Superscalar x12:
+Best: 0.95 (6%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll16x16a: Array code, unrolled by 16, Superscalar x16:
+Best: 0.94 (2%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll20x20a: Array code, unrolled by 20, Superscalar x20:
+Best: 0.94 (2%), Overall Best: 0.96 40-most: 1.01 cycles/element
+Float Sum unroll8x2: Pointer code, unrolled by 8, Superscalar x2:
+Best: 1.41 (2%), Overall Best: 1.41 40-most: 1.50 cycles/element
+Float Sum unroll8x4: Pointer code, unrolled by 8, Superscalar x4:
+Best: 0.95 (4%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll8x8: Pointer code, unrolled by 8, Superscalar x8:
+Best: 0.94 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll9x3: Pointer code, unrolled by 9, Superscalar x3:
+Best: 0.96 (4%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unrollx2as: Array code, Unroll x2, Superscalar x2, noninterleaved:
+Best: 1.41 (4%), Overall Best: 1.50 40-most: 1.51 cycles/element
+Float Sum combine7: Array code, unrolled by 2, different associativity:
+Best: 1.46 (6%), Overall Best: 1.50 40-most: 1.50 cycles/element
+Float Sum unroll3aa: Array code, unrolled by 3, Different Associativity:
+Best: 0.95 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll4aa: Array code, unrolled by 4, Different Associativity:
+Best: 0.95 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll5aa: Array code, unrolled by 5, Different Associativity:
+Best: 0.94 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll6aa: Array code, unrolled by 6, Different Associativity:
+Best: 0.94 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll7aa: Array code, unrolled by 7, Different Associativity:
+Best: 0.96 (2%), Overall Best: 1.00 40-most: 1.01 cycles/element
+Float Sum unroll8aa: Array code, unrolled by 8, Different Associativity:
+Best: 0.95 (6%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll9aa: Array code, unrolled by 9, Different Associativity:
+Best: 0.95 (4%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll10aa: Array code, unrolled by 10, Different Associativity:
+Best: 0.95 (6%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum unroll12aa: Array code, unrolled by 12, Different Associativity:
+Best: 0.94 (2%), Overall Best: 1.01 40-most: 1.01 cycles/element
+Float Sum simd_v1: SSE code, 1*VSIZE-way parallelism:
+Best: 0.37 (54%), Overall Best: 0.38 40-most: 0.38 cycles/element
+Float Sum simd_v2: SSE code, 2*VSIZE-way parallelism:
+Best: 0.18 (62%), Overall Best: 0.18 40-most: 0.19 cycles/element
+Float Sum simd_v4: SSE code, 4*VSIZE-way parallelism:
+Best: 0.13 (80%), Overall Best: 0.13 40-most: 0.13 cycles/element
+Float Sum simd_v8: SSE code, 8*VSIZE-way parallelism:
+Best: 0.11 (10%), Overall Best: 0.12 40-most: 0.12 cycles/element
+Float Sum simd_v10: SSE code, 10*VSIZE-way parallelism:
+Best: 0.14 (66%), Overall Best: 0.15 40-most: 0.15 cycles/element
+Float Sum simd_v12: SSE code, 12*VSIZE-way parallelism:
+Best: 0.16 (100%), Overall Best: 0.16 40-most: 0.16 cycles/element
+Float Sum simd_v2a: SSE code, 2*VSIZE-way parallelism, reassociate:
+Best: 0.16 (4%), Overall Best: 0.18 40-most: 0.18 cycles/element
+Float Sum simd_v4a: SSE code, 4*VSIZE-way parallelism, reassociate:
+Best: 0.11 (2%), Overall Best: 0.12 40-most: 0.13 cycles/element
+Float Sum simd_v8a: SSE code, 8*VSIZE-way parallelism, reassociate:
+Best: 0.11 (26%), Overall Best: 0.12 40-most: 0.12 cycles/element

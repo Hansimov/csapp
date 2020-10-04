@@ -1,0 +1,166 @@
+	.file	"540-floatconst.c"
+	.text
+	.globl	circum
+	.type	circum, @function
+circum:
+	vmulsd	.LC0(%rip), %xmm0, %xmm0
+	ret
+	.size	circum, .-circum
+	.globl	area
+	.type	area, @function
+area:
+	vmulsd	.LC1(%rip), %xmm0, %xmm1
+	vmulsd	%xmm0, %xmm1, %xmm0
+	ret
+	.size	area, .-area
+	.globl	cel2fahr
+	.type	cel2fahr, @function
+cel2fahr:
+	vmulsd	.LC2(%rip), %xmm0, %xmm0
+	vaddsd	.LC3(%rip), %xmm0, %xmm0
+	ret
+	.size	cel2fahr, .-cel2fahr
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC5:
+	.string	"lo = %u (0x%x)\n"
+.LC6:
+	.string	"hi = %u (0x%x)\n"
+.LC7:
+	.string	"exp = %d (0x%x)\n"
+.LC8:
+	.string	"hi_frac = %d (0x%x)\n"
+.LC9:
+	.string	"frac = %lu (0x%lx)\n"
+.LC10:
+	.string	"frac_val = %.15g\n"
+.LC11:
+	.string	"val = %.15g\n"
+	.text
+	.globl	decode
+	.type	decode, @function
+decode:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$24, %rsp
+	movl	%edi, %edx
+	movl	%esi, %ebx
+	movl	%esi, %r13d
+	shrl	$20, %r13d
+	movl	%esi, %r12d
+	andl	$1048575, %r12d
+	movq	%r12, %rcx
+	salq	$32, %rcx
+	movabsq	$4503599627370496, %rax
+	addq	%rax, %rcx
+	movl	%edi, %eax
+	leaq	(%rcx,%rax), %rbp
+	vcvtsi2sdq	%rbp, %xmm0, %xmm0
+	vmulsd	.LC4(%rip), %xmm0, %xmm1
+	leal	-1023(%r13), %ecx
+	movl	$1, %eax
+	sall	%cl, %eax
+	vcvtsi2sd	%eax, %xmm0, %xmm0
+	vmovsd	%xmm1, (%rsp)
+	vmulsd	%xmm1, %xmm0, %xmm2
+	vmovsd	%xmm2, 8(%rsp)
+	movl	%edi, %ecx
+	movl	$.LC5, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	%ebx, %ecx
+	movl	%ebx, %edx
+	movl	$.LC6, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	%r13d, %ecx
+	movl	%r13d, %edx
+	movl	$.LC7, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	%r12d, %ecx
+	movl	%r12d, %edx
+	movl	$.LC8, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movq	%rbp, %rcx
+	movq	%rbp, %rdx
+	movl	$.LC9, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	vmovsd	(%rsp), %xmm0
+	movl	$.LC10, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	vmovsd	8(%rsp), %xmm0
+	movl	$.LC11, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	addq	$24, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+	.size	decode, .-decode
+	.globl	main
+	.type	main, @function
+main:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movq	%rsi, %rbp
+	movl	$1074340347, %esi
+	movl	$1413754136, %ebx
+	cmpl	$3, %edi
+	jne	.L9
+	movq	8(%rbp), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtoul
+	movl	%eax, %ebx
+	movq	16(%rbp), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtoul
+	movl	%eax, %esi
+.L9:
+	movl	%ebx, %edi
+	call	decode
+	movl	$0, %eax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+	.size	main, .-main
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC0:
+	.long	1413754136
+	.long	1075388923
+	.align 8
+.LC1:
+	.long	1413754136
+	.long	1074340347
+	.align 8
+.LC2:
+	.long	3435973837
+	.long	1073532108
+	.align 8
+.LC3:
+	.long	0
+	.long	1077936128
+	.align 8
+.LC4:
+	.long	0
+	.long	1018167296
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

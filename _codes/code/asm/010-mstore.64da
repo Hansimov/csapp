@@ -1,0 +1,16 @@
+
+010-mstore.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+/* $begin 010-mstore-rel-d 7 */
+# Disassembly of function {\em multstore} in binary file {\em mstore.o}
+0000000000000000 <multstore>:
+#Offset   Bytes                        Equivalent assembly language
+   0:	53                   	push   %rbx
+   1:	48 89 d3             	mov    %rdx,%rbx
+   4:	e8 00 00 00 00       	callq  9 <multstore+0x9>
+   9:	48 89 03             	mov    %rax,(%rbx)
+   c:	5b                   	pop    %rbx
+   d:	c3                   	retq   
+/* $end 010-mstore-rel-d 7 */

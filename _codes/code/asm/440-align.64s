@@ -1,0 +1,18 @@
+	.file	"440-align.c"
+	.text
+	.globl	bsize
+	.type	bsize, @function
+bsize:
+	movl	$56, %eax
+	ret
+	.size	bsize, .-bsize
+	.globl	lsize
+	.type	lsize, @function
+lsize:
+	movl	$40, %eax
+	ret
+	.size	lsize, .-lsize
+	.comm	rec,40,32
+	.comm	rec_a,56,32
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,25 @@
+whaleshark> make run-psum-mutex
+/usr/bin/time ./psum-mutex 1 31
+67.67user 0.01system 1:07.70elapsed 99%CPU (0avgtext+0avgdata 2256maxresident)k
+0inputs+0outputs (0major+187minor)pagefaults 0swaps
+68
+
+/usr/bin/time ./psum-mutex 2 31
+370.05user 420.55system 7:11.73elapsed 183%CPU (0avgtext+0avgdata 2272maxresident)k
+0inputs+0outputs (0major+188minor)pagefaults 0swaps
+432
+
+/usr/bin/time ./psum-mutex 4 31
+529.73user 2115.06system 11:59.33elapsed 367%CPU (0avgtext+0avgdata 2336maxresident)k
+0inputs+0outputs (0major+192minor)pagefaults 0swaps
+719
+
+/usr/bin/time ./psum-mutex 8 31
+379.75user 1821.96system 9:12.33elapsed 398%CPU (0avgtext+0avgdata 2480maxresident)k
+0inputs+0outputs (0major+201minor)pagefaults 0swaps
+552
+
+/usr/bin/time ./psum-mutex 16 31
+392.70user 1999.65system 9:59.07elapsed 399%CPU (0avgtext+0avgdata 2736maxresident)k
+0inputs+0outputs (0major+217minor)pagefaults 0swaps
+599

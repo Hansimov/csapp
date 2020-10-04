@@ -1,0 +1,16 @@
+Long Sum combine4: Array reference, accumulate in temporary:
+Best: 14.02 (2%), Overall Best: 14.29 40-most: 14.36 cycles/element
+Long Sum combine5: Array code, unrolled by 2:
+Best: 13.68 (16%), Overall Best: 13.75 40-most: 13.82 cycles/element
+Long Sum unroll3a: Array code, unrolled by 3:
+Best: 13.41 (2%), Overall Best: 13.48 40-most: 13.62 cycles/element
+Long Sum unroll4a: Array code, unrolled by 4:
+Best: 13.55 (52%), Overall Best: 13.62 40-most: 13.68 cycles/element
+Long Sum unroll5a: Array code, unrolled by 5:
+Best: 13.48 (12%), Overall Best: 13.55 40-most: 13.75 cycles/element
+Long Sum unroll6a: Array code, unrolled by 6:
+Best: 13.01 (4%), Overall Best: 13.01 40-most: 13.62 cycles/element
+Long Sum unroll8a: Array code, unrolled by 8:
+Best: 13.41 (2%), Overall Best: 13.62 40-most: 13.68 cycles/element
+Long Sum unroll16a: Array code, unrolled by 16:
+Best: 13.68 (2%), Overall Best: 13.75 40-most: 13.82 cycles/element

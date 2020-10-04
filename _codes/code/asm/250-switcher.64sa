@@ -1,0 +1,103 @@
+	.file	"250-switcher.c"
+	.text
+	.globl	switcher
+	.type	switcher, @function
+/* $begin 250-switcher-s 5 */
+# void switcher(long a, long b, long c, long *dest)
+# a in \rdireg, b in \rsireg{}, c in \rdxreg{}, d in \rcxreg
+switcher:
+	cmpq	$7, %rdi
+	ja	.L2  ## line:asm:switcher:gotodefault
+	jmp	*.L4(,%rdi,8)
+	.section	.rodata
+/* $end 250-switcher-s 5 */
+	.align 8
+	.align 4
+/* $begin 250-switcher-jt 12 */
+.L4:
+	.quad	.L3
+	.quad	.L2
+	.quad	.L5
+	.quad	.L2
+	.quad	.L6
+	.quad	.L7
+	.quad	.L2
+	.quad	.L5
+/* $end 250-switcher-jt 12 */
+	.text
+/* $begin 250-switcher-s 22 */
+.L7:
+	xorq	$15, %rsi
+	movq	%rsi, %rdx ## line:asm:switcher:fallthrough
+.L3:
+	leaq	112(%rdx), %rdi
+	jmp	.L6
+.L5:
+	leaq	(%rdx,%rsi), %rdi
+	salq	$2, %rdi
+	jmp	.L6
+.L2:
+	movq	%rsi, %rdi
+.L6:
+	movq	%rdi, (%rcx)
+	ret
+/* $end 250-switcher-s 22 */
+	.size	switcher, .-switcher
+	.section	.rodata.str1.1,"aMS",@progbits,1
+	.string	"Switcher(%d, %d, %d) --> %d\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$56, %rsp
+	movq	%rsi, %r13
+	movq	$1, 16(%rsp)
+	movq	$2, 24(%rsp)
+	movq	$3, 32(%rsp)
+	movl	$0, %ebx
+	leal	-1(%rdi), %r12d
+	jmp	.L9
+.L11:
+	movslq	%ebx, %rbp
+	movq	8(%r13,%rbp,8), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	cltq
+	movq	%rax, 16(%rsp,%rbp,8)
+	addl	$1, %ebx
+.L9:
+	cmpl	$2, %ebx
+	jg	.L10
+	cmpl	%ebx, %r12d
+	jg	.L11
+.L10:
+	movq	32(%rsp), %r12
+	movq	24(%rsp), %rbp
+	movq	16(%rsp), %rbx
+	leaq	8(%rsp), %rcx
+	movq	%r12, %rdx
+	movq	%rbp, %rsi
+	movq	%rbx, %rdi
+	call	switcher
+	movq	8(%rsp), %r9
+	movq	%r12, %r8
+	movq	%rbp, %rcx
+	movq	%rbx, %rdx
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %eax
+	addq	$56, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

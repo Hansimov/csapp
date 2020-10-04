@@ -1,0 +1,50 @@
+	.file	"w210-okmul-asm-proto.c"
+	.text
+/* $begin w210-tmult_ok_asm-proto-s */
+	.globl	tmult_ok_asm
+/* $end w210-tmult_ok_asm-proto-s */
+	.type	tmult_ok_asm, @function
+/* $begin w210-tmult_ok_asm-proto-s */
+tmult_ok_asm:
+	imulq	%rdi, %rsi		
+	movq	%rsi, (%rdx)		
+	testq	%rsi, %rsi		// line:asm:tmult_ok_asm_proto:testq
+	setg	%al   			// line:asm:tmult_ok_asm_proto:setg
+	movzbl	%al, %eax
+	ret
+/* $end w210-tmult_ok_asm-proto-s */
+	.size	tmult_ok_asm, .-tmult_ok_asm
+/* $begin w210-umult_ok_asm-proto-s */
+	.globl	umult_ok_asm
+/* $end w210-umult_ok_asm-proto-s */
+	.type	umult_ok_asm, @function
+/* $begin w210-umult_ok_asm-proto-s */
+umult_ok_asm:
+	imulq	%rdi, %rsi
+	movq	%rsi, (%rdx)
+	testq	%rsi, %rsi
+	setne	%al
+	movzbl	%al, %eax
+	ret
+/* $end w210-umult_ok_asm-proto-s */
+	.size	umult_ok_asm, .-umult_ok_asm
+	.globl	tmult_sat
+	.type	tmult_sat, @function
+tmult_sat:
+	movq	%rdi, %rdx
+	notq	%rdx
+	shrq	$63, %rdx
+	movq	%rsi, %rax
+	shrq	$63, %rax
+	xorb	%dl, %al
+	movabsq	$-9223372036854775808, %rax
+	movabsq	$9223372036854775807, %rdx
+	cmove	%rax, %rdx
+	movq	%rdi, %rax
+	imulq	%rsi, %rax
+	testq	%rax, %rax
+	cmovne	%rdx, %rax
+	ret
+	.size	tmult_sat, .-tmult_sat
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

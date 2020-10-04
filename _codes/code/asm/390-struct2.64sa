@@ -1,0 +1,31 @@
+	.file	"390-struct2.c"
+	.text
+	.globl	sp_init
+	.type	sp_init, @function
+/* $begin 390-struct2-s 5 */
+# void sp_init(struct prob *sp)
+# sp in \rdireg{}
+sp_init:
+	movl	12(%rdi), %eax
+	movl	%eax, 8(%rdi)
+	leaq	8(%rdi), %rax
+	movq	%rax, (%rdi)
+	movq	%rdi, 16(%rdi)
+	ret
+/* $end 390-struct2-s 5 */
+
+/* $begin 390-struct2-ans-s 5 */
+# void sp_init(struct prob *sp)
+# sp in \rdireg{}
+sp_init:
+	movl	12(%rdi), %eax	# Get sp->s.y
+	movl	%eax, 8(%rdi)	# Save in sp->s.x
+	leaq	8(%rdi), %rax	# Compute &(sp->s.x)
+	movq	%rax, (%rdi)	# Store in sp->p
+	movq	%rdi, 16(%rdi)	# Store sp in sp->next
+	ret
+/* $end 390-struct2-ans-s 5 */
+
+	.size	sp_init, .-sp_init
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

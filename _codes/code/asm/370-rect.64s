@@ -1,0 +1,47 @@
+	.file	"370-rect.c"
+	.text
+	.globl	nothing
+	.type	nothing, @function
+nothing:
+	movq	%rdi, %rax
+	movl	$16711935, -24(%rsp)
+	movq	$0, (%rdi)
+	movq	$0, 8(%rdi)
+	movq	$10, 16(%rdi)
+	movq	$20, 24(%rdi)
+	movq	-24(%rsp), %rdx
+	movq	%rdx, 32(%rdi)
+	ret
+	.size	nothing, .-nothing
+	.globl	nothing2
+	.type	nothing2, @function
+nothing2:
+	movq	%rdi, %rax
+	movl	$20, -24(%rsp)
+	movq	$0, (%rdi)
+	movq	$0, 8(%rdi)
+	movq	$16711935, 16(%rdi)
+	movq	$10, 24(%rdi)
+	movq	-24(%rsp), %rdx
+	movq	%rdx, 32(%rdi)
+	ret
+	.size	nothing2, .-nothing2
+	.globl	area
+	.type	area, @function
+area:
+	movq	24(%rdi), %rax
+	imulq	16(%rdi), %rax
+	ret
+	.size	area, .-area
+	.globl	rotate_left
+	.type	rotate_left, @function
+rotate_left:
+	movq	24(%rdi), %rax
+	movq	16(%rdi), %rdx
+	movq	%rdx, 24(%rdi)
+	movq	%rax, 16(%rdi)
+	subq	%rax, (%rdi)
+	ret
+	.size	rotate_left, .-rotate_left
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

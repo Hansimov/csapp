@@ -1,0 +1,15 @@
+	.file	"060-decode1-ans.c"
+	.text
+	.globl	decode1
+	.type	decode1, @function
+decode1:
+	movq	(%rdi), %r8
+	movq	(%rsi), %rcx
+	movq	(%rdx), %rax
+	movq	%r8, (%rsi)
+	movq	%rcx, (%rdx)
+	movq	%rax, (%rdi)
+	ret
+	.size	decode1, .-decode1
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

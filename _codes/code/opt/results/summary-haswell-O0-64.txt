@@ -1,0 +1,62 @@
+isb	ipb	lsb	lpb	fsb	fpb	dsb	dpb	funct		description
+22.38	20.18	22.68	20.02	22.53	20.15	19.98	20.18	combine1	Maximum use of data abstraction
+16.53	16.55	16.54	16.54	16.57	16.54	16.60	16.53	combine2	Take vec_length() out of loop
+8.27	9.02	8.28	9.02	9.02	11.03	9.02	11.03	combine3	Array reference to vector data
+8.64	9.07	8.82	9.10	9.07	11.19	9.10	11.25	combine3w	Update *dest within loop only with write
+8.59	9.02	8.58	9.02	9.02	11.02	9.02	11.02	combine4	Array reference, accumulate in temporary
+8.59	9.02	7.95	9.02	9.02	11.02	9.02	11.02	combine4b	Include bonds check in loop
+7.05	9.02	7.78	9.02	9.02	11.02	9.02	11.02	combine4p	Pointer reference, accumulate in temporary
+4.02	6.02	4.02	6.02	6.02	8.02	6.02	8.02	combine5	Array code, unrolled by 2
+4.01	6.02	4.01	6.02	6.01	8.02	6.02	8.02	combine5p	Pointer code, unrolled by 2, for loop
+7.02	9.02	7.02	9.02	9.02	11.02	9.02	11.02	unroll2aw	Array code, unrolled by 2, while loop
+7.02	9.02	7.02	9.02	9.02	11.03	9.02	11.02	unroll3a	Array code, unrolled by 3
+4.01	6.01	4.02	6.02	6.02	8.02	6.01	8.02	unroll4a	Array code, unrolled by 4
+4.61	6.62	4.61	6.62	6.62	8.62	6.62	8.62	unroll5a	Array code, unrolled by 5
+4.02	6.02	4.02	6.02	6.02	8.02	6.02	8.02	unroll6a	Array code, unrolled by 6
+4.45	6.45	4.45	6.45	6.45	8.45	6.45	8.45	unroll7a	Array code, unrolled by 7
+4.02	6.02	4.02	6.02	6.02	8.02	6.02	8.02	unroll8a	Array code, unrolled by 8
+4.35	6.35	4.35	6.34	6.35	8.35	6.35	8.35	unroll9a	Array code, unrolled by 9
+4.02	6.02	4.02	6.01	6.01	8.02	6.01	8.02	unroll10a	Array code, unrolled by 10
+4.00	6.01	4.01	6.01	6.01	8.01	6.01	8.01	unroll16a	Array code, unrolled by 16
+7.02	9.02	7.02	9.02	9.02	11.02	9.02	11.03	unroll2	Pointer code, unrolled by 2
+7.02	9.02	7.02	9.02	9.02	11.03	9.02	11.02	unroll3	Pointer code, unrolled by 3
+7.02	9.02	7.02	9.02	9.02	11.02	9.02	11.02	unroll4	Pointer code, unrolled by 4
+7.02	9.02	7.02	9.02	9.02	11.02	9.02	11.02	unroll8	Pointer code, unrolled by 8
+7.02	9.02	7.02	9.02	9.02	11.02	9.02	11.02	unroll16	Pointer code, unrolled by 16
+4.79	5.09	4.79	5.09	5.10	5.52	5.09	5.51	combine6	Array code, unrolled by 2, Superscalar x2
+3.53	4.51	3.53	4.51	4.51	5.51	4.51	5.51	unroll4x2a	Array code, unrolled by 4, Superscalar x2
+3.54	4.52	3.55	4.52	4.52	5.51	4.52	5.51	unroll8x2a	Array code, unrolled by 8, Superscalar x2
+3.63	3.78	3.63	3.79	3.78	3.80	3.78	3.80	unroll3x3a	Array code, unrolled by 3, Superscalar x3
+3.01	3.15	3.01	3.15	3.14	3.29	3.14	3.29	unroll4x4a	Array code, unrolled by 4, Superscalar x4
+2.76	2.86	2.77	2.87	2.86	2.95	2.86	2.95	unroll5x5a	Array code, unrolled by 5, Superscalar x5
+2.80	2.95	2.80	2.96	2.94	2.93	2.95	2.94	unroll6x6a	Array code, unrolled by 6, Superscalar x6
+2.89	2.94	2.88	2.92	2.90	2.91	2.88	2.90	unroll7x7a	Array code, unrolled by 7, Superscalar x7
+2.88	2.96	2.89	2.95	2.95	3.06	2.96	3.06	unroll8x4a	Array code, unrolled by 8, Superscalar x4
+2.87	2.93	2.85	2.91	2.91	2.91	2.89	2.88	unroll8x8a	Array code, unrolled by 8, Superscalar x8
+2.80	2.91	2.78	2.91	2.91	2.93	2.89	2.92	unroll9x9a	Array code, unrolled by 9, Superscalar x9
+2.66	2.69	2.66	2.69	2.71	2.79	2.70	2.76	unroll10x10a	Array code, unrolled by 10, Superscalar x10
+2.64	2.67	2.64	2.68	2.67	2.75	2.67	2.75	unroll2x6a	Array code, unrolled by 12, Superscalar x6
+2.54	2.57	2.54	2.56	2.56	2.60	2.54	2.57	unroll12x12a	Array code, unrolled by 12, Superscalar x12
+3.51	4.51	3.51	4.51	4.51	5.51	4.51	5.51	unroll8x2	Pointer code, unrolled by 8, Superscalar x2
+2.43	2.43	2.44	2.43	2.43	2.76	2.44	2.76	unroll8x4	Pointer code, unrolled by 8, Superscalar x4
+2.17	2.22	2.17	2.22	2.22	2.28	2.22	2.29	unroll8x8	Pointer code, unrolled by 8, Superscalar x8
+2.45	3.02	2.49	3.02	3.01	3.67	3.02	3.67	unroll9x3	Pointer code, unrolled by 9, Superscalar x3
+4.71	5.07	4.71	5.05	4.94	5.51	4.94	5.51	unrollx2as	Array code, Unroll x2, Superscalar x2, noninterleaved
+4.02	4.12	4.03	4.13	4.51	5.51	4.51	5.51	combine7	Array code, unrolled by 2, different associativity
+3.21	3.09	3.21	3.09	3.11	3.68	3.11	3.68	unroll3aa	Array code, unrolled by 3, Different Associativity
+3.07	3.17	3.07	3.18	3.17	3.20	3.17	3.20	unroll4aa	Array code, unrolled by 4, Different Associativity
+3.03	3.03	3.04	3.03	3.03	3.14	3.03	3.14	unroll5aa	Array code, unrolled by 5, Different Associativity
+2.88	2.85	2.89	2.86	2.85	2.92	2.85	2.93	unroll6aa	Array code, unrolled by 6, Different Associativity
+3.25	3.22	3.25	3.22	3.22	3.33	3.22	3.34	unroll7aa	Array code, unrolled by 7, Different Associativity
+2.97	3.01	2.99	3.01	3.00	3.10	3.01	3.10	unroll8aa	Array code, unrolled by 8, Different Associativity
+2.97	3.07	2.99	3.06	3.05	3.17	3.05	3.17	unroll9aa	Array code, unrolled by 9, Different Associativity
+2.82	2.97	2.83	2.98	2.87	3.02	2.87	3.02	unroll10aa	Array code, unrolled by 10, Different Associativity
+2.77	2.81	2.77	2.82	2.79	2.99	2.79	3.00	unroll12aa	Array code, unrolled by 12, Different Associativity
+1.01	2.46	2.03	4.51	1.26	1.51	2.51	3.01	simd_v1	SSE code, 1*VSIZE-way parallelism
+0.70	1.11	1.25	2.40	0.72	0.82	1.30	1.52	simd_v2	SSE code, 2*VSIZE-way parallelism
+0.56	0.59	1.06	1.75	0.57	0.59	1.09	1.07	simd_v4	SSE code, 4*VSIZE-way parallelism
+0.48	0.43	0.96	1.67	0.49	0.47	0.97	0.93	simd_v8	SSE code, 8*VSIZE-way parallelism
+0.50	0.51	0.71	1.61	0.53	0.56	0.73	0.72	simd_v12	SSE code, 12*VSIZE-way parallelism
+0.64	1.10	1.10	2.29	0.71	0.81	1.28	1.51	simd_v2a	SSE code, 2*VSIZE-way parallelism, reassociate
+0.46	0.59	0.89	2.02	0.45	0.48	0.85	0.88	simd_v4a	SSE code, 4*VSIZE-way parallelism, reassociate
+0.38	0.42	0.72	1.97	1.31	1.26	2.61	2.64	simd_v8a	SSE code, 8*VSIZE-way parallelism, reassociate

@@ -1,0 +1,98 @@
+	.file	"520-floatfunct.c"
+	.text
+	.globl	funct
+	.type	funct, @function
+/* $begin 520-float_funct-s 5 */
+# double funct(double a, float x, double b, int i)
+# a in %xmm0, x in %xmm1, b in %xmm2, i in \edireg{}
+funct:
+	# The following two instructions convert x to double
+	vunpcklps	%xmm1, %xmm1, %xmm1	##line:asm:funct:f2d1
+	vcvtps2pd	%xmm1, %xmm1        ##line:asm:funct:f2d2
+	vmulsd	%xmm0, %xmm1, %xmm0	    # Multiply a by x
+	vcvtsi2sd	%edi, %xmm1, %xmm1  # Convert i to double # line:asm:funct:i2d
+	vdivsd	%xmm1, %xmm2, %xmm2  	    # Compute b/i
+	vsubsd	%xmm2, %xmm0, %xmm0	    # Subtract from a*x
+	ret	       	      		    # Return
+/* $end 520-float_funct-s 5 */
+	.size	funct, .-funct
+	.globl	find_range
+	.type	find_range, @function
+/* $begin 520-find_range-s 16 */
+# range_t find_range(float x)
+# x in %xmm0
+find_range:
+	vxorps	%xmm1, %xmm1, %xmm1	   #   Set %xmm1 = 0  # line:asm:findrange:xor
+	vucomiss	%xmm0, %xmm1	   #   Compare 0:x
+	ja	.L5	       		   #   If >, goto \textbf{neg}  #line:asm:findrange:ja
+	vucomiss	%xmm1, %xmm0	   #   Compare x:0
+	jp	.L8	       		   #   If NaN, goto \textbf{posornan}  #line:asm:findrange:jp
+	movl	$1, %eax		   #   Result = ZERO
+	je	.L3 			   #   If =, goto \textbf{done} # line:asm:findrange:je
+.L8:					   # \textbf{posornan:}
+	vucomiss	.LC0(%rip), %xmm0  #   Compare x:0  # line:asm:findrange:comp3
+	setbe	%al		    	   #   Set result = NaN ? 1 : 0 # line:asm:findrange:setbe
+	movzbl	%al, %eax		   #   Zero-extend
+	addl	$2, %eax		   #   result += 2 (POS for > 0, OTHER for NaN) # line:asm:findrange:addl
+	ret	    			   #   Return
+.L5:					   # \textbf{neg:}
+	movl	$0, %eax		   #   Result = NEG
+.L3:		    			   # \textbf{done:}
+	rep; ret			   #   Return
+/* $end 520-find_range-s 16 */
+	.size	find_range, .-find_range
+	.globl	xfer
+	.type	xfer, @function
+xfer:
+	vcvtsi2ss	ss1(%rip), %xmm0, %xmm0
+	vmovss	%xmm0, si+16(%rip)
+	vcvtsi2sd	ss2(%rip), %xmm0, %xmm0
+	vmovsd	%xmm0, si+24(%rip)
+	vcvtsi2ssq	ss1+8(%rip), %xmm0, %xmm0
+	vmovss	%xmm0, sl+16(%rip)
+	vcvtsi2sdq	ss2+8(%rip), %xmm0, %xmm0
+	vmovsd	%xmm0, sl+24(%rip)
+	vcvttss2si	ss1+16(%rip), %eax
+	movl	%eax, sf(%rip)
+	vmovss	ss2+16(%rip), %xmm0
+	vcvttss2siq	%xmm0, %rax
+	movq	%rax, sf+8(%rip)
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm1
+	vmovsd	%xmm1, sf+24(%rip)
+	vmovsd	ss1+24(%rip), %xmm0
+	vcvttsd2si	%xmm0, %eax
+	movl	%eax, sd(%rip)
+	vcvttsd2siq	ss2+24(%rip), %rax
+	movq	%rax, sd+8(%rip)
+	vmovddup	%xmm0, %xmm2
+	vcvtpd2psx	%xmm2, %xmm2
+	vmovss	%xmm2, sd+16(%rip)
+	ret
+	.size	xfer, .-xfer
+	.globl	copy_vals
+	.type	copy_vals, @function
+copy_vals:
+	vcvttss2si	%xmm0, %eax
+	movl	%eax, (%rdx)
+	vcvttsd2siq	%xmm1, %rax
+	movq	%rax, (%rcx)
+	vmovddup	%xmm1, %xmm2
+	vcvtpd2psx	%xmm2, %xmm2
+	vmovss	%xmm2, (%r8)
+	vcvtsi2sdq	%rsi, %xmm0, %xmm0
+	vmovsd	%xmm0, (%r9)
+	ret
+	.size	copy_vals, .-copy_vals
+	.comm	sd,32,32
+	.comm	sf,32,32
+	.comm	sl,32,32
+	.comm	si,32,32
+	.comm	ss2,32,32
+	.comm	ss1,32,32
+	.section	.rodata.cst4,"aM",@progbits,4
+	.align 4
+.LC0:
+	.long	0
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,246 @@
+	.file	"190-fun.c"
+	.text
+	.globl	test_fun_a
+	.type	test_fun_a, @function
+test_fun_a:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+	jmp	.L2
+.L3:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	xorq	%rdx, %rax
+	addq	$1, %rcx
+.L2:
+	cmpq	$63, %rcx
+	jle	.L3
+	rep; ret
+	.size	test_fun_a, .-test_fun_a
+	.globl	fun_a
+	.type	fun_a, @function
+/* $begin 190-fun_a-s 25 */
+# long fun_a(unsigned long x)
+# x in \rdireg{}
+fun_a:
+	movl	$0, %eax
+	jmp	.L5 ## line:asm:fun_a:jmp
+.L6:
+	xorq	%rdi, %rax
+	shrq	%rdi         # Shift right by 1
+.L5:
+	testq	%rdi, %rdi
+	jne	.L6
+	andl	$1, %eax
+	ret
+/* $end 190-fun_a-s 25 */
+	.size	fun_a, .-fun_a
+	.globl	fun_b
+	.type	fun_b, @function
+/* $begin 190-fun_b-s 39 */
+# long fun_b(unsigned long x)
+# x in \rdireg{}
+fun_b:
+	movl	$0, %edx
+	movl	$0, %eax
+	jmp	.L8
+.L9:
+	addq	%rax, %rax
+	movq	%rdi, %rcx
+	andl	$1, %ecx
+	orq	%rcx, %rax
+	shrq	%rdi         # Shift right by 1
+	addq	$1, %rdx
+.L8:
+	cmpq	$63, %rdx
+	jle	.L9
+	rep; ret
+/* $end 190-fun_b-s 39 */
+	.size	fun_b, .-fun_b
+	.globl	test_fun_b
+	.type	test_fun_b, @function
+test_fun_b:
+	movl	$0, %eax
+	movl	$63, %esi
+	movl	$0, %edx
+	movl	$1, %r8d
+	movl	$1, %r9d
+	jmp	.L11
+.L13:
+	movq	%r8, %r10
+	movl	%edx, %ecx
+	salq	%cl, %r10
+	testq	%rdi, %r10
+	je	.L12
+	movl	%r9d, %r11d
+	movl	%esi, %ecx
+	sall	%cl, %r11d
+	movslq	%r11d, %rcx
+	orq	%rcx, %rax
+.L12:
+	addq	$1, %rdx
+	subq	$1, %rsi
+.L11:
+	cmpq	$63, %rdx
+	jle	.L13
+	rep; ret
+	.size	test_fun_b, .-test_fun_b
+	.globl	fun_c
+	.type	fun_c, @function
+fun_c:
+	movl	$0, %eax
+	movl	$0, %edx
+	jmp	.L15
+.L16:
+	movq	%rdi, %rcx
+	andl	$16843009, %ecx
+	addq	%rcx, %rdx
+	shrq	%rdi
+	addq	$1, %rax
+.L15:
+	cmpq	$7, %rax
+	jle	.L16
+	movq	%rdx, %rax
+	sarq	$16, %rax
+	addq	%rax, %rdx
+	movq	%rdx, %rax
+	sarq	$8, %rax
+	addq	%rax, %rdx
+	movzbl	%dl, %eax
+	ret
+	.size	fun_c, .-fun_c
+	.globl	test_fun_c
+	.type	test_fun_c, @function
+test_fun_c:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+	jmp	.L18
+.L19:
+	movl	%esi, %edx
+	sall	%cl, %edx
+	movslq	%edx, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+.L18:
+	cmpq	$63, %rcx
+	jle	.L19
+	rep; ret
+	.size	test_fun_c, .-test_fun_c
+	.globl	test_count_p
+	.type	test_count_p, @function
+test_count_p:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+	jmp	.L21
+.L22:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+.L21:
+	cmpq	$63, %rcx
+	jle	.L22
+	rep; ret
+	.size	test_count_p, .-test_count_p
+	.globl	count_p
+	.type	count_p, @function
+count_p:
+	movl	$0, %eax
+	jmp	.L24
+.L25:
+	movq	%rdi, %rdx
+	shrq	$63, %rdx
+	addq	%rdx, %rax
+	addq	%rdi, %rdi
+.L24:
+	testq	%rdi, %rdi
+	jne	.L25
+	rep; ret
+	.size	count_p, .-count_p
+	.globl	count_q
+	.type	count_q, @function
+count_q:
+	movabsq	$-9223372036854775808, %rdx
+	movl	$0, %eax
+	jmp	.L27
+.L28:
+	testq	%rdx, %rdi
+	setne	%cl
+	movzbl	%cl, %ecx
+	addq	%rcx, %rax
+	shrq	%rdx
+.L27:
+	testq	%rdx, %rdx
+	jne	.L28
+	rep; ret
+	.size	count_q, .-count_q
+	.globl	test_count_q
+	.type	test_count_q, @function
+test_count_q:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+	jmp	.L30
+.L31:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+.L30:
+	cmpq	$63, %rcx
+	jle	.L31
+	rep; ret
+	.size	test_count_q, .-test_count_q
+	.globl	count_r
+	.type	count_r, @function
+count_r:
+	movl	$1, %edx
+	movl	$0, %eax
+	jmp	.L33
+.L35:
+	movq	%rdi, %rcx
+	andq	%rdx, %rcx
+	cmpq	$1, %rcx
+	sbbq	$-1, %rax
+	addq	%rdx, %rdx
+.L33:
+	testq	%rdx, %rdx
+	jne	.L35
+	rep; ret
+	.size	count_r, .-count_r
+	.globl	test_count_r
+	.type	test_count_r, @function
+test_count_r:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+	jmp	.L37
+.L38:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+.L37:
+	cmpq	$63, %rcx
+	jle	.L38
+	rep; ret
+	.size	test_count_r, .-test_count_r
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

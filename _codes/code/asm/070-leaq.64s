@@ -1,0 +1,20 @@
+	.file	"070-leaq.c"
+	.text
+	.globl	scale
+	.type	scale, @function
+scale:
+	leaq	(%rdi,%rsi,4), %rax
+	leaq	(%rdx,%rdx,2), %rdx
+	leaq	(%rax,%rdx,4), %rax
+	ret
+	.size	scale, .-scale
+	.globl	scale2
+	.type	scale2, @function
+scale2:
+	leaq	(%rdi,%rdi,4), %rax
+	leaq	(%rax,%rsi,2), %rax
+	leaq	(%rax,%rdx,8), %rax
+	ret
+	.size	scale2, .-scale2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

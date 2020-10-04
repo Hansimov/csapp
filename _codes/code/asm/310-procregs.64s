@@ -1,0 +1,43 @@
+	.file	"310-procregs.c"
+	.text
+	.globl	proc
+	.type	proc, @function
+proc:
+	movq	16(%rsp), %rax
+	addq	%rdi, (%rsi)
+	addl	%edx, (%rcx)
+	addw	%r8w, (%r9)
+	movl	8(%rsp), %edx
+	addb	%dl, (%rax)
+	ret
+	.size	proc, .-proc
+	.globl	call_proc
+	.type	call_proc, @function
+call_proc:
+	subq	$32, %rsp
+	movq	$1, 24(%rsp)
+	movl	$2, 20(%rsp)
+	movw	$3, 18(%rsp)
+	movb	$4, 17(%rsp)
+	leaq	17(%rsp), %rax
+	movq	%rax, 8(%rsp)
+	movl	$4, (%rsp)
+	leaq	18(%rsp), %r9
+	movl	$3, %r8d
+	leaq	20(%rsp), %rcx
+	movl	$2, %edx
+	leaq	24(%rsp), %rsi
+	movl	$1, %edi
+	call	proc
+	movslq	20(%rsp), %rdx
+	addq	24(%rsp), %rdx
+	movswl	18(%rsp), %eax
+	movsbl	17(%rsp), %ecx
+	subl	%ecx, %eax
+	cltq
+	imulq	%rdx, %rax
+	addq	$32, %rsp
+	ret
+	.size	call_proc, .-call_proc
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

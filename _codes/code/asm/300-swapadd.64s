@@ -1,0 +1,29 @@
+	.file	"300-swapadd.c"
+	.text
+	.globl	swap_add
+	.type	swap_add, @function
+swap_add:
+	movq	(%rdi), %rdx
+	movq	(%rsi), %rax
+	movq	%rax, (%rdi)
+	movq	%rdx, (%rsi)
+	addq	%rdx, %rax
+	ret
+	.size	swap_add, .-swap_add
+	.globl	caller
+	.type	caller, @function
+caller:
+	subq	$16, %rsp
+	movq	$534, (%rsp)
+	movq	$1057, 8(%rsp)
+	leaq	8(%rsp), %rsi
+	movq	%rsp, %rdi
+	call	swap_add
+	movq	(%rsp), %rdx
+	subq	8(%rsp), %rdx
+	imulq	%rdx, %rax
+	addq	$16, %rsp
+	ret
+	.size	caller, .-caller
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

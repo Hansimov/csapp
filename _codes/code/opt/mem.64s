@@ -1,0 +1,119 @@
+.Ltext0:
+sum_list:
+	testq	%rdi, %rdi
+	je	.L4
+	movl	$0, %eax
+.L3:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L3
+	rep; ret
+.L4:
+	movl	$0, %eax
+	ret
+
+test_list:
+	pushq	%rbx
+	movq	%rdi, %rbx
+	cmpq	$0, 8(%rdi)
+	movq	static_head(%rip), %rdi
+	cmove	dynamic_head(%rip), %rdi
+	call	sum_list
+	movq	%rax, (%rbx)
+	popq	%rbx
+	ret
+
+init:
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %r12
+	testq	%rdi, %rdi
+	jle	.L9
+	movl	$block_alloc, %ebp
+	movl	$0, %ebx
+.L11:
+	movl	$16, %edi
+	call	malloc
+	movq	%rbx, (%rax)
+	movq	dynamic_head(%rip), %rdx
+	movq	%rdx, 8(%rax)
+	movq	%rax, dynamic_head(%rip)
+	movq	%rbx, 0(%rbp)
+	movq	static_head(%rip), %rax
+	movq	%rax, 8(%rbp)
+	movq	%rbp, static_head(%rip)
+	addq	$1, %rbx
+	addq	$16, %rbp
+	cmpq	%r12, %rbx
+	jne	.L11
+.L9:
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+main:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$40, %rsp
+	movq	$.LC0, 16(%rsp)
+	movq	$.LC1, 24(%rsp)
+	movl	$10000, %ebp
+	cmpl	$1, %edi
+	jle	.L14
+	movq	8(%rsi), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	movslq	%eax, %rbp
+.L14:
+	leaq	-1(%rbp), %r13
+	imulq	%rbp, %r13
+	movq	%r13, %rax
+	shrq	$63, %rax
+	addq	%rax, %r13
+	sarq	%r13
+	movq	%rbp, %rdi
+	call	init
+	movl	$0, %ebx
+.L16:
+	movq	$0, (%rsp)
+	movq	%rbx, 8(%rsp)
+	movq	%rsp, %rdi
+	call	test_list
+	movq	(%rsp), %r12
+	movq	%rsp, %rsi
+	movl	$test_list, %edi
+	call	fcyc
+	vcvtsi2sdq	%rbp, %xmm1, %xmm1
+	vdivsd	%xmm1, %xmm0, %xmm0
+	movq	16(%rsp,%rbx,8), %rcx
+	movq	%r12, %r9
+	movq	%r13, %r8
+	movq	%rbp, %rdx
+	movl	$.LC2, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	addq	$1, %rbx
+	cmpq	$2, %rbx
+	jne	.L16
+	movl	$0, %eax
+	addq	$40, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+static_head:
+dynamic_head:
+.Letext0:
+.Ldebug_info0:
+.Ldebug_abbrev0:
+.Ldebug_loc0:
+.Ldebug_line0:

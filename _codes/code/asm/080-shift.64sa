@@ -1,0 +1,17 @@
+	.file	"080-shift.c"
+	.text
+	.globl	shift_left4_rightn
+	.type	shift_left4_rightn, @function
+/* $begin 080-shift-ans-s 5 */
+# long shift_left4_rightn(long x, long n)
+# x in \rdireg{}, n in \rsireg{}
+shift_left4_rightn:
+	movq	%rdi, %rax  # Get x
+	salq	$4, %rax    # x <<= 4
+	movl	%esi, %ecx  # Get n (4 bytes)
+	sarq	%cl, %rax   # x >>= n
+/* $end 080-shift-ans-s 5 */
+	ret
+	.size	shift_left4_rightn, .-shift_left4_rightn
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

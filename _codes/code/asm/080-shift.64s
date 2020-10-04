@@ -1,0 +1,13 @@
+	.file	"080-shift.c"
+	.text
+	.globl	shift_left4_rightn
+	.type	shift_left4_rightn, @function
+shift_left4_rightn:
+	movq	%rdi, %rax
+	salq	$4, %rax
+	movl	%esi, %ecx
+	sarq	%cl, %rax
+	ret
+	.size	shift_left4_rightn, .-shift_left4_rightn
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

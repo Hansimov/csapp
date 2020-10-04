@@ -1,0 +1,9 @@
+	.file	"420-node.c"
+	.text
+	.globl	dothings
+	.type	dothings, @function
+dothings:
+	rep; ret
+	.size	dothings, .-dothings
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

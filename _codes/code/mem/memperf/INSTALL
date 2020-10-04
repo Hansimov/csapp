@@ -1,0 +1,80 @@
+/*
+ * Memory System Performance Characterisation
+ * ECT memperf - Extended Copy Transfer Characterization
+ *
+ * Thomas M. Stricker <tomstr@inf.ethz.ch>
+ * Christian Kurmann  <kurmann@inf.ethz.ch>
+ * http://www.cs.inf.ethz.ch/CoPs/ECT/
+ *
+ * Changes in Changelog
+ */
+
+To install the memperf benchmark under UNIX use the
+provided Makefile. Select the apropriate compiler and
+compiler options and use make to compile the benchmark.
+
+
+Time measurments:
+-----------------
+There are two different methods for time measurement. The
+standard method uses the unix gettimeofday() call,
+which normally has a resolution of 1 or 10 usec. On 
+Pentium or Alpha systems, a processor internal high 
+resolution timer can be used. It is a clock
+counter and therefore has a resolution which is equal to 
+the clock frequency of the processor.
+
+To compile the benchmark for standard unix use:
+
+make
+
+If you run the test on a Pentium system, you should use
+the high resolution hardware counter:
+
+make pentium
+
+Equivalent for Alpha systems with the Alpha hardware 
+counters:
+
+make alpha
+
+
+Shared memory:
+--------------
+If you want to use the same shared memory segments for all 
+the processes in a multiprocessor machine you can compile 
+the code with:
+
+make shmem
+
+This produces an executable called memperf_shared which is
+used the same way as memperf.
+
+Special instructions for x86:
+-----------------------------
+If you want to use the optimized functions, you need a cpu which 
+supports these instructions.
+
+Intel: CPU must have SSE; PIII, P4 or Celeron with Coppermine
+       core (533a and faster for desktop cpus) or newer core.
+
+AMD:   CPU must have at least Enhanced 3dnow!; Duron, Athlon or
+       newer (but not K6-x).
+
+Other: CPU needs SSE or Enhanced 3dnow!
+
+These optimizations are only supported under unix, need a recent enough
+build environment (the assembler needs to know SSE instructions) and very
+likely gcc to compile (gcc extension for inline assembly is used).
+You can decide at runtime if you want to use optimizations.
+
+Compile with:
+
+make pentiumopt
+
+Win32:
+------
+Under Windows98/Me/NT/2000/XP we used the MS Visual C++ Compiler 6
+to generate the binary. We've added the project file to the
+distribution.
+

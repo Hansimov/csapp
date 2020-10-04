@@ -1,0 +1,32 @@
+	.file	"060-decode1-ans.c"
+	.text
+	.globl	decode1
+	.type	decode1, @function
+/* $begin 060-decode1-ans-s 5 */
+# void decode1(long *xp, long *yp, long *zp) 
+# xp in \rdireg{}, yp in \rsireg{}, zp in \rdxreg{}
+decode1:
+	movq	(%rdi), %r8
+	movq	(%rsi), %rcx
+	movq	(%rdx), %rax
+	movq	%r8, (%rsi)
+	movq	%rcx, (%rdx)
+	movq	%rax, (%rdi)
+	ret
+/* $end 060-decode1-ans-s 5 */
+	.size	decode1, .-decode1
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin 060-decode1-ann-s 5 */
+# void decode1(long *xp, long *yp, long *zp) 
+# xp in \rdireg{}, yp in \rsireg{}, zp in \rdxreg{}
+decode1:
+	movq	(%rdi), %r8   # Get x = *xp
+	movq	(%rsi), %rcx  # Get y = *yp
+	movq	(%rdx), %rax  # Get z = *zp
+	movq	%r8, (%rsi)   # Store x at yp
+	movq	%rcx, (%rdx)  # Store y at zp
+	movq	%rax, (%rdi)  # Store z at xp
+	ret
+/* $end 060-decode1-ann-s 5 */

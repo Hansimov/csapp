@@ -1,0 +1,9 @@
+ncpe-31	ncpe-8192	funct		description
+14.36	1.36	combine4	Array reference, accumulate in temporary
+13.82	1.06	combine5	Array code, unrolled by 2
+13.62	1.06	unroll3a	Array code, unrolled by 3
+13.68	1.06	unroll4a	Array code, unrolled by 4
+13.75	1.06	unroll5a	Array code, unrolled by 5
+13.62	1.06	unroll6a	Array code, unrolled by 6
+13.68	1.07	unroll8a	Array code, unrolled by 8
+13.82	1.06	unroll16a	Array code, unrolled by 16

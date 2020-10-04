@@ -1,0 +1,65 @@
+	.file	"445-frame.c"
+	.text
+	.globl	vframe
+	.type	vframe, @function
+vframe:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	subq	$16, %rsp
+	leaq	22(,%rdi,8), %rax
+	andq	$-16, %rax
+	subq	%rax, %rsp
+	leaq	7(%rsp), %rax
+	shrq	$3, %rax
+	leaq	0(,%rax,8), %r8
+	movq	%r8, %rcx
+	leaq	-8(%rbp), %r9
+	movq	%r9, 0(,%rax,8)
+	movq	$1, -8(%rbp)
+	jmp	.L2
+.L3:
+	movq	%rdx, (%rcx,%rax,8)
+	addq	$1, %rax
+	movq	%rax, -8(%rbp)
+.L2:
+	movq	-8(%rbp), %rax
+	cmpq	%rdi, %rax
+	jl	.L3
+	movq	(%r8,%rsi,8), %rax
+	movq	(%rax), %rax
+	leave
+	ret
+	.size	vframe, .-vframe
+	.globl	lframe
+	.type	lframe, @function
+lframe:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	leaq	18(,%rdi,4), %rax
+	andq	$-16, %rax
+	subq	%rax, %rsp
+	leaq	3(%rsp), %rax
+	shrq	$2, %rax
+	leaq	0(,%rax,4), %rcx
+	movq	%rcx, %rdx
+	movl	$7, 0(,%rax,4)
+	movl	$1, %eax
+	jmp	.L6
+.L7:
+	movl	$3, (%rdx,%rax,4)
+	addq	$1, %rax
+.L6:
+	cmpq	%rdi, %rax
+	jl	.L7
+	movslq	(%rcx,%rsi,4), %rax
+	leave
+	ret
+	.size	lframe, .-lframe
+	.globl	main
+	.type	main, @function
+main:
+	movl	$0, %eax
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

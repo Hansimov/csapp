@@ -1,0 +1,4 @@
+Processor Clock Rate ~= 2.1000 GHz (extracted from file)
+65536	3.06	3.88
+65536	3.02	3.83
+65536	3.03	3.82

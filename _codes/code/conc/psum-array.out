@@ -1,0 +1,26 @@
+whaleshark> make run-psum-array
+/usr/bin/time ./psum-array 1 31
+7.10user 0.00system 0:07.10elapsed 99%CPU (0avgtext+0avgdata 2224maxresident)k
+0inputs+0outputs (0major+185minor)pagefaults 0swaps
+7.10
+
+/usr/bin/time ./psum-array 2 31
+7.26user 0.00system 0:03.64elapsed 199%CPU (0avgtext+0avgdata 2272maxresident)k
+0inputs+0outputs (0major+188minor)pagefaults 0swaps
+3.64
+
+/usr/bin/time ./psum-array 4 31
+7.54user 0.00system 0:01.91elapsed 394%CPU (0avgtext+0avgdata 2336maxresident)k
+0inputs+0outputs (0major+193minor)pagefaults 0swaps
+1.91
+
+/usr/bin/time ./psum-array 8 31
+7.24user 0.00system 0:01.85elapsed 390%CPU (0avgtext+0avgdata 2448maxresident)k
+0inputs+0outputs (0major+199minor)pagefaults 0swaps
+1.85
+
+/usr/bin/time ./psum-array 16 31
+7.36user 0.00system 0:01.84elapsed 398%CPU (0avgtext+0avgdata 2720maxresident)k
+0inputs+0outputs (0major+216minor)pagefaults 0swaps
+1.84
+

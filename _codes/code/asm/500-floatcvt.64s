@@ -1,0 +1,64 @@
+	.file	"500-floatcvt.c"
+	.text
+	.globl	fcvt
+	.type	fcvt, @function
+fcvt:
+	vmovss	(%rsi), %xmm0
+	movq	(%rcx), %rax
+	vcvttsd2siq	(%rdx), %r8
+	movq	%r8, (%rcx)
+	vcvtsi2ss	%edi, %xmm1, %xmm1
+	vmovss	%xmm1, (%rsi)
+	vcvtsi2sdq	%rax, %xmm1, %xmm1
+	vmovsd	%xmm1, (%rdx)
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	ret
+	.size	fcvt, .-fcvt
+	.globl	fcvt2
+	.type	fcvt2, @function
+fcvt2:
+	movl	(%rdi), %eax
+	vmovss	(%rsi), %xmm0
+	vcvttsd2si	(%rdx), %r8d
+	movl	%r8d, (%rdi)
+	vcvtsi2ss	%eax, %xmm1, %xmm1
+	vmovss	%xmm1, (%rsi)
+	vcvtsi2sdq	%rcx, %xmm1, %xmm1
+	vmovsd	%xmm1, (%rdx)
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	ret
+	.size	fcvt2, .-fcvt2
+	.globl	mf2md
+	.type	mf2md, @function
+mf2md:
+	vmovss	(%rdi), %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	vmovsd	%xmm0, (%rsi)
+	ret
+	.size	mf2md, .-mf2md
+	.globl	f2d
+	.type	f2d, @function
+f2d:
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	ret
+	.size	f2d, .-f2d
+	.globl	d2f
+	.type	d2f, @function
+d2f:
+	vmovddup	%xmm0, %xmm0
+	vcvtpd2psx	%xmm0, %xmm0
+	ret
+	.size	d2f, .-d2f
+	.globl	float_mov
+	.type	float_mov, @function
+float_mov:
+	vmovaps	%xmm0, %xmm1
+	vmovss	(%rdi), %xmm0
+	vmovss	%xmm1, (%rsi)
+	ret
+	.size	float_mov, .-float_mov
+	.ident	"GCC: (GNU) 4.8.5 20150623 (Red Hat 4.8.5-36)"
+	.section	.note.GNU-stack,"",@progbits

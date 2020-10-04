@@ -1,0 +1,56 @@
+	.file	"w100-ia32.c"
+	.text
+	.globl	fun
+	.type	fun, @function
+/* $begin w100-fun-s 5 */
+# int fun(int a, int *bp)
+# a at %ebp+8, bp at %ebp+12
+fun:
+	pushl	%ebp			# Save %ebp	    # line:asm:32s:fun:saveebp
+	movl	%esp, %ebp		# Set frame pointer # line:asm:32s:fun:setebp
+	movl	12(%ebp), %eax		# Get bp  # line:asm:32s:fun:line1
+	movl	(%eax), %eax		# Get *bp # line:asm:32s:fun:line2
+	addl	8(%ebp), %eax		# Add a   # line:asm:32s:fun:line3
+	popl	%ebp			# Restore %ebp	    # line:asm:32s:fun:restoreebp
+	ret                             ## line:asm:32s:fun:ret
+/* $end w100-fun-s 5 */
+	.size	fun, .-fun
+	.globl	call_fun
+	.type	call_fun, @function
+/* $begin w100-call_fun-s 16 */
+# int call_fun(int x, int y)
+# x at %ebp+8, y at %ebp+12
+call_fun:
+	pushl	%ebp			# Save %ebp	    # line:asm:32s:call_fun:saveebp
+	movl	%esp, %ebp		# Set frame pointer # line:asm:32s:call_fun:setebp
+	subl	$8, %esp		# Allocate 8 bytes	# line:asm:32s:call_fun:line1
+# Store arguments at offsets 0 and 4 from %esp
+	leal	12(%ebp), %eax		# Compute &y  		# line:asm:32s:call_fun:line2
+	movl	%eax, 4(%esp)		# Store as 2nd argument # line:asm:32s:call_fun:line3
+	movl	8(%ebp), %eax		# Get x        		# line:asm:32s:call_fun:line4
+	movl	%eax, (%esp)		# Store as 1st argument # line:asm:32s:call_fun:line5
+	call	fun			# fun(x, &y)   		# line:asm:32s:call_fun:line6   
+	leave				# Deallocate & restore %ebp	    # line:asm:32s:call_fun:restoreebp
+	ret                             ## line:asm:32s:call_fun:ret
+/* $end w100-call_fun-s 16 */
+	.size	call_fun, .-call_fun
+	.globl	afun
+	.type	afun, @function
+/* $begin w100-afun-s 30 */
+# int afun(int t)
+# t at %ebp+8
+afun:
+	pushl	%ebp			# Save %ebp	    # line:asm:32s:afun:saveebp
+	movl	%esp, %ebp		# Set frame pointer # line:asm:32s:afun:setebp
+	subl	$16, %esp		# Allocate 16 bytes	# line:asm:32s:afun:line1
+# Allocate: a[0] at %ebp-4, a[1] at %ebp-8
+	movl	$33, -8(%ebp)		# a[0] = 33   		# line:asm:32s:afun:line2
+	movl	$515, -4(%ebp)		# a[1] = 515   		# line:asm:32s:afun:line3
+	movl	8(%ebp), %eax		# Get t   		# line:asm:32s:afun:line4
+	movl	-8(%ebp,%eax,4), %eax	# Get a[t]		# line:asm:32s:afun:line5
+	leave			 	# Deallocate & restore %ebp	    # line:asm:32s:afun:restoreebp
+	ret
+/* $end w100-afun-s 30 */
+	.size	afun, .-afun
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

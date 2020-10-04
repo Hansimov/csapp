@@ -1,0 +1,40 @@
+	.file	"280-calleesave.c"
+	.text
+	.globl	P
+	.type	P, @function
+/* $begin 280-calleesave-s 5 */
+# long P(long x, long y) 
+# x in \rdireg{}, y in \rsireg{}
+P:
+	pushq	%rbp		# Save %rbp	# line:asm:calleesave:srbp
+	pushq	%rbx		# Save %rbx	# line:asm:calleesave:srbx
+	subq	$8, %rsp	# Align stack frame # line:asm:calleesave:allocate
+	movq	%rdi, %rbp	# Save x        # line:asm:calleesave:savex
+	movq	%rsi, %rdi	# Move y to first argument
+	call	Q     		# Call Q(y)
+	movq	%rax, %rbx	# Save result # line:asm:calleesave:saveqy
+	movq	%rbp, %rdi	# Move x to first argument # line:asm:calleesave:movq
+	call	Q     		# Call Q(x)
+	addq	%rbx, %rax	# Add saved Q(y) to Q(x)
+	addq	$8, %rsp	# Deallocate last part of stack
+	popq	%rbx		# Restore %rbx # line:asm:calleesave:rrbx
+	popq	%rbp		# Restore %rbp # line:asm:calleesave:rrbp
+	ret
+/* $end 280-calleesave-s 5 */
+	.size	P, .-P
+	.globl	P2
+	.type	P2, @function
+P2:
+	subq	$24, %rsp
+	movq	%rsi, (%rsp)
+	call	Q
+	movq	%rax, 8(%rsp)
+	movq	(%rsp), %rdi
+	call	Q
+	movq	8(%rsp), %rdx
+	addq	%rdx, %rax
+	addq	$24, %rsp
+	ret
+	.size	P2, .-P2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,32 @@
+	.file	"150-if.c"
+	.text
+	.globl	test
+	.type	test, @function
+/* $begin 150-if-s 5 */
+# long test(long x, long y, long z) 
+# x in \rdireg{}, y in \rsireg{}, z in \rdxreg{}
+test:
+	leaq	(%rdi,%rsi), %rax
+	addq	%rdx, %rax
+	cmpq	$-3, %rdi
+	jge	.L2
+	cmpq	%rdx, %rsi
+	jge	.L3
+	movq	%rdi, %rax
+	imulq	%rsi, %rax
+	ret
+.L3:
+	movq	%rsi, %rax
+	imulq	%rdx, %rax
+	ret
+.L2:
+	cmpq	$2, %rdi
+	jle	.L4
+	movq	%rdi, %rax
+	imulq	%rdx, %rax
+.L4:
+	rep; ret
+/* $end 150-if-s 5 */
+	.size	test, .-test
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

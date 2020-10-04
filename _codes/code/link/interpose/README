@@ -1,0 +1,54 @@
+Interpositioning Case Study
+David O'Hallaron, Carnegie Mellon University
+
+This directory illustrates three different techniques (run-time,
+link-time, and compile-time library interpositioning) for intercepting
+and wrapping library functions such as malloc and free.
+
+The example program (int.c) calls malloc and free:
+string.
+
+    #include <malloc.h>
+
+    int main()
+    {
+        free(malloc(10));
+        return(0);
+    }
+
+The objective is to interpose our own wrapper functions for malloc and
+free that generate a trace of the sizes and locations of the allocated
+and freed blocks. We can accomplish this using three different
+techniques:
+
+1. Run-time interpositioning using the dynamic linker's LD_PRELOAD
+mechanism.
+
+To build: make intr
+To run: make runr
+
+2. Link-time interpositioning using the static linker's (ld) "--wrap
+symbol" flag.
+
+To build: make intl
+To run: make runl
+	
+3. Compile-time interpositioning using the C preprocessor.
+
+To build: make intc
+To run: make runc
+
+******
+Files:
+******
+
+Makefile
+int.c		main routine
+intc*		executable based on compile-time interposition
+intl*		executable based on link-time interposition
+intr*		executable based on run-time interposition
+malloc.h	header file for compile-time interposition
+mymalloc.c	contains source for all three interposition examples
+mymalloc.o	relocatable object file for link-time interposition
+mymalloc.so*	shared library file for run-time interposition
+

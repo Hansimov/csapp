@@ -1,0 +1,185 @@
+	.file	"210-cond.c"
+	.text
+	.globl	max
+	.type	max, @function
+max:
+	cmpq	%rsi, %rdi
+	movq	%rsi, %rax
+	cmovge	%rdi, %rax
+	ret
+	.size	max, .-max
+	.globl	wa_max
+	.type	wa_max, @function
+wa_max:
+	leaq	17(%rsi), %rax
+	leaq	23(%rdi), %rdx
+	cmpq	%rsi, %rdi
+	cmovge	%rdx, %rax
+	ret
+	.size	wa_max, .-wa_max
+	.globl	wm_max
+	.type	wm_max, @function
+wm_max:
+	cmpq	%rsi, %rdi
+	jge	.L6
+	movq	%rsi, %rax
+	salq	$4, %rax
+	addq	%rsi, %rax
+	ret
+.L6:
+	leaq	(%rdi,%rdi,2), %rax
+	salq	$3, %rax
+	subq	%rdi, %rax
+	ret
+	.size	wm_max, .-wm_max
+	.globl	wm_max2
+	.type	wm_max2, @function
+wm_max2:
+	movq	%rsi, %rax
+	salq	$4, %rax
+	cmpq	%rsi, %rdi
+	cmovge	%rdi, %rax
+	ret
+	.size	wm_max2, .-wm_max2
+	.globl	wm_max3
+	.type	wm_max3, @function
+wm_max3:
+	movq	%rdi, %rax
+	cmpq	%rsi, %rdi
+	jge	.L12
+	movq	%rsi, %rax
+	salq	$4, %rax
+	addq	%rsi, %rax
+.L12:
+	rep; ret
+	.size	wm_max3, .-wm_max3
+	.globl	intabs
+	.type	intabs, @function
+intabs:
+	movq	%rdi, %rdx
+	sarq	$63, %rdx
+	movq	%rdi, %rax
+	xorq	%rdx, %rax
+	subq	%rdx, %rax
+	ret
+	.size	intabs, .-intabs
+	.globl	cmul
+	.type	cmul, @function
+cmul:
+	movl	$0, %eax
+	testq	%rsi, %rsi
+	je	.L16
+	movq	%rdi, %rax
+	imulq	%rsi, %rax
+.L16:
+	rep; ret
+	.size	cmul, .-cmul
+	.globl	cmul2
+	.type	cmul2, @function
+cmul2:
+	cmpq	$1, %rsi
+	je	.L20
+	movq	%rdi, %rax
+	imulq	%rsi, %rax
+	ret
+.L20:
+	movq	%rdi, %rax
+	ret
+	.size	cmul2, .-cmul2
+	.globl	cdiv
+	.type	cdiv, @function
+cdiv:
+	movl	$0, %eax
+	testq	%rsi, %rsi
+	je	.L22
+	movq	%rdi, %rax
+	cqto
+	idivq	%rsi
+.L22:
+	rep; ret
+	.size	cdiv, .-cdiv
+	.globl	cdiv2
+	.type	cdiv2, @function
+cdiv2:
+	cmpq	$1, %rsi
+	je	.L26
+	movq	%rdi, %rax
+	cqto
+	idivq	%rsi
+	ret
+.L26:
+	movq	%rdi, %rax
+	ret
+	.size	cdiv2, .-cdiv2
+	.globl	cread
+	.type	cread, @function
+/* $begin 210-cread-invalid-s 116 */
+# long cread(long *xp)
+# Invalid implementation of function cread
+# xp in register \rdireg{}
+cread:
+/* $end 210-cread-invalid-s 116 */
+	testq	%rdi, %rdi
+	je	.L29
+	movq	(%rdi), %rax
+	ret
+.L29:
+	movl	$0, %eax
+	ret
+	.size	cread, .-cread
+	.globl	cread_invalid
+	.type	cread_invalid, @function
+cread_invalid:
+/* $begin 210-cread-invalid-s 128 */
+	movq	(%rdi), %rax  # v = *xp # line:asm:cread:movq
+	testq	%rdi, %rdi    # Test xp
+	movl	$0, %edx      # Set ve = 0
+	cmove	%rdx, %rax    # If xp==0, v = ve
+	ret                   # Return v
+/* $end 210-cread-invalid-s 128 */
+	.size	cread_invalid, .-cread_invalid
+	.globl	se_max
+	.type	se_max, @function
+se_max:
+	movq	%rdi, %rax
+	cmpq	%rsi, %rdi
+	jge	.L33
+	addq	$1, lcount(%rip)
+	movq	%rsi, %rax
+.L33:
+	rep; ret
+	.size	se_max, .-se_max
+	.globl	arith
+	.type	arith, @function
+/* $begin 210-arith-prob-s 147 */
+# long arith(long x)
+# x in \rdireg{}
+arith:
+	leaq	7(%rdi), %rax
+	testq	%rdi, %rdi
+	cmovns	%rdi, %rax
+	sarq	$3, %rax
+	ret
+/* $end 210-arith-prob-s 147 */
+
+/* $begin 210-arith-ann-s 147 */
+# long arith(long x)
+# x in \rdireg{}
+arith:
+	leaq	7(%rdi), %rax  # temp = x+7
+	testq	%rdi, %rdi     # Text x
+	cmovns	%rdi, %rax     # If x>= 0, temp = x
+	sarq	$3, %rax       # result = temp >> 3 (= x/8)
+	ret
+/* $end 210-arith-ann-s 147 */
+
+	.size	arith, .-arith
+	.globl	lcount
+	.bss
+	.align 8
+	.type	lcount, @object
+	.size	lcount, 8
+lcount:
+	.zero	8
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

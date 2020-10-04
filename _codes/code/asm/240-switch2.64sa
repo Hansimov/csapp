@@ -1,0 +1,52 @@
+	.file	"240-switchprob1.c"
+	.text
+	.globl	switch2
+	.type	switch2, @function
+/* $begin 240-switch2-s 5 */
+# void switch2(long x, long *dest)
+# x in \rdireg
+switch2:
+	addq	$1, %rdi  ##line:asm:switch2:add
+	cmpq	$8, %rdi  ##line:asm:switch2:cmp
+	ja	.L2       ##line:asm:switch2:ja
+	jmp	*.L4(,%rdi,8)
+/* $end 240-switch2-s 5 */
+	.section	.rodata
+	.align 8
+	.align 4
+/* $begin 240-switch2-jt 13 */
+.L4:
+	.quad	.L9
+	.quad	.L5 ##line:asm:switch2:case0
+	.quad	.L6
+	.quad	.L7 ##line:asm:switch2:case2
+	.quad	.L2 ##line:asm:switch2:case3
+	.quad	.L7 ##line:asm:switch2:case4
+	.quad	.L8
+	.quad	.L2 ##line:asm:switch2:case6
+	.quad	.L5 ##line:asm:switch2:case7
+/* $end 240-switch2-jt 13 */
+	.text
+.L5:
+	movl	$8, %eax
+	jmp	.L3
+.L6:
+	movl	$1, %eax
+	jmp	.L3
+.L7:
+	movl	$4, %eax
+	jmp	.L3
+.L8:
+	movl	$5, %eax
+	jmp	.L3
+.L2:
+	movl	$7, %eax
+	jmp	.L3
+.L9:
+	movq	$-1, %rax
+.L3:
+	movq	%rax, (%rsi)
+	ret
+	.size	switch2, .-switch2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

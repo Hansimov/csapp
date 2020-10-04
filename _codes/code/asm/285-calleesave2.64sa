@@ -1,0 +1,47 @@
+	.file	"285-calleesave2.c"
+	.text
+	.globl	P
+	.type	P, @function
+/* $begin 285-calleesave2-s 5 */
+# long P(long x)
+# x in \rdireg{}
+P:
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$24, %rsp
+	movq	%rdi, %rbx    ## line:asm:calleesave2:sa0
+	leaq	1(%rdi), %r15
+	leaq	2(%rdi), %r14
+	leaq	3(%rdi), %r13
+	leaq	4(%rdi), %r12
+	leaq	5(%rdi), %rbp ## line:asm:calleesave2:sa5
+	leaq	6(%rdi), %rax 
+	movq	%rax, (%rsp) ## line:asm:calleesave2:sa6
+	leaq	7(%rdi), %rdx
+	movq	%rdx, 8(%rsp) ## line:asm:calleesave2:sa7
+	movl	$0, %eax
+	call	Q
+#       . . .
+/* $end 285-calleesave2-s 5 */
+	leaq	(%rbx,%r15), %rax
+	addq	%r14, %rax
+	addq	%r13, %rax
+	addq	%r12, %rax
+	addq	%rbp, %rax
+	addq	(%rsp), %rax
+	addq	8(%rsp), %rax
+	addq	$24, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	ret
+	.size	P, .-P
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

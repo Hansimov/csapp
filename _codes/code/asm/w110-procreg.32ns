@@ -1,0 +1,44 @@
+	.file	"w110-procreg.c"
+	.text
+	.globl	proc
+	.type	proc, @function
+proc:
+	pushl	%ebx
+	movl	12(%esp), %ecx
+	movl	20(%esp), %edx
+	movl	28(%esp), %eax
+	movl	8(%esp), %ebx
+	addl	%ebx, (%ecx)
+	movl	16(%esp), %ecx
+	addw	%cx, (%edx)
+	movl	24(%esp), %edx
+	addb	%dl, (%eax)
+	popl	%ebx
+	ret
+	.size	proc, .-proc
+	.globl	call_proc
+	.type	call_proc, @function
+call_proc:
+	subl	$40, %esp
+	movl	$2, 36(%esp)
+	movw	$3, 34(%esp)
+	movb	$4, 33(%esp)
+	leal	33(%esp), %eax
+	movl	%eax, 20(%esp)
+	movl	$4, 16(%esp)
+	leal	34(%esp), %eax
+	movl	%eax, 12(%esp)
+	movl	$3, 8(%esp)
+	leal	36(%esp), %eax
+	movl	%eax, 4(%esp)
+	movl	$2, (%esp)
+	call	proc
+	movswl	34(%esp), %eax
+	movsbl	33(%esp), %edx
+	subl	%edx, %eax
+	imull	36(%esp), %eax
+	addl	$40, %esp
+	ret
+	.size	call_proc, .-call_proc
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,25 @@
+/usr/bin/time ./psum-local 1 31
+1.06user 0.00system 0:01.06elapsed 99%CPU (0avgtext+0avgdata 2240maxresident)k
+0inputs+0outputs (0major+186minor)pagefaults 0swaps
+1.06
+
+/usr/bin/time ./psum-local 2 31
+1.07user 0.00system 0:00.54elapsed 198%CPU (0avgtext+0avgdata 2272maxresident)k
+0inputs+0outputs (0major+189minor)pagefaults 0swaps
+0.54
+
+/usr/bin/time ./psum-local 4 31
+1.08user 0.00system 0:00.28elapsed 384%CPU (0avgtext+0avgdata 2336maxresident)k
+0inputs+0outputs (0major+193minor)pagefaults 0swaps
+0.28
+
+/usr/bin/time ./psum-local 8 31
+1.11user 0.00system 0:00.29elapsed 380%CPU (0avgtext+0avgdata 2464maxresident)k
+0inputs+0outputs (0major+200minor)pagefaults 0swaps
+0.29
+
+/usr/bin/time ./psum-local 16 31
+1.20user 0.00system 0:00.30elapsed 390%CPU (0avgtext+0avgdata 2720maxresident)k
+0inputs+0outputs (0major+216minor)pagefaults 0swaps
+0.30
+

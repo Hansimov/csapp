@@ -1,0 +1,21 @@
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /afs/cs.cmu.edu/project/ics3/code/asm/prog...(no debugging symbols found)...done.
+Breakpoint 1 at 0x400540
+
+Breakpoint 1, 0x0000000000400540 in multstore ()
+$1 = 0x7fffffffe818
+$2 = 0x400540
+0x0000000000400544 in multstore ()
+$3 = 0x400544
+0x000000000040054d in multstore ()
+$4 = 0x40054d
+2 * 3 --> 6
+[Inferior 1 (process 29584) exited normally]

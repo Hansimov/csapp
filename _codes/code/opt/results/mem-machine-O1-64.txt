@@ -1,0 +1,3 @@
+Processor Clock Rate ~= 2.1000 GHz (extracted from file)
+N = 10000, Allocation: dynamic, expected=49995000, got=49995000, tpe=5.58
+N = 10000, Allocation: static, expected=49995000, got=49995000, tpe=4.11

@@ -1,0 +1,32 @@
+	.file	"300-swapadd.c"
+	.text
+	.globl	swap_add
+	.type	swap_add, @function
+swap_add:
+	movq	(%rdi), %rdx
+	movq	(%rsi), %rax
+	movq	%rax, (%rdi)
+	movq	%rdx, (%rsi)
+	addq	%rdx, %rax
+	ret
+	.size	swap_add, .-swap_add
+	.globl	caller
+	.type	caller, @function
+/* $begin 300-swapadd-s 15 */
+# long caller()
+caller:
+	subq	$16, %rsp	# Allocate 16 bytes for stack frame # line:asm:swapadd:allocate
+	movq	$534, (%rsp)	# Store 534 in arg1
+	movq	$1057, 8(%rsp)	# Store 1057 in arg2
+	leaq	8(%rsp), %rsi	# Compute &arg2 as second argument # line:asm:swapadd:arg2
+	movq	%rsp, %rdi	# Compute &arg1 as first argument # line:asm:swapadd:arg1
+	call	swap_add	# Call swap_add(&arg1, &arg2)
+	movq	(%rsp), %rdx	# Get arg1			  # line:asm:swapadd:getarg1
+	subq	8(%rsp), %rdx	# Compute diff = arg1 - arg2	   # line:asm:swapadd:getarg2
+	imulq	%rdx, %rax	# Compute sum * diff  		   # line:asm:swapadd:mult
+	addq	$16, %rsp	# Deallocate stack frame # line:asm:swapadd:deallocate
+	ret	     		# Return
+/* $end 300-swapadd-s 15 */
+	.size	caller, .-caller
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

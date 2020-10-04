@@ -1,0 +1,145 @@
+/*
+ * Memory System Performance Characterisation
+ * ECT memperf - Extended Copy Transfer Characterization
+ *
+ * Thomas M. Stricker <tomstr@inf.ethz.ch>
+ * Christian Kurmann  <kurmann@inf.ethz.ch>
+ * http://www.cs.inf.ethz.ch/CoPs/ECT/
+ *
+ * Changes in Changelog
+ */
+
+memperf measures the memory bandwidth in a 2 dimensional way.
+First it varies the block size which provides information of the
+throughput in different memory system hierarchys (different cache 
+levels). Secondly it varies the access pattern from contiguous
+blocks to different strided accesses.
+
+4 different tests are provided:
+
+load sum (test -m 0 ):
+The load sum test measures the memory load performance for all the
+blocksizes and access patterns. It accumulates the values in order
+to prevent the optimizing compiler to suppress the interesting part
+of the test.
+
+const store (test -m 1):
+The const store test does the reverse operation of the load test.
+It measures the store bandwith for all the blocksizes and access
+patterns.
+
+load copy (test -m 2):
+The load copy does a strided load test and stores the result in
+a contiguous way. It simulates a matrix transpose. It is performed
+for all the blocksizes and access patterns.
+
+copy store (test -m 3):
+The copy store test is the opposite of the load copy test. It
+performs a contiguous load and stores the data in strides. So the
+result of the operation is the same as in the load copy test. Again,
+all the blocksizes and access patterns are tested.
+
+
+Usage: memperf -m <mode> [-p] [-s] [-n] [-r] [-i] [-t]
+       -m <mode>     : 0 = load sum test
+                       1 = const store test
+                       2 = load copy test
+                       3 = copy store test
+                       9 = all of the above tests
+
+       -p <nproc>    : Number of processes (Default: 1 process)
+                       (numbers higher than processors in the system
+                       make no sense and will give strange results)
+
+       -s <mxstrds>  : Number of strides testet
+                       (Default: 22 different strides)
+
+       -n <mxsize>   : Maximum block size tested [2^x double values]
+                       (Default: 20 = 8MB)
+
+       -r <minsize>  : Minimum block size tested [2^x double values]
+                       (Default: 6 = 512 Bytes)
+
+       -i <mxiters>  : Number of iterations for each test (Default: 16)
+                       (the number of iterations is adaptivly chosen to the
+                       examined block size, so it does not refers to very
+                       small and very large blocks)
+
+       -t <tics/us>  : When using the high resolution clock counter the
+        (unix only)    program tries to autodetect the clock frequency.
+                       This should work on linux/x86 and linux/alpha systems,
+                       on other systems the autodetection might not be
+                       reliable, especially on MP systems, so you can
+                       override the autodetection.
+
+       -a <useoptasm>: 0 = don't use optimized functions/special instructions
+        (unix only)    1 = use only optimized functions (slower in some cases)
+                       2 = both methods (Default: 0)
+                       (currently only possible with x86 systems, needs CPU
+                       with SSE or Enhanced 3dnow! support)
+
+       -c <nrofrep>  : Number of repetitions of each test (Default:3)
+                       (to increase reliability of the results, you shouldn't
+                       use 1 (especially not in uniprocessor systems), of
+                       course the higher the number the longer it takes
+                       to complete the benchmark)
+
+       -o <chartrev> : revert chart output (to make import in certain programs
+                       easier)
+
+
+
+Results:
+
+The maximum results of the test are stored in files (one file for each mode).
+The naming convention of the files is as follows:
+chart.m0.p2.max      this is the maximum result of a mode 0 test with two
+                     processors.
+
+If you want the individual results of each repetition of the benchmark
+you need to change the #define chart in lcpy.c, otherwise only the max
+files will be generated.
+These individual results of the tests are stored in files (one file for each process, each
+repetition and each mode).
+The naming convention of these files is as follows:
+chart.m0.p2.out.r3.2 this is the result of the second process of the third
+                     repetition of a mode 0 test with two processors.
+
+All files have the following format (8 character separated colons):
+
+Load Sum    0.5 K     1 K     2 K     4 K
+       1   327.68  402.06  431.16  449.65
+       2   321.25  368.18  412.18  439.84
+       3   280.49  344.98  388.57  425.28
+       4   309.13  339.56  375.56  417.43
+       5   287.10  316.83  350.97  406.10
+
+The first column determines the stride, the first row the block size.
+All values are MB/s.
+
+Visualiation:
+We use DeltaGraph 4.0 from Delta Point to visualize the results.
+We therefore provide a DeltaGraph library deltagraph.lbr with the
+chart. 
+deltagraph.dg4 is an example DeltaGraph file with one chart.
+deltagraph.ps is a sample print.
+We also provide an Excel Spreadsheet which generates similar charts.
+Feel free to modify it.
+
+
+Papers:
+To understand the benchmark in theory, further reading is provided in the 
+following ISCA and HPCA papers:
+
+mark.cummins@itb.ieT. Stricker, T.Gross Global Address Space, Non-Uniform Bandwidth: 
+A Memory System Performance Characterization of Parallel Systems
+Reprint from proceedings of HPCA'97, Feb 1-5,1997, San Antonio, TX.
+
+T. Stricker and T. Gross. Optimizing Memory System Performance for 
+Communication in Parallel Computers . 
+Reprint from proceedings of ISCA'95, June 1995. 
+
+Both papers are available under: http://www.cs.inf.ethz.ch/cops/ECT
+
+
+

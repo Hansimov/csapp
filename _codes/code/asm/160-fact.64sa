@@ -1,0 +1,163 @@
+	.file	"160-fact.c"
+	.text
+	.globl	fact_do
+	.type	fact_do, @function
+/* $begin 160-fact_do-s 5 */
+# long fact_do(long n)
+# n in \rdireg{}
+fact_do:
+	movl	$1, %eax     # Set result = 1  # line:asm:fact:do:init
+.L2:                       # \textbf{loop:}
+	imulq	%rdi, %rax   # Compute result *= n # line:asm:fact:do:bodystart
+	subq	$1, %rdi     # Decrement n   # line:asm:fact:do:bodyend
+	cmpq	$1, %rdi     # Compare n:1
+	jg	.L2          # If >, goto \textbf{loop} # line:asm:fact:do:jg
+	rep; ret             # Return
+/* $end 160-fact_do-s 5 */
+	.size	fact_do, .-fact_do
+	.globl	fact_while
+	.type	fact_while, @function
+
+/* $begin 160-fact_while_jm-s 16 */
+# long fact_while(long n)
+# n in \rdireg{}
+fact_while:
+	movl	$1, %eax     # Set result = 1
+	jmp	.L5          # Goto \textbf{test}
+.L6:                      #  \textbf{loop:}
+	imulq	%rdi, %rax   # Compute result *= n
+	subq	$1, %rdi     # Decrement n
+.L5:                      #  \textbf{test:}
+	cmpq	$1, %rdi     # Compare n:1
+	jg	.L6          # If >, goto \textbf{loop}
+	rep; ret             # Return
+/* $end 160-fact_while_jm-s 16 */
+	.size	fact_while, .-fact_while
+	.globl	fact_for
+	.type	fact_for, @function
+/* $begin 160-fact_for_jm-s 29 */
+# long fact_for(long n)
+# n in \rdireg{}
+fact_for:
+	movl	$1, %eax     # Set result = 1
+	movl	$2, %edx     # Set i = 2
+	jmp	.L8          # Goto \textbf{test}
+.L9:                      #  \textbf{loop:}
+	imulq	%rdx, %rax   # Compute result *= i
+	addq	$1, %rdx     # Increment i
+.L8:                      #  \textbf{test:}
+	cmpq	%rdi, %rdx   # Compare i:n
+	jle	.L9          # If <=, goto \textbf{loop}
+	rep; ret             # Return
+/* $end 160-fact_for_jm-s 29 */
+	.size	fact_for, .-fact_for
+	.globl	fact_for_while
+	.type	fact_for_while, @function
+fact_for_while:
+	movl	$1, %eax
+	movl	$2, %edx
+	jmp	.L11
+.L12:
+	imulq	%rdx, %rax
+	addq	$1, %rdx
+.L11:
+	cmpq	%rdi, %rdx
+	jle	.L12
+	rep; ret
+	.size	fact_for_while, .-fact_for_while
+	.globl	fact_do_goto
+	.type	fact_do_goto, @function
+fact_do_goto:
+	movl	$1, %eax
+.L14:
+	imulq	%rdi, %rax
+	subq	$1, %rdi
+	cmpq	$1, %rdi
+	jg	.L14
+	rep; ret
+	.size	fact_do_goto, .-fact_do_goto
+	.globl	fact_while_jm_goto
+	.type	fact_while_jm_goto, @function
+fact_while_jm_goto:
+	movl	$1, %eax
+	jmp	.L17
+.L18:
+	imulq	%rdi, %rax
+	subq	$1, %rdi
+.L17:
+	cmpq	$1, %rdi
+	jg	.L18
+	rep; ret
+	.size	fact_while_jm_goto, .-fact_while_jm_goto
+	.globl	fact_while_gd_goto
+	.type	fact_while_gd_goto, @function
+fact_while_gd_goto:
+	cmpq	$1, %rdi
+	jle	.L23
+.L21:
+	movl	$1, %eax
+.L22:
+	imulq	%rdi, %rax
+	subq	$1, %rdi
+	cmpq	$1, %rdi
+	jg	.L22
+	rep; ret
+.L23:
+	movl	$1, %eax
+.L20:
+	ret
+	.size	fact_while_gd_goto, .-fact_while_gd_goto
+	.globl	fact_for_jm_goto
+	.type	fact_for_jm_goto, @function
+fact_for_jm_goto:
+	movl	$1, %eax
+	movl	$2, %edx
+	jmp	.L26
+.L27:
+	imulq	%rdx, %rax
+	addq	$1, %rdx
+.L26:
+	cmpq	%rdi, %rdx
+	jle	.L27
+	rep; ret
+	.size	fact_for_jm_goto, .-fact_for_jm_goto
+	.globl	fact_for_gd_goto
+	.type	fact_for_gd_goto, @function
+fact_for_gd_goto:
+	cmpq	$1, %rdi
+	jle	.L32
+.L30:
+	movl	$1, %eax
+	movl	$2, %edx
+.L31:
+	imulq	%rdx, %rax
+	addq	$1, %rdx
+	cmpq	%rdi, %rdx
+	jle	.L31
+	rep; ret
+.L32:
+	movl	$1, %eax
+.L29:
+	ret
+	.size	fact_for_gd_goto, .-fact_for_gd_goto
+	.globl	rfact
+	.type	rfact, @function
+/* $begin 160-rfact-s 132 */
+# long rfact(long n)
+# n in \rdireg{}
+rfact:
+	pushq	%rbx		#   Save \rbxreg  # line:asm:rfact:srbx
+	movq	%rdi, %rbx	#   Store n in callee-saved register
+	movl	$1, %eax	#   Set return value = 1
+	cmpq	$1, %rdi	#   Compare n:1
+	jle	.L35		#   If <=, goto done
+	leaq	-1(%rdi), %rdi	#   Compute n-1
+	call	rfact	  	#   Call rfact(n-1)
+	imulq	%rbx, %rax	#   Multiply result by n  # line:asm:rfact:userbx
+.L35:		      		# \textbf{done:}
+	popq	%rbx		#   Restore \rbxreg  # line:asm:rfact:rrbx
+	ret			#   Return
+/* $end 160-rfact-s 132 */
+	.size	rfact, .-rfact
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

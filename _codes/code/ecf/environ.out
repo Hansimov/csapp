@@ -1,0 +1,41 @@
+&argc        = 0xbffff9f0
+&argv        = 0xbffff9f4
+&envp        = 0xbffff9f8
+&argv[]      = 0xbffffa34
+&__environ   = 0x804bbc0
+&__environ[] = 0xbffffa3c
+&i           = 0xbffff9e4
+Argument list:
+    0xbffffa34: (0xbffffb4e) argv[ 0]: environ
+Environment list:
+    0xbffffa3c: (0xbffffb56) __environ[ 0]: PWD=/usr/droh/ics/code/ecf
+    0xbffffa40: (0xbffffb71) __environ[ 1]: TERM=emacs
+    0xbffffa44: (0xbffffb7c) __environ[ 2]: TERMCAP=emacs:co#80:tc=unknown:
+    0xbffffa48: (0xbffffb9c) __environ[ 3]: EMACS=t
+    0xbffffa4c: (0xbffffba4) __environ[ 4]: WINDOWID=12582926
+    0xbffffa50: (0xbffffbb6) __environ[ 5]: CVSROOT=/afs/cs/project/cmcl/dv/repository
+    0xbffffa54: (0xbffffbe1) __environ[ 6]: LS_COLORS=no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:
+    0xbffffa58: (0xbffffda4) __environ[ 7]: SHLVL=4
+    0xbffffa5c: (0xbffffdac) __environ[ 8]: OSTYPE=linux
+    0xbffffa60: (0xbffffdb9) __environ[ 9]: HOST=kittyhawk.cmcl.cs.cmu.edu
+    0xbffffa64: (0xbffffdd8) __environ[10]: LANG=en_US
+    0xbffffa68: (0xbffffde3) __environ[11]: DISPLAY=:0.0
+    0xbffffa6c: (0xbffffdf0) __environ[12]: HOSTDISPLAY=kittyhawk.cmcl.cs.cmu.edu:0.0
+    0xbffffa70: (0xbffffe1a) __environ[13]: QTDIR=/usr/lib/qt-2.1.0
+    0xbffffa74: (0xbffffe32) __environ[14]: GROUP=users
+    0xbffffa78: (0xbffffe3e) __environ[15]: VENDOR=intel
+    0xbffffa7c: (0xbffffe4b) __environ[16]: MANPATH=/usr/man:/usr/local/man:/usr/local/apache/man:/usr/X11R6/man
+    0xbffffa80: (0xbffffe90) __environ[17]: USER=droh
+    0xbffffa84: (0xbffffe9a) __environ[18]: SYS=i386_rh60
+    0xbffffa88: (0xbffffea8) __environ[19]: KRBTKFILE=/tkt/3478-0401-3a88a54e
+    0xbffffa8c: (0xbffffeca) __environ[20]: SHELL=/usr/local/bin/tcsh
+    0xbffffa90: (0xbffffee4) __environ[21]: INPUTRC=/etc/inputrc
+    0xbffffa94: (0xbffffef9) __environ[22]: HOME=/usr/droh
+    0xbffffa98: (0xbfffff08) __environ[23]: PRINTER=iron
+    0xbffffa9c: (0xbfffff15) __environ[24]: PATH=.:/usr/droh/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/etc:/etc
+    0xbffffaa0: (0xbfffff74) __environ[25]: HOSTTYPE=i386_rh60
+    0xbffffaa4: (0xbfffff87) __environ[26]: login_done=1
+    0xbffffaa8: (0xbfffff94) __environ[27]: MACHTYPE=i386
+    0xbffffaac: (0xbfffffa2) __environ[28]: LOGNAME=droh
+    0xbffffab0: (0xbfffffaf) __environ[29]: HOSTNAME=kittyhawk.cmcl.cs.cmu.edu
+    0xbffffab4: (0xbfffffd2) __environ[30]: LESSOPEN=|/usr/bin/lesspipe.sh %s

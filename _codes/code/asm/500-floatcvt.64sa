@@ -1,0 +1,85 @@
+	.file	"500-floatcvt.c"
+	.text
+	.globl	fcvt
+	.type	fcvt, @function
+/* $begin 500-fcvt-s 5 */
+# double fcvt(int i, float *fp, double *dp, long *lp)
+# i in \edireg{}, fp in \rsireg{}, dp in \rdxreg{}, lp in \rcxreg{}
+fcvt:
+	vmovss	(%rsi), %xmm0			# Get f = *fp
+	movq	(%rcx), %rax			# Get l = *lp
+	vcvttsd2siq	(%rdx), %r8		# Get d = *dp and convert to long
+	movq	%r8, (%rcx)			# Store at lp
+	vcvtsi2ss	%edi, %xmm1, %xmm1	# Convert i to float
+	vmovss	%xmm1, (%rsi) 	     		# Store at fp
+	vcvtsi2sdq	%rax, %xmm1, %xmm1	# Convert l to double
+	vmovsd	%xmm1, (%rdx) 	     		# Store at dp
+	# The following two instructions convert f to double 
+	vunpcklps	%xmm0, %xmm0, %xmm0	## line:asm:fcvt:f2d1
+	vcvtps2pd	%xmm0, %xmm0  		## line:asm:fcvt:f2d2
+	ret		       			# Return f 
+/* $end 500-fcvt-s 5 */
+	.size	fcvt, .-fcvt
+	.globl	fcvt2
+	.type	fcvt2, @function
+/* $begin 500-fcvt2-s 20 */
+# double fcvt2(int *ip, float *fp, double *dp, long l)
+# ip in \rdireg{}, fp in \rsireg{}, dp in \rdxreg{}, l in \rcxreg{}
+# Result returned in %xmm0
+fcvt2:
+	movl	(%rdi), %eax
+	vmovss	(%rsi), %xmm0 ##line:asm:fcvt2:readfp
+	vcvttsd2si	(%rdx), %r8d ##line:asm:fcvt2:vcvttsd2si
+	movl	%r8d, (%rdi)
+	vcvtsi2ss	%eax, %xmm1, %xmm1 ##line:asm:fcvt2:vcvtsi2ss
+	vmovss	%xmm1, (%rsi)
+	vcvtsi2sdq	%rcx, %xmm1, %xmm1 ##line:asm:fcvt2:vcvtsi2sdq
+	vmovsd	%xmm1, (%rdx)
+	vunpcklps	%xmm0, %xmm0, %xmm0 ##line:asm:fcvt2:vunpcklps
+	vcvtps2pd	%xmm0, %xmm0 ##line:asm:fcvt2:vcvtps2pd
+	ret
+/* $end 500-fcvt2-s 20 */
+	.size	fcvt2, .-fcvt2
+	.globl	mf2md
+	.type	mf2md, @function
+mf2md:
+	vmovss	(%rdi), %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	vmovsd	%xmm0, (%rsi)
+	ret
+	.size	mf2md, .-mf2md
+	.globl	f2d
+	.type	f2d, @function
+f2d:
+/* $begin 500-f2d-s 44 */
+   	# Conversion from single to double precision
+	vunpcklps	%xmm0, %xmm0, %xmm0 # Replicate first vector element # line:asm:f2d:f2d1
+	vcvtps2pd	%xmm0, %xmm0	    # Convert two vector elements to double # line:asm:f2d:f2d2
+/* $end 500-f2d-s 44 */
+	ret
+	.size	f2d, .-f2d
+	.globl	d2f
+	.type	d2f, @function
+d2f:
+/* $begin 500-d2f-s 51 */
+   	# Conversion from double to single precision
+	vmovddup	%xmm0, %xmm0    # Replicate first vector element # line:asm:d2f:d2f1
+	vcvtpd2psx	%xmm0, %xmm0	# Convert two vector elements to single # line:asm:d2f:d2f2
+/* $end 500-d2f-s 51 */
+	ret
+	.size	d2f, .-d2f
+	.size	d2f, .-d2f
+	.globl	float_mov
+	.type	float_mov, @function
+/* $begin 500-floatmov-s 57 */ 
+# float float_mov(float v1, float *src, float *dst)
+# v1 in %xmm0, src in \rdireg{}, dst in \rsireg{}
+float_mov:
+	vmovaps	%xmm0, %xmm1	# Copy v1
+	vmovss	(%rdi), %xmm0	# Read v2 from src
+	vmovss	%xmm1, (%rsi)	# Write v1 to dst
+	ret	       		# Return v2 in %xmm0
+/* $end 500-floatmov-s 57 */ 
+	.size	float_mov, .-float_mov
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

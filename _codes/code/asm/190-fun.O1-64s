@@ -1,0 +1,223 @@
+	.file	"190-fun.c"
+	.text
+	.globl	test_fun_a
+	.type	test_fun_a, @function
+test_fun_a:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+.L3:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	xorq	%rdx, %rax
+	addq	$1, %rcx
+	cmpq	$64, %rcx
+	jne	.L3
+	rep; ret
+	.size	test_fun_a, .-test_fun_a
+	.globl	fun_a
+	.type	fun_a, @function
+fun_a:
+	testq	%rdi, %rdi
+	je	.L7
+	movl	$0, %eax
+.L6:
+	xorq	%rdi, %rax
+	shrq	%rdi
+	jne	.L6
+	jmp	.L5
+.L7:
+	movl	$0, %eax
+.L5:
+	andl	$1, %eax
+	ret
+	.size	fun_a, .-fun_a
+	.globl	fun_b
+	.type	fun_b, @function
+fun_b:
+	movl	$64, %edx
+	movl	$0, %eax
+.L10:
+	movq	%rdi, %rcx
+	andl	$1, %ecx
+	addq	%rax, %rax
+	orq	%rcx, %rax
+	shrq	%rdi
+	subq	$1, %rdx
+	jne	.L10
+	rep; ret
+	.size	fun_b, .-fun_b
+	.globl	test_fun_b
+	.type	test_fun_b, @function
+test_fun_b:
+	movl	$0, %eax
+	movl	$0, %edx
+	movl	$1, %esi
+	movl	$63, %r9d
+	movl	$1, %r8d
+.L14:
+	movq	%rsi, %r10
+	movl	%edx, %ecx
+	salq	%cl, %r10
+	testq	%rdi, %r10
+	je	.L12
+	movl	%r9d, %ecx
+	subl	%edx, %ecx
+	movl	%r8d, %r11d
+	sall	%cl, %r11d
+	movslq	%r11d, %rcx
+	orq	%rcx, %rax
+.L12:
+	addq	$1, %rdx
+	cmpq	$64, %rdx
+	jne	.L14
+	rep; ret
+	.size	test_fun_b, .-test_fun_b
+	.globl	fun_c
+	.type	fun_c, @function
+fun_c:
+	movl	$8, %eax
+	movl	$0, %edx
+.L17:
+	movq	%rdi, %rcx
+	andl	$16843009, %ecx
+	addq	%rcx, %rdx
+	shrq	%rdi
+	subq	$1, %rax
+	jne	.L17
+	movq	%rdx, %rax
+	sarq	$16, %rax
+	addq	%rax, %rdx
+	movq	%rdx, %rax
+	sarq	$8, %rax
+	addq	%rax, %rdx
+	movzbl	%dl, %eax
+	ret
+	.size	fun_c, .-fun_c
+	.globl	test_fun_c
+	.type	test_fun_c, @function
+test_fun_c:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+.L20:
+	movl	%esi, %edx
+	sall	%cl, %edx
+	movslq	%edx, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+	cmpq	$64, %rcx
+	jne	.L20
+	rep; ret
+	.size	test_fun_c, .-test_fun_c
+	.globl	test_count_p
+	.type	test_count_p, @function
+test_count_p:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+.L23:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+	cmpq	$64, %rcx
+	jne	.L23
+	rep; ret
+	.size	test_count_p, .-test_count_p
+	.globl	count_p
+	.type	count_p, @function
+count_p:
+	testq	%rdi, %rdi
+	je	.L27
+	movl	$0, %eax
+.L26:
+	movq	%rdi, %rdx
+	shrq	$63, %rdx
+	addq	%rdx, %rax
+	addq	%rdi, %rdi
+	jne	.L26
+	rep; ret
+.L27:
+	movl	$0, %eax
+	ret
+	.size	count_p, .-count_p
+	.globl	count_q
+	.type	count_q, @function
+count_q:
+	movl	$64, %ecx
+	movabsq	$-9223372036854775808, %rdx
+	movl	$0, %eax
+.L30:
+	testq	%rdi, %rdx
+	setne	%sil
+	movzbl	%sil, %esi
+	addq	%rsi, %rax
+	shrq	%rdx
+	subl	$1, %ecx
+	jne	.L30
+	rep; ret
+	.size	count_q, .-count_q
+	.globl	test_count_q
+	.type	test_count_q, @function
+test_count_q:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+.L33:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+	cmpq	$64, %rcx
+	jne	.L33
+	rep; ret
+	.size	test_count_q, .-test_count_q
+	.globl	count_r
+	.type	count_r, @function
+count_r:
+	movl	$64, %ecx
+	movl	$1, %edx
+	movl	$0, %eax
+.L37:
+	movq	%rdx, %rsi
+	andq	%rdi, %rsi
+	cmpq	$1, %rsi
+	sbbq	$-1, %rax
+	addq	%rdx, %rdx
+	subl	$1, %ecx
+	jne	.L37
+	rep; ret
+	.size	count_r, .-count_r
+	.globl	test_count_r
+	.type	test_count_r, @function
+test_count_r:
+	movl	$0, %eax
+	movl	$0, %ecx
+	movl	$1, %esi
+.L40:
+	movq	%rsi, %rdx
+	salq	%cl, %rdx
+	testq	%rdi, %rdx
+	setne	%dl
+	movzbl	%dl, %edx
+	addq	%rdx, %rax
+	addq	$1, %rcx
+	cmpq	$64, %rcx
+	jne	.L40
+	rep; ret
+	.size	test_count_r, .-test_count_r
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

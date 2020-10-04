@@ -1,0 +1,27 @@
+	.file	"220-if2.c"
+	.text
+	.globl	test
+	.type	test, @function
+/* $begin 220-if2-s 5 */
+# long test(long x, long y)
+# x in \rdireg{}, y in \rsireg{}
+test:
+	leaq	0(,%rdi,8), %rax
+	testq	%rsi, %rsi
+	jle	.L2
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+	movq	%rdi, %rdx
+	andq	%rsi, %rdx
+	cmpq	%rsi, %rdi
+	cmovge	%rdx, %rax
+	ret
+.L2:
+	addq	%rsi, %rdi
+	cmpq	$-2, %rsi
+	cmovle	%rdi, %rax
+	ret
+/* $end 220-if2-s 5 */
+	.size	test, .-test
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

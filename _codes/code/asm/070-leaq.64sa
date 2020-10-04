@@ -1,0 +1,38 @@
+	.file	"070-leaq.c"
+	.text
+	.globl	scale
+	.type	scale, @function
+/* $begin 070-leaq-eg-s 5 */
+# long scale(long x, long y, long z)
+# x in \rdireg, y in \rsireg, z in \rdxreg
+scale:
+	leaq	(%rdi,%rsi,4), %rax   # x + 4*y
+	leaq	(%rdx,%rdx,2), %rdx   # z + 2*z = 3*z
+	leaq	(%rax,%rdx,4), %rax   # (x+4*y) + 4*(3*z) = x + 4*y + 12*z
+	ret
+/* $end 070-leaq-eg-s 5 */
+	.size	scale, .-scale
+	.globl	scale2
+	.type	scale2, @function
+/* $begin 070-leaq-prob-s 13 */
+# long scale2(long x, long y, long z)
+# x in \rdireg, y in \rsireg, z in \rdxreg
+scale2:
+	leaq	(%rdi,%rdi,4), %rax
+	leaq	(%rax,%rsi,2), %rax
+	leaq	(%rax,%rdx,8), %rax
+	ret
+/* $end 070-leaq-prob-s 13 */
+	.size	scale2, .-scale2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin 070-leaq-prob-ann-s 13 */
+# long scale2(long x, long y, long z)
+# x in \rdireg, y in \rsireg, z in \rdxreg
+scale2:
+	leaq	(%rdi,%rdi,4), %rax  # 5 * x
+	leaq	(%rax,%rsi,2), %rax  # 5 * x + 2 * y
+	leaq	(%rax,%rdx,8), %rax  # 5 * x + 2 * y + 8 * z
+	ret
+/* $end 070-leaq-prob-ann-s 13 */

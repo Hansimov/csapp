@@ -1,0 +1,37 @@
+	.file	"400-struct-eg.c"
+	.text
+	.globl	fun
+	.type	fun, @function
+/* $begin 400-struct-eg-s 5 */
+# long fun(struct ELE *ptr)
+# ptr in \rdireg{}
+fun:
+	movl	$0, %eax
+	jmp	.L2
+.L3:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+.L2:
+	testq	%rdi, %rdi
+	jne	.L3
+	rep; ret
+/* $end 400-struct-eg-s 5 */
+
+/* $begin 400-struct-eg-ann-s 5 */
+# long fun(struct ELE *ptr)
+# ptr in \rdireg{}
+fun:
+	movl	$0, %eax	#   result = 0
+	jmp	.L2 		#   Goto \textbf{middle}
+.L3:				# \textbf{loop:}
+	addq	(%rdi), %rax	#   result += ptr->v
+	movq	8(%rdi), %rdi	#   ptr = ptr->p
+.L2:			 	# \textbf{middle:}
+	testq	%rdi, %rdi	#   Test ptr  
+	jne	.L3   		#   If != NULL, goto \textbf{loop}
+	rep; ret
+/* $end 400-struct-eg-ann-s 5 */
+
+	.size	fun, .-fun
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,47 @@
+	.file	"430-struct-union.c"
+	.text
+	.globl	get_u
+	.type	get_u, @function
+get_u:
+	movq	(%rdi), %rax
+	movq	%rax, (%rsi)
+	ret
+	.size	get_u, .-get_u
+	.globl	get_v
+	.type	get_v, @function
+get_v:
+	movzwl	8(%rdi), %eax
+	movw	%ax, (%rsi)
+	ret
+	.size	get_v, .-get_v
+	.globl	get_wp
+	.type	get_wp, @function
+get_wp:
+	addq	$10, %rdi
+	movq	%rdi, (%rsi)
+	ret
+	.size	get_wp, .-get_wp
+	.globl	get_a
+	.type	get_a, @function
+get_a:
+	movq	%rdi, (%rsi)
+	ret
+	.size	get_a, .-get_a
+	.globl	get_au
+	.type	get_au, @function
+get_au:
+	movq	(%rdi), %rax
+	movl	(%rdi,%rax,4), %eax
+	movl	%eax, (%rsi)
+	ret
+	.size	get_au, .-get_au
+	.globl	get_pval
+	.type	get_pval, @function
+get_pval:
+	movq	8(%rdi), %rax
+	movzbl	(%rax), %eax
+	movb	%al, (%rsi)
+	ret
+	.size	get_pval, .-get_pval
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,340 @@
+.Ltext0:
+list_len:
+	testq	%rdi, %rdi
+	je	.L4
+	movl	$0, %eax
+.L3:
+	addq	$1, %rax
+	movq	(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L3
+	rep; ret
+.L4:
+	movl	$0, %eax
+	ret
+
+list_len_clear:
+	testq	%rdi, %rdi
+	je	.L8
+	movl	$0, %eax
+.L7:
+	movq	$0, 8(%rdi)
+	movq	(%rdi), %rdi
+	addq	$1, %rax
+	testq	%rdi, %rdi
+	jne	.L7
+	rep; ret
+.L8:
+	movl	$0, %eax
+	ret
+
+list_sum_clear:
+	testq	%rdi, %rdi
+	je	.L12
+	movl	$0, %eax
+.L11:
+	addq	8(%rdi), %rax
+	movq	$0, 8(%rdi)
+	movq	(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L11
+	rep; ret
+.L12:
+	movl	$0, %eax
+	ret
+
+list_sum:
+	testq	%rdi, %rdi
+	je	.L16
+	movl	$0, %eax
+.L15:
+	addq	8(%rdi), %rax
+	movq	(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L15
+	rep; ret
+.L16:
+	movl	$0, %eax
+	ret
+
+list_sum2:
+	testq	%rdi, %rdi
+	je	.L20
+	movl	$0, %eax
+.L19:
+	movq	(%rdi), %rdx
+	addq	8(%rdi), %rax
+	testq	%rdx, %rdx
+	je	.L18
+	movq	%rdx, %rdi
+	jmp	.L19
+.L20:
+	movl	$0, %eax
+.L18:
+	rep; ret
+pipe_sum2:
+	testq	%rdi, %rdi
+	je	.L24
+	movl	$0, %eax
+.L23:
+	movq	(%rdi), %rdx
+	addq	8(%rdi), %rax
+	testq	%rdx, %rdx
+	je	.L22
+	movq	%rdx, %rdi
+	jmp	.L23
+.L24:
+	movl	$0, %eax
+.L22:
+	rep; ret
+rlist_len:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L30
+	subq	$8, %rsp
+	movq	(%rdi), %rdi
+	call	rlist_len
+	addq	$1, %rax
+	addq	$8, %rsp
+.L30:
+	rep; ret
+rlist_sum:
+	pushq	%rbx
+	movq	%rdi, %rbx
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L32
+	movq	(%rdi), %rdi
+	call	rlist_sum
+	addq	8(%rbx), %rax
+.L32:
+	popq	%rbx
+	ret
+
+list_copy:
+	testq	%rdi, %rdi
+	je	.L35
+	testq	%rsi, %rsi
+	je	.L35
+.L37:
+	movq	8(%rdi), %rax
+	movq	%rax, 8(%rsi)
+	movq	(%rdi), %rdi
+	movq	(%rsi), %rsi
+	testq	%rsi, %rsi
+	je	.L35
+	testq	%rdi, %rdi
+	jne	.L37
+.L35:
+	rep; ret
+plist_copy:
+	testq	%rdi, %rdi
+	je	.L38
+	testq	%rsi, %rsi
+	je	.L38
+.L40:
+	movq	(%rsi), %rax
+	movq	(%rdi), %rdx
+	movq	8(%rdi), %rcx
+	movq	%rcx, 8(%rsi)
+	testq	%rax, %rax
+	je	.L38
+	testq	%rdx, %rdx
+	je	.L38
+	movq	%rdx, %rdi
+	movq	%rax, %rsi
+	jmp	.L40
+.L38:
+	rep; ret
+plist_copy2:
+	testq	%rdi, %rdi
+	je	.L41
+	testq	%rsi, %rsi
+	je	.L41
+.L43:
+	movq	(%rdi), %rdx
+	movq	(%rsi), %rax
+	movq	8(%rdi), %rcx
+	movq	%rcx, 8(%rsi)
+	testq	%rax, %rax
+	je	.L41
+	testq	%rdx, %rdx
+	je	.L41
+	movq	%rax, %rsi
+	movq	%rdx, %rdi
+	jmp	.L43
+.L41:
+	rep; ret
+stationary_copy:
+	movl	$1024, %eax
+.L46:
+	movq	8(%rdi), %rdx
+	movq	%rdx, 8(%rsi)
+	subq	$1, %rax
+	jne	.L46
+	rep; ret
+test:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	leaq	-1(%rdi), %rbx
+	salq	$4, %rbx
+	movq	main_list(%rbx), %rbp
+	movq	$0, main_list(%rbx)
+	movl	$main_list, %edi
+	movq	myindex(%rip), %rax
+	call	*test_fun(,%rax,8)
+	movq	%rbp, main_list(%rbx)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+test2a:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	leaq	-1(%rdi), %rbx
+	salq	$4, %rbx
+	movq	main_list(%rbx), %rbp
+	movq	$0, main_list(%rbx)
+	movl	$main_list, %esi
+	movq	%rsi, %rdi
+	movq	myindex(%rip), %rax
+	call	*test2_fun(,%rax,8)
+	movq	%rbp, main_list(%rbx)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+test2b:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	leaq	-1(%rdi), %rbx
+	salq	$4, %rbx
+	movq	main_list(%rbx), %rbp
+	movq	$0, main_list(%rbx)
+	movq	main_list(%rip), %rsi
+	movl	$main_list, %edi
+	movq	myindex(%rip), %rax
+	call	*test2_fun(,%rax,8)
+	movq	%rbp, main_list(%rbx)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+test2c:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	leaq	-1(%rdi), %rbx
+	salq	$4, %rbx
+	movq	main_list(%rbx), %rbp
+	movq	$0, main_list(%rbx)
+	movl	$main_list, %esi
+	movq	main_list(%rip), %rdi
+	movq	myindex(%rip), %rax
+	call	*test2_fun(,%rax,8)
+	movq	%rbp, main_list(%rbx)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+mylink:
+	leaq	-1(%rdi), %rcx
+	testq	%rcx, %rcx
+	jle	.L56
+	movl	$main_list+16, %eax
+	movl	$0, %edx
+.L57:
+	movq	%rdx, -8(%rax)
+	addq	$1, %rdx
+	movq	%rax, -16(%rax)
+	addq	$16, %rax
+	cmpq	%rcx, %rdx
+	jne	.L57
+.L56:
+	movq	%rcx, %rax
+	salq	$4, %rax
+	movq	%rcx, main_list+8(%rax)
+	movq	$0, main_list(%rax)
+	ret
+
+main:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	$0, %ebx
+.L61:
+	movl	$1024, %edi
+	call	mylink
+	movl	$main_list, %edi
+	call	*test_fun(,%rbx,8)
+	movq	%rax, %r8
+	movq	test_descr(,%rbx,8), %rdx
+	movl	$1024, %ecx
+	movl	$.LC0, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movq	%rbx, myindex(%rip)
+	movl	$1024, %esi
+	movl	$test, %edi
+	call	find_cpe
+	movl	$.LC1, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	addq	$1, %rbx
+	cmpq	$8, %rbx
+	jne	.L61
+	movl	$0, %ebp
+	jmp	.L60
+.L64:
+	movl	$1024, %edi
+	call	mylink
+	movq	case2_descr(%rbx), %rcx
+	movq	test2_descr(,%rbp,8), %rdx
+	movl	$.LC2, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movq	%rbp, myindex(%rip)
+	movq	case_fun(%rbx), %rdi
+	movl	$1024, %esi
+	call	find_cpe
+	movl	$.LC1, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	addq	$8, %rbx
+	cmpq	$24, %rbx
+	jne	.L64
+	addq	$1, %rbp
+	cmpq	$4, %rbp
+	je	.L63
+.L60:
+	movl	$0, %ebx
+	jmp	.L64
+.L63:
+	movl	$0, %eax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+case2_descr:
+case_fun:
+test2_descr:
+test2_fun:
+test_descr:
+test_fun:
+.Letext0:
+.Ldebug_info0:
+.Ldebug_abbrev0:
+.Ldebug_loc0:
+.Ldebug_line0:

@@ -1,0 +1,176 @@
+	.file	"530-float-funs.c"
+	.text
+	.globl	funct1
+	.type	funct1, @function
+/* $begin 530-fexpr1-s 5 */
+# double funct1(arg1_t p, arg2_t q, arg3_t r, arg4_t s) 
+funct1:
+	vcvtsi2ssq	%rsi, %xmm2, %xmm2
+	vaddss	%xmm0, %xmm2, %xmm0
+	vcvtsi2ss	%edi, %xmm2, %xmm2
+	vdivss	%xmm0, %xmm2, %xmm0
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	vsubsd	%xmm1, %xmm0, %xmm0
+	ret
+/* $end 530-fexpr1-s 5 */
+
+/* $begin 530-fexpr1-ann-s 5 */
+# Refer to arguments as i1 (\rdireg{}), i2 (\esireg{})
+#                       f1 (\xmmreg{0}), and f2 (\xmmreg{1}) 
+#
+# double funct1(arg1_t p, arg2_t q, arg3_t r, arg4_t s) 
+funct1:
+	vcvtsi2ssq	%rsi, %xmm2, %xmm2  # Get i2 and convert from long to float
+	vaddss	%xmm0, %xmm2, %xmm0  	    # Add f1 (type float)
+	vcvtsi2ss	%edi, %xmm2, %xmm2  # Get i1 and convert from int to float
+	vdivss	%xmm0, %xmm2, %xmm0  	    # Compute i1 / (i2 + f1)
+	vunpcklps	%xmm0, %xmm0, %xmm0 
+	vcvtps2pd	%xmm0, %xmm0  	    # Convert to double
+	vsubsd	%xmm1, %xmm0, %xmm0	    # Compute i1 / (i2 + f1) - f2 (double)
+	ret
+/* $end 530-fexpr1-ann-s 5 */
+
+	.size	funct1, .-funct1
+	.globl	funct2
+	.type	funct2, @function
+/* $begin 530-fexpr2-s 17 */
+# double funct2(double w, int x, float y, long z)
+# w in %xmm0, x in \edireg{}, y in %xmm1, z in \rsireg{}
+funct2:
+	vcvtsi2ss	%edi, %xmm2, %xmm2
+	vmulss	%xmm1, %xmm2, %xmm1
+	vunpcklps	%xmm1, %xmm1, %xmm1
+	vcvtps2pd	%xmm1, %xmm2
+	vcvtsi2sdq	%rsi, %xmm1, %xmm1
+	vdivsd	%xmm1, %xmm0, %xmm0
+	vsubsd	%xmm0, %xmm2, %xmm0
+	ret
+/* $end 530-fexpr2-s 17 */
+
+/* $begin 530-fexpr2-ann-s 17 */
+# double funct2(double w, int x, float y, long z)
+# w in %xmm0, x in \edireg{}, y in %xmm1, z in \rsireg{}
+funct2:
+	vcvtsi2ss	%edi, %xmm2, %xmm2   # Convert x to float
+	vmulss	%xmm1, %xmm2, %xmm1  	     # Multiply by y
+	vunpcklps	%xmm1, %xmm1, %xmm1
+	vcvtps2pd	%xmm1, %xmm2	     # Convert x*y to double
+	vcvtsi2sdq	%rsi, %xmm1, %xmm1   # Convert z to double
+	vdivsd	%xmm1, %xmm0, %xmm0  	     # Compute w/z
+	vsubsd	%xmm0, %xmm2, %xmm0	     # Subtract from x*y
+	ret	       	      		     # Return
+/* $end 530-fexpr2-ann-s 17 */
+
+	.size	funct2, .-funct2
+	.globl	funct3
+	.type	funct3, @function
+/* $begin 530-fexpr3-s 29 */
+# double funct3(int *ap, double b, long c, float *dp)
+# ap in \rdireg{}, b in %xmm0, c in \rsireg{}, dp in \rdxreg{}
+funct3:
+	vmovss	(%rdx), %xmm1
+	vcvtsi2sd	(%rdi), %xmm2, %xmm2
+	vucomisd	%xmm2, %xmm0
+	jbe	.L8
+	vcvtsi2ssq	%rsi, %xmm0, %xmm0
+	vmulss	%xmm1, %xmm0, %xmm1
+	vunpcklps	%xmm1, %xmm1, %xmm1
+	vcvtps2pd	%xmm1, %xmm0
+	ret
+.L8:
+	vaddss	%xmm1, %xmm1, %xmm1
+	vcvtsi2ssq	%rsi, %xmm0, %xmm0
+	vaddss	%xmm1, %xmm0, %xmm0
+	vunpcklps	%xmm0, %xmm0, %xmm0
+	vcvtps2pd	%xmm0, %xmm0
+	ret
+/* $end 530-fexpr3-s 29 */
+
+/* $begin 530-fexpr3-ann-s 29 */
+# double funct3(int *ap, double b, long c, float *dp)
+# ap in \rdireg{}, b in %xmm0, c in \rsireg{}, dp in \rdxreg{}
+funct3:
+	vmovss	(%rdx), %xmm1			#   Get d = *dp
+	vcvtsi2sd	(%rdi), %xmm2, %xmm2	#   Get a = *ap and convert to double
+	vucomisd	%xmm2, %xmm0   		#   Compare b:a
+	jbe	.L8	       			#   If <=, goto \textbf{lesseq}
+	vcvtsi2ssq	%rsi, %xmm0, %xmm0	#   Convert c to float
+	vmulss	%xmm1, %xmm0, %xmm1  		#   Multiply by d
+	vunpcklps	%xmm1, %xmm1, %xmm1	
+	vcvtps2pd	%xmm1, %xmm0  		#   Convert to double
+	ret					#   Return
+.L8:						# \textbf{lesseq:}
+	vaddss	%xmm1, %xmm1, %xmm1		#   Compute d+d = 2.0 * d
+	vcvtsi2ssq	%rsi, %xmm0, %xmm0	#   Convert c to float   
+	vaddss	%xmm1, %xmm0, %xmm0  		#   Compute c + 2*d
+	vunpcklps	%xmm0, %xmm0, %xmm0	
+	vcvtps2pd	%xmm0, %xmm0  		#   Convert to double
+	ret					#   Return
+/* $end 530-fexpr3-ann-s 29 */
+
+	.size	funct3, .-funct3
+	.globl	d_max
+	.type	d_max, @function
+d_max:
+	vmaxsd	%xmm0, %xmm1, %xmm0
+	ret
+	.size	d_max, .-d_max
+	.globl	f_max
+	.type	f_max, @function
+f_max:
+	vmaxss	%xmm0, %xmm1, %xmm0
+	ret
+	.size	f_max, .-f_max
+	.globl	dz
+	.type	dz, @function
+dz:
+	vxorpd	%xmm0, %xmm0, %xmm0
+	vmovsd	%xmm0, (%rdi)
+	ret
+	.size	dz, .-dz
+	.globl	simplefun
+	.type	simplefun, @function
+simplefun:
+/* $begin 530-simplefun1-s  69 */
+	vmovsd	.LC1(%rip), %xmm1
+	vandpd	%xmm1, %xmm0, %xmm0
+/* $end 530-simplefun1-s 69 */
+	ret
+	.size	simplefun, .-simplefun
+	.globl	simplefun2
+	.type	simplefun2, @function
+simplefun2:
+/* $begin 530-simplefun2-s 76 */
+	vxorpd	%xmm0, %xmm0, %xmm0
+/* $end 530-simplefun2-s 76 */
+	ret
+	.size	simplefun2, .-simplefun2
+	.globl	simplefun3
+	.type	simplefun3, @function
+simplefun3:
+/* $begin 530-simplefun3-s 82 */
+	vmovsd	.LC2(%rip), %xmm1
+	vxorpd	%xmm1, %xmm0, %xmm0
+/* $end 530-simplefun3-s 82 */
+	ret
+	.size	simplefun3, .-simplefun3
+	.section	.rodata.cst16,"aM",@progbits,16
+	.align 16
+/* $begin 530-simplefun1-s 88 */
+.LC1:
+	.long	4294967295
+	.long	2147483647
+	.long	0
+	.long	0
+/* $end 530-simplefun1-s 88 */
+	.align 16
+/* $begin 530-simplefun3-s 94 */
+.LC2:
+	.long	0
+	.long	-2147483648
+	.long	0
+	.long	0
+/* $end 530-simplefun3-s 94 */
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

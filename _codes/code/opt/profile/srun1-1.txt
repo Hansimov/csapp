@@ -1,0 +1,24 @@
+verbose	10
+size	1021
+hash	1
+lower	0
+find	0
+ngram	1
+quicksort	0
+file	shakespeare.txt
+N-gram size 1
+Lower case function lower1
+Hash function h_add
+Find element function find_ele_rec
+29854	'the'
+27554	'and'
+23357	'i'
+21075	'to'
+18520	'of'
+15523	'a'
+14264	'you'
+12964	'my'
+11955	'that'
+11842	'in'
+965028 n-grams, 23706 unique, 8610 singletons.  Most common (29854) = 'the'.  Longest (1 have length 27) = 'honorificabilitudinitatibus'
+Total time = 0.470000 seconds

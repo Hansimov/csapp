@@ -1,0 +1,191 @@
+	.file	"350-array.c"
+	.text
+	.globl	get_value
+	.type	get_value, @function
+get_value:
+	leaq	(%rsi,%rsi,2), %rax
+	leaq	(%rdi,%rax,4), %rax
+	movl	(%rax,%rdx,4), %eax
+	ret
+	.size	get_value, .-get_value
+	.globl	get_value2
+	.type	get_value2, @function
+get_value2:
+	movq	(%rdi,%rsi,8), %rax
+	movq	(%rax,%rdx,8), %rax
+	ret
+	.size	get_value2, .-get_value2
+	.globl	new_fix_matrix
+	.type	new_fix_matrix, @function
+new_fix_matrix:
+	subq	$8, %rsp
+	movl	$1024, %edi
+	call	malloc
+	addq	$8, %rsp
+	ret
+	.size	new_fix_matrix, .-new_fix_matrix
+	.globl	fix_prod_ele
+	.type	fix_prod_ele, @function
+fix_prod_ele:
+	salq	$6, %rdx
+	addq	%rdx, %rdi
+	leaq	(%rsi,%rcx,4), %rcx
+	leaq	1024(%rcx), %rsi
+	movl	$0, %eax
+.L7:
+	movl	(%rdi), %edx
+	imull	(%rcx), %edx
+	addl	%edx, %eax
+	addq	$4, %rdi
+	addq	$64, %rcx
+	cmpq	%rsi, %rcx
+	jne	.L7
+	rep; ret
+	.size	fix_prod_ele, .-fix_prod_ele
+	.globl	fix_prod_ele_opt
+	.type	fix_prod_ele_opt, @function
+fix_prod_ele_opt:
+	salq	$6, %rdx
+	addq	%rdx, %rdi
+	salq	$2, %rcx
+	leaq	(%rsi,%rcx), %r8
+	leaq	1024(%rsi,%rcx), %rcx
+	movl	$0, %eax
+.L10:
+	movl	(%rdi), %edx
+	imull	(%r8), %edx
+	addl	%edx, %eax
+	addq	$4, %rdi
+	addq	$64, %r8
+	cmpq	%rcx, %r8
+	jne	.L10
+	rep; ret
+	.size	fix_prod_ele_opt, .-fix_prod_ele_opt
+	.globl	fix_set_diag
+	.type	fix_set_diag, @function
+fix_set_diag:
+	movl	$0, %eax
+.L13:
+	movl	%esi, (%rdi,%rax)
+	addq	$68, %rax
+	cmpq	$1088, %rax
+	jne	.L13
+	rep; ret
+	.size	fix_set_diag, .-fix_set_diag
+	.globl	fix_set_diag_opt
+	.type	fix_set_diag_opt, @function
+fix_set_diag_opt:
+	movl	$0, %eax
+.L16:
+	movl	%esi, (%rdi,%rax,4)
+	addq	$17, %rax
+	cmpq	$272, %rax
+	jne	.L16
+	rep; ret
+	.size	fix_set_diag_opt, .-fix_set_diag_opt
+	.globl	fix_ele
+	.type	fix_ele, @function
+fix_ele:
+	movslq	%esi, %rsi
+	salq	$6, %rsi
+	addq	%rsi, %rdi
+	movslq	%edx, %rdx
+	movl	(%rdi,%rdx,4), %eax
+	ret
+	.size	fix_ele, .-fix_ele
+	.globl	new_var_matrix
+	.type	new_var_matrix, @function
+new_var_matrix:
+	subq	$8, %rsp
+	imulq	%rdi, %rdi
+	salq	$2, %rdi
+	call	malloc
+	addq	$8, %rsp
+	ret
+	.size	new_var_matrix, .-new_var_matrix
+	.globl	var_ele
+	.type	var_ele, @function
+var_ele:
+	salq	$2, %rdx
+	imulq	%rdx, %rdi
+	leaq	(%rsi,%rcx,4), %rax
+	movl	(%rax,%rdi), %eax
+	ret
+	.size	var_ele, .-var_ele
+	.globl	pvar_ele
+	.type	pvar_ele, @function
+pvar_ele:
+	salq	$2, %rdx
+	imulq	%rdx, %rdi
+	leaq	(%rsi,%rcx,4), %rax
+	movl	(%rax,%rdi), %eax
+	ret
+	.size	pvar_ele, .-pvar_ele
+	.globl	var_prod_ele
+	.type	var_prod_ele, @function
+var_prod_ele:
+	testq	%rdi, %rdi
+	jle	.L25
+	salq	$2, %rcx
+	imulq	%rdi, %rcx
+	addq	%rcx, %rsi
+	leaq	0(,%rdi,4), %r9
+	leaq	(%rdx,%r8,4), %rcx
+	movl	$0, %eax
+	movl	$0, %edx
+.L24:
+	movl	(%rsi,%rdx,4), %r8d
+	imull	(%rcx), %r8d
+	addl	%r8d, %eax
+	addq	$1, %rdx
+	addq	%r9, %rcx
+	cmpq	%rdi, %rdx
+	jne	.L24
+	rep; ret
+.L25:
+	movl	$0, %eax
+	ret
+	.size	var_prod_ele, .-var_prod_ele
+	.globl	var_prod_ele_opt
+	.type	var_prod_ele_opt, @function
+var_prod_ele_opt:
+	leaq	0(,%rcx,4), %rax
+	imulq	%rdi, %rax
+	addq	%rax, %rsi
+	leaq	(%rdx,%r8,4), %rcx
+	testq	%rdi, %rdi
+	jle	.L29
+	salq	$2, %rdi
+	movq	%rsi, %rdx
+	addq	%rdi, %rsi
+	movl	$0, %eax
+.L28:
+	movl	(%rdx), %r8d
+	imull	(%rcx), %r8d
+	addl	%r8d, %eax
+	addq	%rdi, %rcx
+	addq	$4, %rdx
+	cmpq	%rsi, %rdx
+	jne	.L28
+	rep; ret
+.L29:
+	movl	$0, %eax
+	ret
+	.size	var_prod_ele_opt, .-var_prod_ele_opt
+	.globl	B
+	.data
+	.align 32
+	.type	B, @object
+	.size	B, 32
+B:
+	.quad	row0
+	.quad	row1
+	.quad	row2
+	.quad	row3
+	.comm	row3,12,4
+	.comm	row2,12,4
+	.comm	row1,12,4
+	.comm	row0,12,4
+	.comm	A,60,32
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

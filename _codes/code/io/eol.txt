@@ -1,0 +1,5 @@
+This is a file I'm using to test perl eol command
+a text line
+another text line
+yet another line
+one more text line for good measure

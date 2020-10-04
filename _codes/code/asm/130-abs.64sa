@@ -1,0 +1,132 @@
+	.file	"130-abs.c"
+	.text
+	.globl	absdiff_se
+	.type	absdiff_se, @function
+/* $begin 130-absdiff_se-s 5 */
+# long absdiff_se(long x, long y)
+# x in \rdireg, y in \rsireg
+absdiff_se:
+	cmpq	%rsi, %rdi         # Compare x:y #line:asm:absdiff_se:cmpq
+	jge	.L2                # If >= goto \textbf{x_ge_y}
+	addq	$1, lt_cnt(%rip)   # lt_cnt++ #line:asm:absdiff_se:lt
+	movq	%rsi, %rax      
+	subq	%rdi, %rax         # result = y-x
+	ret                        # Return
+.L2:                             # \textbf{x_ge_y}: #line:asm:absdiff_se:xgey
+	addq	$1, ge_cnt(%rip)   # ge_cnt++ 
+	movq	%rdi, %rax      
+	subq	%rsi, %rax         # result = x-y
+	ret                        # Return
+/* $end 130-absdiff_se-s 5 */
+	.size	absdiff_se, .-absdiff_se
+	.globl	gotodiff_se
+	.type	gotodiff_se, @function
+gotodiff_se:
+	cmpq	%rsi, %rdi
+	jge	.L5
+	addq	$1, lt_cnt(%rip)
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+	ret
+.L5:
+	addq	$1, ge_cnt(%rip)
+	movq	%rdi, %rax
+	subq	%rsi, %rax
+.L6:
+	ret
+	.size	gotodiff_se, .-gotodiff_se
+	.globl	gotodiff_se_alt
+	.type	gotodiff_se_alt, @function
+gotodiff_se_alt:
+	cmpq	%rsi, %rdi
+	jl	.L8
+	addq	$1, ge_cnt(%rip)
+	movq	%rdi, %rax
+	subq	%rsi, %rax
+	ret
+.L8:
+	addq	$1, lt_cnt(%rip)
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+.L9:
+	ret
+	.size	gotodiff_se_alt, .-gotodiff_se_alt
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+	.string	"x = %ld, y = %ld, |x-y| = (%ld,%ld,%ld,%ld,%ld)\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$40, %rsp
+	movq	%rsi, %rbp
+	movq	8(%rsi), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	movslq	%eax, %rbx
+	movq	16(%rbp), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	movslq	%eax, %rbp
+	movq	%rbp, %rsi
+	movq	%rbx, %rdi
+	call	absdiff_se
+	movq	%rax, %r12
+	movq	%rbp, %rsi
+	movq	%rbx, %rdi
+	call	gotodiff_se
+	movq	%rax, %r13
+	movq	%rbp, %rsi
+	movq	%rbx, %rdi
+	call	cmovdiff
+	movq	%rax, %r14
+	movq	%rbp, %rsi
+	movq	%rbx, %rdi
+	call	absdiff
+	movq	%rax, %r15
+	movq	%rbp, %rsi
+	movq	%rbx, %rdi
+	call	absdiff_asm
+	movq	%rax, 16(%rsp)
+	movq	%r15, 8(%rsp)
+	movq	%r14, (%rsp)
+	movq	%r13, %r9
+	movq	%r12, %r8
+	movq	%rbp, %rcx
+	movq	%rbx, %rdx
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %eax
+	addq	$40, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	ret
+	.size	main, .-main
+	.globl	ge_cnt
+	.bss
+	.align 8
+	.type	ge_cnt, @object
+	.size	ge_cnt, 8
+ge_cnt:
+	.zero	8
+	.globl	lt_cnt
+	.align 8
+	.type	lt_cnt, @object
+	.size	lt_cnt, 8
+lt_cnt:
+	.zero	8
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

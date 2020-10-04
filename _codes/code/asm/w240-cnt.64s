@@ -1,0 +1,291 @@
+	.file	"w240-cnt.c"
+	.text
+	.globl	thread
+	.type	thread, @function
+thread:
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	(%rdi), %ebp
+	movl	$0, %ebx
+	jmp	.L2
+.L3:
+	movl	$cnt, %edi
+	call	*incr_fun(%rip)
+	addl	$1, %ebx
+.L2:
+	cmpl	%ebp, %ebx
+	jl	.L3
+	movl	$0, %eax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+	.size	thread, .-thread
+	.globl	bad_incr
+	.type	bad_incr, @function
+bad_incr:
+	addl	$1, (%rdi)
+	ret
+	.size	bad_incr, .-bad_incr
+	.globl	lock_incr
+	.type	lock_incr, @function
+lock_incr:
+#APP
+# 114 "w240-cnt.c" 1
+	lock            # Insert lock prefix
+	addl $1, (%rdi)   # Increment *ptr
+# 0 "" 2
+#NO_APP
+	ret
+	.size	lock_incr, .-lock_incr
+	.globl	mutex_incr
+	.type	mutex_incr, @function
+mutex_incr:
+	pushq	%rbx
+	movq	%rdi, %rbx
+	movl	$mutex, %edi
+	call	pthread_mutex_lock
+	addl	$1, (%rbx)
+	movl	$mutex, %edi
+	call	pthread_mutex_unlock
+	popq	%rbx
+	ret
+	.size	mutex_incr, .-mutex_incr
+	.globl	sem_incr
+	.type	sem_incr, @function
+sem_incr:
+	pushq	%rbx
+	movq	%rdi, %rbx
+	movl	$sem, %edi
+	call	sem_wait
+	addl	$1, (%rbx)
+	movl	$sem, %edi
+	call	sem_post
+	popq	%rbx
+	ret
+	.size	sem_incr, .-sem_incr
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC2:
+	.string	"BOOM!\t"
+.LC3:
+	.string	"OK\t"
+.LC4:
+	.string	"%d\t%s\t%d\t%.1f\n"
+	.text
+	.globl	run_test
+	.type	run_test, @function
+run_test:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbx
+	subq	$32, %rsp
+	movl	%edi, -52(%rbp)
+	movl	%esi, %r12d
+	movslq	%esi, %rax
+	leaq	22(,%rax,8), %rax
+	andq	$-16, %rax
+	subq	%rax, %rsp
+	movq	%rsp, %r13
+	movslq	%edx, %rdx
+	movq	inames(,%rdx,8), %r14
+	movq	incrs(,%rdx,8), %rax
+	movq	%rax, incr_fun(%rip)
+	movl	$0, cnt(%rip)
+	movl	$1, %edx
+	movl	$0, %esi
+	movl	$sem, %edi
+	call	sem_init
+	movl	$0, %esi
+	movl	$mutex, %edi
+	call	pthread_mutex_init
+	movl	$0, %esi
+	leaq	-48(%rbp), %rdi
+	call	gettimeofday
+	vcvtsi2sdq	-48(%rbp), %xmm1, %xmm1
+	vmulsd	.LC0(%rip), %xmm1, %xmm1
+	vcvtsi2sdq	-40(%rbp), %xmm0, %xmm0
+	vmulsd	.LC1(%rip), %xmm0, %xmm0
+	vaddsd	%xmm0, %xmm1, %xmm2
+	vmovsd	%xmm2, -64(%rbp)
+	movl	$0, %ebx
+	jmp	.L12
+.L13:
+	movslq	%ebx, %rax
+	leaq	0(%r13,%rax,8), %rdi
+	leaq	-52(%rbp), %rcx
+	movl	$thread, %edx
+	movl	$0, %esi
+	call	pthread_create
+	addl	$1, %ebx
+.L12:
+	cmpl	%r12d, %ebx
+	jl	.L13
+	movl	$0, %ebx
+	jmp	.L14
+.L15:
+	movslq	%ebx, %rax
+	movq	0(%r13,%rax,8), %rdi
+	movl	$0, %esi
+	call	pthread_join
+	addl	$1, %ebx
+.L14:
+	cmpl	%r12d, %ebx
+	jl	.L15
+	movl	$0, %esi
+	leaq	-48(%rbp), %rdi
+	call	gettimeofday
+	vcvtsi2sdq	-48(%rbp), %xmm1, %xmm1
+	vmulsd	.LC0(%rip), %xmm1, %xmm1
+	vcvtsi2sdq	-40(%rbp), %xmm0, %xmm0
+	vmulsd	.LC1(%rip), %xmm0, %xmm0
+	vaddsd	%xmm0, %xmm1, %xmm1
+	vsubsd	-64(%rbp), %xmm1, %xmm1
+	movl	-52(%rbp), %eax
+	vcvtsi2sd	%eax, %xmm0, %xmm0
+	vdivsd	%xmm0, %xmm1, %xmm3
+	vmovsd	%xmm3, -64(%rbp)
+	imull	%r12d, %eax
+	movl	cnt(%rip), %edx
+	cmpl	%edx, %eax
+	je	.L16
+	movl	$.LC2, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	jmp	.L17
+.L16:
+	movl	$.LC3, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+.L17:
+	movl	cnt(%rip), %edx
+	vmovsd	-64(%rbp), %xmm0
+	movl	%r12d, %r8d
+	movq	%r14, %rcx
+	movl	$.LC4, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	movl	$0, %edi
+	call	exit
+	.size	run_test, .-run_test
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC5:
+	.string	"usage: %s <niters> [<nthreads> [<incrfun>]]\n"
+	.align 8
+.LC6:
+	.string	"incrfun must be between 0 and %d\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	%edi, %ebx
+	movq	%rsi, %rbp
+	leal	-2(%rdi), %eax
+	cmpl	$2, %eax
+	jbe	.L20
+	movq	(%rsi), %rdx
+	movl	$.LC5, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %edi
+	call	exit
+.L20:
+	movq	8(%rsi), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	movq	%rax, %r13
+	movl	$2, %r12d
+	cmpl	$2, %ebx
+	jle	.L21
+	movq	16(%rbp), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	movl	%eax, %r12d
+.L21:
+	cmpl	$3, %ebx
+	jle	.L24
+	movq	24(%rbp), %rdi
+	movl	$10, %edx
+	movl	$0, %esi
+	call	strtol
+	movl	%eax, %edx
+	cmpl	$3, %eax
+	jbe	.L22
+	movl	$4, %edx
+	movl	$.LC6, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %edi
+	call	exit
+.L24:
+	movl	$0, %edx
+.L22:
+	movl	%r12d, %esi
+	movl	%r13d, %edi
+	call	run_test
+	.size	main, .-main
+	.comm	mutex,40,32
+	.comm	sem,32,32
+	.globl	cnt
+	.bss
+	.align 4
+	.type	cnt, @object
+	.size	cnt, 4
+cnt:
+	.zero	4
+	.comm	incr_fun,8,8
+	.globl	inames
+	.section	.rodata.str1.1
+.LC7:
+	.string	"bad"
+.LC8:
+	.string	"lock"
+.LC9:
+	.string	"mutex"
+.LC10:
+	.string	"sem"
+	.data
+	.align 32
+	.type	inames, @object
+	.size	inames, 32
+inames:
+	.quad	.LC7
+	.quad	.LC8
+	.quad	.LC9
+	.quad	.LC10
+	.globl	incrs
+	.align 32
+	.type	incrs, @object
+	.size	incrs, 32
+incrs:
+	.quad	bad_incr
+	.quad	lock_incr
+	.quad	mutex_incr
+	.quad	sem_incr
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC0:
+	.long	0
+	.long	1104006501
+	.align 8
+.LC1:
+	.long	0
+	.long	1083129856
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

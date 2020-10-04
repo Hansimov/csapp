@@ -1,0 +1,118 @@
+	.file	"110-cc.c"
+	.text
+	.globl	comp
+	.type	comp, @function
+comp:
+	cmpq	%rsi, %rdi
+	setl	%al
+	movzbl	%al, %eax
+	ret
+	.size	comp, .-comp
+	.globl	ilt
+	.type	ilt, @function
+ilt:
+	cmpl	%esi, %edi
+	setl	%al
+	movzbl	%al, %eax
+	ret
+	.size	ilt, .-ilt
+	.globl	bge
+	.type	bge, @function
+bge:
+	cmpw	%si, %di
+	setge	%al
+	movzbl	%al, %eax
+	ret
+	.size	bge, .-bge
+	.globl	ucle
+	.type	ucle, @function
+ucle:
+	cmpb	%sil, %dil
+	setbe	%al
+	movzbl	%al, %eax
+	ret
+	.size	ucle, .-ucle
+	.globl	lieq
+	.type	lieq, @function
+lieq:
+	cmpq	%rsi, %rdi
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	lieq, .-lieq
+	.globl	ulieq
+	.type	ulieq, @function
+ulieq:
+	cmpq	%rsi, %rdi
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	ulieq, .-ulieq
+	.globl	peq
+	.type	peq, @function
+peq:
+	cmpq	%rsi, %rdi
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	peq, .-peq
+	.globl	gt
+	.type	gt, @function
+gt:
+	cmpq	%rsi, %rdi
+	seta	%al
+	movzbl	%al, %eax
+	ret
+	.size	gt, .-gt
+	.globl	test
+	.type	test, @function
+test:
+	testq	%rdi, %rdi
+	setne	%al
+	movzbl	%al, %eax
+	ret
+	.size	test, .-test
+	.globl	test_lige
+	.type	test_lige, @function
+test_lige:
+	movq	%rdi, %rax
+	notq	%rax
+	shrq	$63, %rax
+	ret
+	.size	test_lige, .-test_lige
+	.globl	test_wz
+	.type	test_wz, @function
+test_wz:
+	testw	%di, %di
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	test_wz, .-test_wz
+	.globl	test_uwz
+	.type	test_uwz, @function
+test_uwz:
+	testw	%di, %di
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.size	test_uwz, .-test_uwz
+	.globl	test_cgt
+	.type	test_cgt, @function
+test_cgt:
+	testb	%dil, %dil
+	setg	%al
+	movzbl	%al, %eax
+	ret
+	.size	test_cgt, .-test_cgt
+	.globl	test_ile
+	.type	test_ile, @function
+test_ile:
+	testl	%edi, %edi
+	setle	%al
+	movzbl	%al, %eax
+	ret
+	.size	test_ile, .-test_ile
+	.comm	y,4,4
+	.comm	x,4,4
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

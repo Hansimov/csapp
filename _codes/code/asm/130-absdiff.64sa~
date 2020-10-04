@@ -1,0 +1,30 @@
+	.file	"130-absdiff.c"
+	.text
+	.globl	absdiff
+	.type	absdiff, @function
+/* $begin 130-absdiff-s 5 */
+# long absdiff(long x, long y)
+# x in \rdireg{}, y in \rsireg{}
+absdiff:
+	movq	%rsi, %rax     
+	subq	%rdi, %rax     # rval = y-x
+	movq	%rdi, %rdx
+	subq	%rsi, %rdx     # eval = x-y
+	cmpq	%rsi, %rdi     # Compare x:y        # line:asm:absdiff:cmpq
+	cmovge	%rdx, %rax     # If >=, rval = eval # line:asm:absdiff:cmovge
+	ret                    # Return tval
+/* $end 130-absdiff-s 5 */
+	.size	absdiff, .-absdiff
+	.globl	cmovdiff
+	.type	cmovdiff, @function
+cmovdiff:
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+	movq	%rdi, %rdx
+	subq	%rsi, %rdx
+	cmpq	%rdi, %rsi
+	cmovle	%rdx, %rax
+	ret
+	.size	cmovdiff, .-cmovdiff
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,32 @@
+	.file	"090-arith.c"
+	.text
+	.globl	arith
+	.type	arith, @function
+/* $begin 090-arith-s 5 */
+# long arith(long x, long y, long z)
+# x in \rdireg, y in \rsireg, z in \rdxreg
+arith:
+	xorq	%rsi, %rdi           # t1 = x ^ y # line:asm:arith:xor
+	leaq	(%rdx,%rdx,2), %rax  # 3*z  # line:asm:arith:3z
+	salq	$4, %rax             # t2 = 16 * (3*z) = 48*z # line:asm:arith:48z
+	andl	$252645135, %edi     # t3 = t1 & 0x0F0F0F0F # line:asm:arith:and
+	subq	%rdi, %rax           # return value = t2 - t3 # line:asm:arith:sub
+	ret
+/* $end 090-arith-s 5 */
+	.size	arith, .-arith
+	.globl	arith2
+	.type	arith2, @function
+/* $begin 090-arith-prob-s 15 */
+# long arith2(long x, long y, long z)
+# x in \rdireg, y in \rsireg, z in \rdxreg
+arith2:
+	orq	%rsi, %rdi
+	sarq	$3, %rdi
+	notq	%rdi
+	movq	%rdx, %rax
+	subq	%rdi, %rax
+	ret
+/* $end 090-arith-prob-s 15 */
+	.size	arith2, .-arith2
+	.ident	"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits
