@@ -41,7 +41,7 @@
 | Makefile | 构建整个实验。 |
 | README | 本文件。 |
 | src/ | 包含实验的所有源代码。 |
-| datalab-handout/ | 发给学生的讲义目录。由 Makefile 从 ./src 中的文件生成。不要修改此目录中的任何内容。 |
+| datalab-handout/ | 发给学生的材料目录。由 Makefile 从 ./src 中的文件生成。不要修改此目录中的任何内容。 |
 | grade/ | 自动评分脚本，讲师可以用它来给学生提交的文件打分。 |
 | writeup/ | LaTeX 实验报告样例。 |
 | contest/ | 可选的“击败教授”比赛所需的所有文件。 |

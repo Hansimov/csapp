@@ -1,6 +1,6 @@
 # Table of contents
 
-* [封面](README.md)
+* [本电子书信息](README.md)
 
 ## 出版信息 <a id="info"></a>
 
