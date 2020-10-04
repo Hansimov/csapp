@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/archlab.pdf](http://csapp.cs.cmu.edu/3e/archlab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/archlab-release.html](http://csapp.cs.cmu.edu/3e/archlab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/archlab-handout.tar](http://csapp.cs.cmu.edu/3e/archlab-handout.tar)
 
 ## 实验简介

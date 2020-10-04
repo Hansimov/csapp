@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/perflab.pdf](http://csapp.cs.cmu.edu/3e/perflab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/perflab-release.html](http://csapp.cs.cmu.edu/3e/perflab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/perflab-handout.tar](http://csapp.cs.cmu.edu/3e/perflab-handout.tar)
 
 ## 实验简介

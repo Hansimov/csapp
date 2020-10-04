@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/datalab.pdf](http://csapp.cs.cmu.edu/3e/datalab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/datalab-release.html](http://csapp.cs.cmu.edu/3e/datalab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/datalab-handout.tar](http://csapp.cs.cmu.edu/3e/datalab-handout.tar)
 
 ## 实验简介

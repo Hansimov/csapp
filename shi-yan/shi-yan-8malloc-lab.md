@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/malloclab.pdf](http://csapp.cs.cmu.edu/3e/malloclab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/malloclab-release.html](http://csapp.cs.cmu.edu/3e/malloclab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/malloclab-handout.tar](http://csapp.cs.cmu.edu/3e/malloclab-handout.tar)
 
 ## 实验简介

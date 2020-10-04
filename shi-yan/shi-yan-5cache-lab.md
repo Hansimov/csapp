@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/cachelab.pdf](http://csapp.cs.cmu.edu/3e/cachelab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/cachelab-release.html](http://csapp.cs.cmu.edu/3e/cachelab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/cachelab-handout.tar](http://csapp.cs.cmu.edu/3e/cachelab-handout.tar)
 
 ## 实验简介

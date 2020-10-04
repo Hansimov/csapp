@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/bomblab.pdf](http://csapp.cs.cmu.edu/3e/bomblab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/bomblab-release.html](http://csapp.cs.cmu.edu/3e/bomblab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/bomb.tar](http://csapp.cs.cmu.edu/3e/bomb.tar)
 * 解答（需使用教师账户登录）
   * [http://csapp.cs.cmu.edu/im/bomb-solution.txt](http://csapp.cs.cmu.edu/im/bomb-solution.txt)

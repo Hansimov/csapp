@@ -8,7 +8,7 @@
   * [http://csapp.cs.cmu.edu/3e/attacklab.pdf](http://csapp.cs.cmu.edu/3e/attacklab.pdf)
 * 版本历史
   * [http://csapp.cs.cmu.edu/3e/attacklab-release.html](http://csapp.cs.cmu.edu/3e/attacklab-release.html)
-* 自学讲义
+* 自学材料
   * [http://csapp.cs.cmu.edu/3e/target1.tar](http://csapp.cs.cmu.edu/3e/target1.tar)
 * 解答（需使用教师账户登录）
   * [http://csapp.cs.cmu.edu/im/labs/target1-sol.tar](http://csapp.cs.cmu.edu/im/labs/target1-sol.tar)
