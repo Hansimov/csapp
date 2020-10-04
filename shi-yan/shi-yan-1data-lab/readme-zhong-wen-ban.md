@@ -94,7 +94,7 @@ linux> make
 
 ## 6. 实验性的 BDD 检查器
 
-为了好玩，我们包含了一个基于二进制决策图（binary decision diagram，BDD）的实验性的正确性检查器（R. E. Bryant，IEEE Transactions on Computers，August, 1986），它使用了科罗拉多大学的 CUDD BDD 包。BDD 检查器对 bits.c 中的测试函数进行穷举测试，照参考解答，形式化验证每个测试函数对于_所有_可能的输入值的正确性。对于和参考解答不同的函数，BDD 检查器生成一个反例，该反例以一组函数参数的形式出现，这些参数会让测试解答与参考解答不同。
+为了好玩，我们包含了一个基于二进制决策图（binary decision diagram，BDD）的实验性的正确性检查器（R. E. Bryant，IEEE Transactions on Computers，August, 1986），它使用了科罗拉多大学的 CUDD BDD 包。BDD 检查器对 bits.c 中的测试函数进行穷举测试，对照参考解答，形式化验证每个测试函数对于_所有_可能的输入值的正确性。对于和参考解答不同的函数，BDD 检查器生成一个反例，该反例以一组函数参数的形式出现，这些参数会让测试解答与参考解答不同。
 
 源代码包含在 **./src/bddcheck** 中。编译方法：
 
