@@ -1,4 +1,4 @@
-# README（中文版）
+# README（讲师版）
 
 > **CS:APP Data Lab**
 >
