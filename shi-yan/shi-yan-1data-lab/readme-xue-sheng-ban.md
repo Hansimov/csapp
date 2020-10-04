@@ -47,14 +47,14 @@ unix> ./dlc -e bits.c
 
 要编译并运行 btest 程序，请键入：
 
-```text
+```c
 unix> make btest
 unix> ./btest [optional cmd line args]
 ```
 
 每次更改 bits.c 程序时，都需要重新编译 btest。当从一个平台迁移到另一个平台时，你会想删除旧版本 btest 并生成一个新版本。使用以下命令：
 
-```text
+```c
 unix> make clean
 unix> make btest
 ```
