@@ -23,7 +23,7 @@
 
 ## 实验链接
 
-{% page-ref page="shi-yan-1data-lab/" %}
+{% page-ref page="data-lab/" %}
 
 {% page-ref page="shi-yan-2bomb-lab.md" %}
 

@@ -124,19 +124,19 @@
 * [附录 A：错误处理](fu-lu-acuo-wu-chu-li.md)
 * [参考文献](can-kao-wen-xian.md)
 
-## 实验
+## 实验 <a id="labs"></a>
 
-* [实验总览](shi-yan/untitled.md)
-* [实验 1：Data Lab](shi-yan/shi-yan-1data-lab/README.md)
-  * [README（讲师版）](shi-yan/shi-yan-1data-lab/readme-zhong-wen-ban.md)
-  * [README（学生版）](shi-yan/shi-yan-1data-lab/readme-xue-sheng-ban.md)
-  * [Writeup](shi-yan/shi-yan-1data-lab/writeup.md)
-* [实验 2：Bomb Lab](shi-yan/shi-yan-2bomb-lab.md)
-* [实验 3：Attack Lab](shi-yan/shi-yan-3attack-lab.md)
-* [实验 4：Architechture Lab](shi-yan/shi-yan-4architechture-lab.md)
-* [实验 5：Cache Lab](shi-yan/shi-yan-5cache-lab.md)
-* [实验 6：Performance Lab](shi-yan/shi-yan-6performance-lab.md)
-* [实验 7：Shell Lab](shi-yan/shi-yan-7shell-lab.md)
-* [实验 8：Malloc Lab](shi-yan/shi-yan-8malloc-lab.md)
-* [实验 9：Proxy Lab](shi-yan/shi-yan-9proxy-lab.md)
+* [实验总览](labs/labs-overview.md)
+* [实验 1：Data Lab](labs/data-lab/README.md)
+  * [README（讲师版）](labs/data-lab/readme-instructor.md)
+  * [README（学生版）](labs/data-lab/readme-student.md)
+  * [Writeup](labs/data-lab/writeup.md)
+* [实验 2：Bomb Lab](labs/shi-yan-2bomb-lab.md)
+* [实验 3：Attack Lab](labs/shi-yan-3attack-lab.md)
+* [实验 4：Architechture Lab](labs/shi-yan-4architechture-lab.md)
+* [实验 5：Cache Lab](labs/shi-yan-5cache-lab.md)
+* [实验 6：Performance Lab](labs/shi-yan-6performance-lab.md)
+* [实验 7：Shell Lab](labs/shi-yan-7shell-lab.md)
+* [实验 8：Malloc Lab](labs/shi-yan-8malloc-lab.md)
+* [实验 9：Proxy Lab](labs/shi-yan-9proxy-lab.md)
 
