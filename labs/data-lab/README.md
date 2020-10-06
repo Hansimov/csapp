@@ -21,4 +21,6 @@
   * [https://zhuanlan.zhihu.com/p/59534845](https://zhuanlan.zhihu.com/p/59534845)
 * CSAPP DataLab 题解 \| Claude's Blog 
   * [http://claude-ray.com/2019/10/02/csapp-datalab/](http://claude-ray.com/2019/10/02/csapp-datalab/)
+* CSAPP - datalab · Mcginn's Blog 
+  * [https://mcginn7.github.io/2020/02/14/CSAPP-datalab/](https://mcginn7.github.io/2020/02/14/CSAPP-datalab/)
 
