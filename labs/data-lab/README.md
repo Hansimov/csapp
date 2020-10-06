@@ -15,3 +15,10 @@
 
 学生可以实现简单的逻辑函数、二进制补码和浮点函数，但必须使用 C 语言的一个高度受限的子集。例如，可能会要求仅用位级运算和直线代码（straightline code）来计算一个数的绝对值。该实验帮助学生理解 C 语言数据类型的位级表示和数据操作的位级行为。
 
+## 参考链接
+
+* CSAPP 之 DataLab详解，没有比这更详细的了 - 知乎 
+  * [https://zhuanlan.zhihu.com/p/59534845](https://zhuanlan.zhihu.com/p/59534845)
+* CSAPP DataLab 题解 \| Claude's Blog 
+  * [http://claude-ray.com/2019/10/02/csapp-datalab/](http://claude-ray.com/2019/10/02/csapp-datalab/)
+
