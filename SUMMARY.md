@@ -13,31 +13,31 @@
 
 ---
 
-* [第 1 章：计算机系统漫游](01/README.md)
-  * [1.1 信息就是位 + 上下文](01/1.1.md)
-  * [1.2 程序被其他程序翻译成不同的格式](01/1.2.md)
-  * [1.3 了解编译系统如何工作是大有益处的](01/1.3.md)
-  * [1.4 处理器读并解释储存在内存中的指令](01/1.4.md)
-  * [1.5 高速缓存至关重要](01/1.5.md)
-  * [1.6 存储设备形成层次结构](01/1.6.md)
-  * [1.7 操作系统管理硬件](01/1.7.md)
-  * [1.8 系统之间利用网络通信](01/1.8.md)
-  * [1.9 重要主题](01/1.9.md)
-  * [1.10 小结](01/1.10-xiao-jie.md)
+* [第 1 章：计算机系统漫游](ch01-a-tour-of-computer-systems/README.md)
+  * [1.1 信息就是位 + 上下文](ch01-a-tour-of-computer-systems/1.1.md)
+  * [1.2 程序被其他程序翻译成不同的格式](ch01-a-tour-of-computer-systems/1.2.md)
+  * [1.3 了解编译系统如何工作是大有益处的](ch01-a-tour-of-computer-systems/1.3.md)
+  * [1.4 处理器读并解释储存在内存中的指令](ch01-a-tour-of-computer-systems/1.4.md)
+  * [1.5 高速缓存至关重要](ch01-a-tour-of-computer-systems/1.5.md)
+  * [1.6 存储设备形成层次结构](ch01-a-tour-of-computer-systems/1.6.md)
+  * [1.7 操作系统管理硬件](ch01-a-tour-of-computer-systems/1.7.md)
+  * [1.8 系统之间利用网络通信](ch01-a-tour-of-computer-systems/1.8.md)
+  * [1.9 重要主题](ch01-a-tour-of-computer-systems/1.9.md)
+  * [1.10 小结](ch01-a-tour-of-computer-systems/1.10-xiao-jie.md)
 
 ## 第一部分：程序结构和执行 <a id="part1"></a>
 
-* [第 2 章：信息的表示和处理](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/README.md)
-  * [2.1 信息存储](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.1-xin-xi-cun-chu.md)
-  * [2.2 整数表示](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.2-zheng-shu-biao-shi.md)
-  * [2.3 整数运算](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.3-zheng-shu-yun-suan.md)
-  * [2.4 浮点数](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.4-fu-dian-shu.md)
-  * [2.5 小结](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/2.5-xiao-jie.md)
-  * [家庭作业](part1/di-2-zhang-xin-xi-de-biao-shi-he-chu-li/jia-ting-zuo-ye.md)
-* [第 3 章：程序的机器级表示](part1/di-3-zhang-cheng-xu-de-ji-qi-ji-biao-shi.md)
-* [第 4 章：处理器体系结构](part1/di-4-zhang-chu-li-qi-ti-xi-jie-gou.md)
-* [第 5 章：优化程序性能](part1/di-5-zhang-you-hua-cheng-xu-xing-neng.md)
-* [第 6 章：存储器层次结构](part1/di-6-zhang-cun-chu-qi-ceng-ci-jie-gou.md)
+* [第 2 章：信息的表示和处理](part1/ch02-representing-and-manipulating-information/README.md)
+  * [2.1 信息存储](part1/ch02-representing-and-manipulating-information/2.1-xin-xi-cun-chu.md)
+  * [2.2 整数表示](part1/ch02-representing-and-manipulating-information/2.2-zheng-shu-biao-shi.md)
+  * [2.3 整数运算](part1/ch02-representing-and-manipulating-information/2.3-zheng-shu-yun-suan.md)
+  * [2.4 浮点数](part1/ch02-representing-and-manipulating-information/2.4-fu-dian-shu.md)
+  * [2.5 小结](part1/ch02-representing-and-manipulating-information/2.5-xiao-jie.md)
+  * [家庭作业](part1/ch02-representing-and-manipulating-information/jia-ting-zuo-ye.md)
+* [第 3 章：程序的机器级表示](part1/ch03-machine-level-representing-of-programs.md)
+* [第 4 章：处理器体系结构](part1/ch04-processor-architecture.md)
+* [第 5 章：优化程序性能](part1/ch05-optimizing-program-performance.md)
+* [第 6 章：存储器层次结构](part1/ch06-the-memory-hierarchy.md)
 
 ## 第二部分：在系统上运行程序 <a id="part2"></a>
 
