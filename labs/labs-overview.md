@@ -25,21 +25,21 @@
 
 {% page-ref page="data-lab/" %}
 
-{% page-ref page="shi-yan-2bomb-lab.md" %}
+{% page-ref page="bomb-lab.md" %}
 
-{% page-ref page="shi-yan-3attack-lab.md" %}
+{% page-ref page="attack-lab.md" %}
 
-{% page-ref page="shi-yan-4architechture-lab.md" %}
+{% page-ref page="arch-lab.md" %}
 
-{% page-ref page="shi-yan-5cache-lab.md" %}
+{% page-ref page="cache-lab.md" %}
 
-{% page-ref page="shi-yan-6performance-lab.md" %}
+{% page-ref page="perf-lab.md" %}
 
-{% page-ref page="shi-yan-7shell-lab.md" %}
+{% page-ref page="shell-lab.md" %}
 
-{% page-ref page="shi-yan-8malloc-lab.md" %}
+{% page-ref page="malloc-lab.md" %}
 
-{% page-ref page="shi-yan-9proxy-lab.md" %}
+{% page-ref page="proxy-lab.md" %}
 
 
 
