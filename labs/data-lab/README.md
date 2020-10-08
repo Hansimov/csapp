@@ -23,4 +23,6 @@
   * [http://claude-ray.com/2019/10/02/csapp-datalab/](http://claude-ray.com/2019/10/02/csapp-datalab/)
 * CSAPP - datalab · Mcginn's Blog 
   * [https://mcginn7.github.io/2020/02/14/CSAPP-datalab/](https://mcginn7.github.io/2020/02/14/CSAPP-datalab/)
+* 【读厚 CSAPP】I Data Lab \| 小土刀 2.0 
+  * [https://wdxtub.com/csapp/thick-csapp-lab-1/2016/04/16/](https://wdxtub.com/csapp/thick-csapp-lab-1/2016/04/16/)
 
