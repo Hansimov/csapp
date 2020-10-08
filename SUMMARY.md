@@ -130,7 +130,8 @@
 
 ## 实验 <a id="labs"></a>
 
-* [实验总览](labs/labs-overview.md)
+* [实验总览](labs/labs-overview/README.md)
+  * [常见问题](labs/labs-overview/common-problems.md)
 * [实验 1：Data Lab](labs/data-lab/README.md)
   * [README（讲师版）](labs/data-lab/readme-instructor.md)
   * [README（学生版）](labs/data-lab/readme-student.md)
