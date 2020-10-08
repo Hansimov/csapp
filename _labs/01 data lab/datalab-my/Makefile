@@ -3,6 +3,7 @@
 # 
 CC = gcc
 CFLAGS = -O -Wall -m32
+# CFLAGS = -O -Wall
 LIBS = -lm
 
 all: btest fshow ishow

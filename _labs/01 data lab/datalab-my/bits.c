@@ -174,11 +174,18 @@ int tmin(void) {
  */
 int isTmax(int x) {
     /*
-    0111 + 1 = 1000, 1000 + 0111 = 1111 √
-    1111 + 1 = 0000, 0000 + 1111 = 1111 ×
-    0101 + 1 = 0110, 0110 + 0101 = 1011 ×
+    0111 + 1 = 1000 √ (Tmax)
+    0101 + 1 = 0110 × 
+    1111 + 1 = 0000 × (except -1)
+    Core idea: x+1 == ~x and x != -1
+        base case: !(~x^(x+1))
+            if x is Tmax, ~x^(x+1) = 0
+        edge case:
+            if x+1==0, then ` | (bit or) <base case>` should be 1
+            so edge case should be | !(x+1)
     */
-    return (!~(x+1+x)) & (x+1);
+    // return !(x^(~(1<<31))); // `<<` is illegal
+    return !( (~x^(x+1)) | !(x+1) );
 }
 
 
@@ -289,13 +296,15 @@ int isLessOrEqual(int x, int y) {
  */
 int logicalNeg(int x) {
     /*
-    Only x==0 returns 1; Only x==0 sign(x)==sign(-x)
-    0000 | (1111+1 =) 0000 = 0000, _ >> 3 = 0, !_ = 1
-    1000 | (0111+1 =) 1000 = 1000, _ >> 3 = 1, !_ = 0
-    0111 | (1000+1 =) 1001 = 1111, _ >> 3 = 1, !_ = 0
-    1010 | (0101+1 =) 0110 = 1110, _ >> 3 = 1, !_ = 0
+    if x!=0, there must be sign(x|(-x)) == 1
+    or, only x==0, sign(x|(-x)) == 0
+    0000 | (1111+1 =) 0000 = 0000, _ >> 3 = ---0, ~_ & 1 = 1 √
+    1000 | (0111+1 =) 1000 = 1000, _ >> 3 = ---1, ~_ & 1= 0 ×
+    0111 | (1000+1 =) 1001 = 1111, _ >> 3 = ---1, ~_ & 1= 0 ×
+    1010 | (0101+1 =) 0110 = 1110, _ >> 3 = ---1, ~_ & 1= 0 ×
     */
-    return !((x|(~x+1))>>31);
+    // `!` operator is illegal
+    return ~((x|(~x+1))>>31) & 1;
 }
 
 
@@ -315,21 +324,31 @@ int howManyBits(int x) {
     /*
     11011 = -5 = 1011
     */
-    int sign = x >> 31;
-    x = (sign & ~x) |  (~sign & x);
-    int b16, b8, b4, b2, b1, b0;
+    // int sign = x >> 31;
+    // x = (sign & ~x) |  (~sign & x);
+    
+    int b16, b8, b4, b2, b1, b0; // must declare at the beginning
+
+    x = x ^ (x >> 31);
+
     b16 = !!(x >> 16) << 4;
     x = x >> b16;
+
     b8 = !!(x >> 8) << 3;
     x = x >> b8;
+
     b4 = !!(x >> 4) << 2;
     x = x >> b4;
+
     b2 = !!(x >> 2) << 1;
     x = x >> b2;
+
     b1 = !!(x >> 1);
     x = x >> b1;
+
     b0 = x;
-    return b16 + b8 + b4 + b2 + b0 + 1;
+
+    return b16 + b8 + b4 + b2 + b1 + b0 + 1;
 }
 
 
@@ -346,8 +365,35 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  return 2;
+    /*
+      0   0000 0000   000 0000 0000 0000 0000 0000
+    |-s-|-----e-----|--------------f---------------|
+    
+    if   all e[i] == 0:
+        uf is denorm
+        old_val = f x 2^(1-Bias)
+        new_val: f << 1
+
+    elif all e[i] == 1:
+        uf == inf or nan, return uf
+
+    else:
+        uf is norm
+        old_val = (1+f) x 2 ^(e-Bias)
+        new_val: e +=1 
+    */
+
+    unsigned s = (uf >> 31) & 1;
+    unsigned e = (uf >> 23) & 0xff;
+    // ---- ---- -111 1111 1111 1111 1111 1111
+    unsigned f = uf & 0x7fffff;
+    if (!e)
+        return (s << 31) | (f << 1);
+    if (!(e^0xff))
+        return uf;
+    return (s << 31) | ((e+1) << 23) | f;
 }
+
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
  *   for floating point argument f.
@@ -361,8 +407,23 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-    return 2;
+    int s = (uf >> 31) & 1;
+    int e = (uf >> 23) & 0xff;
+    // ---- ---- -111 1111 1111 1111 1111 1111
+    int f = uf & 0x7fffff;
+    if (!(e|f))
+        return 0;
+    e = e - 127;
+    if (e < 0)
+        return 0;
+    // Need to understand ↓
+    if (e > 30 + (s & !f))
+        return 0x80000000u;
+    f = ((1 << 23) | f) >> (23 - e);
+    return s ? -f : f;
+
 }
+
 /* 
  * floatPower2 - Return bit-level equivalent of the expression 2.0^x
  *   (2.0 raised to the power x) for any 32-bit integer x.
@@ -377,5 +438,9 @@ int floatFloat2Int(unsigned uf) {
  *   Rating: 4
  */
 unsigned floatPower2(int x) {
-    return 2;
+    x = x + 127;
+    if (x < 0)
+        return 0;
+    // 0 [111 1111 1] 000 0000 0000 0000 0000 0000
+    return (x < 255) ? (x << 23) : 0x7f800000u;
 }
