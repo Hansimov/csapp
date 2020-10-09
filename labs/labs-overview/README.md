@@ -25,7 +25,7 @@
 
 {% page-ref page="../data-lab/" %}
 
-{% page-ref page="../bomb-lab.md" %}
+{% page-ref page="../bomb-lab/" %}
 
 {% page-ref page="../attack-lab.md" %}
 
