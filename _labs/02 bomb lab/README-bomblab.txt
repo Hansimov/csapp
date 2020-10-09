@@ -346,7 +346,7 @@ start".
 
 * Information and error messages from the servers are appended to the
 "status log" in bomblab/log-status.txt. Servers run quietly, so they
-can be started from initrc scripts at boot time.
+can be started from init.rc scripts at boot time.
 
 * See src/README for more information about the anatomy of bombs and
 how they are constructed. You don't need to understand any of this to
