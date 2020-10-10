@@ -8,7 +8,7 @@
 * [中文版序一](publish-info/chinese-preface-1.md)
 * [中文版序二](publish-info/chinese-preface-2.md)
 * [译者序](publish-info/translators-preface.md)
-* [前言](publish-info/00-preface.md)
+* [前言](publish-info/preface.md)
 * [关于作者](publish-info/about-authors.md)
 
 ---
