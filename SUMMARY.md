@@ -138,6 +138,7 @@
   * [Writeup](labs/data-lab/writeup.md)
 * [实验 2：Bomb Lab](labs/bomb-lab/README.md)
   * [README（讲师版）](labs/bomb-lab/readme-jiang-shi-ban.md)
+  * [Writeup](labs/bomb-lab/writeup.md)
 * [实验 3：Attack Lab](labs/attack-lab.md)
 * [实验 4：Architechture Lab](labs/arch-lab.md)
 * [实验 5：Cache Lab](labs/cache-lab.md)
