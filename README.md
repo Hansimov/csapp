@@ -8,7 +8,7 @@ OCR 支持：WPS PDF
 
 GitHub：[https://github.com/Hansimov/csapp](https://github.com/Hansimov/csapp)
 
-已施工章节：序、前言、第 1、7、9、10、11、12 章
+已施工章节：序、前言、第 1、7、8、9、10、11、12 章
 
 待施工章节：第 2、3、4、5、6 章
 
