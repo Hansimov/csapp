@@ -8,9 +8,9 @@ OCR 支持：WPS PDF
 
 GitHub：[https://github.com/Hansimov/csapp](https://github.com/Hansimov/csapp)
 
-已施工章节：序、前言、第 1、7、8、9、10、11、12 章
+已施工部分：序、前言、第 1、7、8、9、10、11、12 章，全部实验简介
 
-待施工章节：第 2、3、4、5、6 章
+待施工部分：第 2、3、4、5、6 章，实验 3、4、5、6、7、8、9 文档
 
 {% page-ref page="ch01-a-tour-of-computer-systems/" %}
 
@@ -25,6 +25,8 @@ GitHub：[https://github.com/Hansimov/csapp](https://github.com/Hansimov/csapp)
 {% page-ref page="part3/ch11-network-programming/" %}
 
 {% page-ref page="part3/ch12-concurrent-programming/" %}
+
+{% page-ref page="labs/labs-overview/" %}
 
 
 
