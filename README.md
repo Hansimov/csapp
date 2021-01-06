@@ -1,6 +1,6 @@
 # 本电子书信息
 
-制作者：Hansimov
+制作者：[**Hansimov**](https://github.com/Hansimov)\*\*\*\*
 
 OCR 支持：WPS PDF
 
@@ -8,7 +8,7 @@ OCR 支持：WPS PDF
 
 GitHub：[https://github.com/Hansimov/csapp](https://github.com/Hansimov/csapp)
 
-已施工部分：序、前言、第 1、7、8、9、10、11、12 章，全部实验简介
+已施工部分：序、前言、第 1、7、8、9、10、11、12 章，全部实验简介，实验 1、2 文档
 
 待施工部分：第 2、3、4、5、6 章，实验 3、4、5、6、7、8、9 文档
 
