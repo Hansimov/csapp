@@ -1,5 +1,7 @@
 # 本电子书信息
 
+ 个人整理的《深入理解计算机系统》中文电子版（原书第 3 版）与实验材料：[https://hansimov.gitbook.io/csapp/](https://hansimov.gitbook.io/csapp/)
+
 制作者：[**Hansimov**](https://github.com/Hansimov)\*\*\*\*
 
 OCR 支持：WPS PDF
