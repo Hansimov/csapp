@@ -10,7 +10,7 @@
 
 A. 虚拟地址格式
 
-![](../../.gitbook/assets/0904-lian-xi-ti-9.4.png)
+![](../../.gitbook/assets/09-04%20练习题9.4%20虚拟地址格式.png)
 
 B. 地址翻译
 
@@ -49,7 +49,7 @@ D. 物理地址引用
 
 A. 虚拟地址格式
 
-![](../../.gitbook/assets/0904-lian-xi-ti-9.4.png)
+![](../../.gitbook/assets/09-04%20练习题9.4%20虚拟地址格式.png)
 
 B. 地址翻译
 
@@ -90,7 +90,7 @@ D. 物理地址引用
 
 A. 虚拟地址格式
 
-![](../../.gitbook/assets/0904-lian-xi-ti-9.4.png)
+![](../../.gitbook/assets/09-04%20练习题9.4%20虚拟地址格式.png)
 
 B. 地址翻译
 
